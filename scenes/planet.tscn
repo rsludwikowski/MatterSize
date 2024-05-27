@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bswoaf0h0e7fw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ddlx3"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_juca2"]
+specular_color = Color(0.632471, 0.187322, 0.431867, 1)
+
+[node name="Planet" type="RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ddlx3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(12.985, 12.985)
+texture = SubResource("CanvasTexture_juca2")
