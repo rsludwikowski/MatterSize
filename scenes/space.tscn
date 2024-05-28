@@ -1,22 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://6a6ph8vs7fjf"]
+[gd_scene load_steps=5 format=3 uid="uid://6a6ph8vs7fjf"]
 
 [ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="1_pb5o4"]
 [ext_resource type="Script" path="res://scenes/space.gd" id="1_vm23c"]
 
+[sub_resource type="Environment" id="Environment_1tnpd"]
+background_mode = 1
+background_color = Color(0.261672, 0.0519997, 0.141296, 1)
+background_energy_multiplier = 1.78
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_scecj"]
+
 [node name="Space" type="Node3D"]
 script = ExtResource("1_vm23c")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07606, 18.016)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1tnpd")
+camera_attributes = SubResource("CameraAttributesPractical_scecj")
 
 [node name="Planet1" parent="." instance=ExtResource("1_pb5o4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.56363, 0, 0)
-mass = 6.39
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4082, 0, 0)
+hill_radius = 1.4
+planet_radius = 1.0
+color = Color(0, 0.501961, 0, 1)
 
 [node name="Planet2" parent="." instance=ExtResource("1_pb5o4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.52874, 0, 0)
-mass = 6.26
+hill_radius = 2.5
+initial_velocity = Vector3(6.295, -3, 0)
+planet_radius = 2.0
+color = Color(0.0705882, 0.729412, 1, 1)
 
 [node name="Planet3" parent="." instance=ExtResource("1_pb5o4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.12069, 5.0044, 0)
-mass = 15.88
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.12069, 7.32006, 0)
+hill_radius = 4.5
+planet_radius = 4.0
+color = Color(0.72549, 0, 0, 1)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.15529, 4.99241, 18.6177)
+current = true

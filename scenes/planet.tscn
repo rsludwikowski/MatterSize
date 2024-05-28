@@ -7,18 +7,20 @@ radius = 2.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6rk0y"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gwus6"]
-albedo_color = Color(0.247059, 0.6, 1, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mrotc"]
+emission_enabled = true
+emission = Color(0.800029, 0.692334, 0.509742, 1)
+emission_energy_multiplier = 0.52
 
 [sub_resource type="SphereMesh" id="SphereMesh_w683j"]
 lightmap_size_hint = Vector2i(17, 9)
-material = SubResource("StandardMaterial3D_gwus6")
+material = SubResource("StandardMaterial3D_mrotc")
 
 [node name="Planet" type="RigidBody3D" groups=["Planets"]]
 script = ExtResource("1_ysgxj")
 
 [node name="Area3D" type="Area3D" parent="."]
-gravity_space_override = 3
+gravity_space_override = 1
 gravity_point = true
 gravity_point_center = Vector3(0, 0, 0)
 gravity_direction = Vector3(0, 0, 0)
@@ -31,3 +33,9 @@ shape = SubResource("SphereShape3D_6rk0y")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_w683j")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
