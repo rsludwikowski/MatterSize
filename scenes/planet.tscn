@@ -1,22 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://bswoaf0h0e7fw"]
+[gd_scene load_steps=6 format=3 uid="uid://bswoaf0h0e7fw"]
 
-[ext_resource type="Texture2D" uid="uid://chhb6omg6b2hp" path="res://res_files/pngwing.com.png" id="1_lqjeg"]
+[ext_resource type="Script" path="res://scenes/planet.gd" id="1_ysgxj"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ddlx3"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_2o1ej"]
+radius = 2.0
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_juca2"]
-specular_color = Color(0.632471, 0.187322, 0.431867, 1)
+[sub_resource type="SphereShape3D" id="SphereShape3D_6rk0y"]
 
-[node name="Planet" type="RigidBody2D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gwus6"]
+albedo_color = Color(0.247059, 0.6, 1, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_ddlx3")
+[sub_resource type="SphereMesh" id="SphereMesh_w683j"]
+material = SubResource("StandardMaterial3D_gwus6")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(12.985, 12.985)
-texture = SubResource("CanvasTexture_juca2")
+[node name="Planet" type="RigidBody3D" groups=["Planets"]]
+script = ExtResource("1_ysgxj")
 
-[node name="Pngwing_com" type="Sprite2D" parent="."]
-position = Vector2(1.47396e-06, 1.90735e-06)
-scale = Vector2(0.0142012, 0.012685)
-texture = ExtResource("1_lqjeg")
+[node name="Area3D" type="Area3D" parent="."]
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_2o1ej")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_6rk0y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_w683j")

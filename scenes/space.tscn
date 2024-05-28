@@ -1,3 +1,18 @@
-[gd_scene format=3 uid="uid://6a6ph8vs7fjf"]
+[gd_scene load_steps=2 format=3 uid="uid://6a6ph8vs7fjf"]
+
+[ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="1_pb5o4"]
 
 [node name="Space" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07606, 9.14272)
+
+[node name="Planet1" parent="." instance=ExtResource("1_pb5o4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.33029, -0.700475, -2.14511)
+mass = 2.0
+linear_velocity = Vector3(2, 0, 0)
+
+[node name="Planet2" parent="." instance=ExtResource("1_pb5o4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.493402, 1.60504, -2.53402)
+mass = 2.0
+linear_velocity = Vector3(-10, 0, 0)
