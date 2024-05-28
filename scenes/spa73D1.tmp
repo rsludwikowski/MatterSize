@@ -7,16 +7,14 @@
 script = ExtResource("1_vm23c")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07606, 18.016)
-
-[node name="Planet1" parent="." instance=ExtResource("1_pb5o4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.56363, 0, 0)
-mass = 6.39
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07606, 5.1799)
 
 [node name="Planet2" parent="." instance=ExtResource("1_pb5o4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.52874, 0, 0)
-mass = 6.26
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+mass = 40.0
+linear_damp = 20.0
 
 [node name="Planet3" parent="." instance=ExtResource("1_pb5o4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.12069, 5.0044, 0)
-mass = 15.88
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+mass = 40.0
+linear_damp = 20.0

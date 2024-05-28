@@ -11,6 +11,7 @@ radius = 2.0
 albedo_color = Color(0.247059, 0.6, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_w683j"]
+lightmap_size_hint = Vector2i(17, 9)
 material = SubResource("StandardMaterial3D_gwus6")
 
 [node name="Planet" type="RigidBody3D" groups=["Planets"]]
