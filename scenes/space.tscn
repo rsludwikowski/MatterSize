@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://6a6ph8vs7fjf"]
 
 [ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="1_pb5o4"]
-[ext_resource type="Script" path="res://scenes/space.gd" id="1_vm23c"]
+[ext_resource type="Script" path="res://scripts/space.gd" id="1_vm23c"]
 [ext_resource type="PackedScene" uid="uid://bf675du8if2kv" path="res://scenes/sun.tscn" id="2_oqqjf"]
 
 [sub_resource type="Environment" id="Environment_1tnpd"]
@@ -29,18 +29,14 @@ fov = 48.9
 
 [node name="Planet1" parent="Planets" instance=ExtResource("1_pb5o4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.072, -3.85991, 0)
-lock_rotation = true
 max_contacts_reported = 10
-contact_monitor = true
 initial_velocity = Vector3(0, -72.82, 0)
 planet_radius = 1.555
 color = Color(0, 0.501961, 0, 1)
 
 [node name="Planet2" parent="Planets" instance=ExtResource("1_pb5o4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148.762, 5.86691, 0)
-lock_rotation = true
 max_contacts_reported = 10
-contact_monitor = true
 initial_velocity = Vector3(0, -35.655, 0)
 planet_radius = 3.0
 color = Color(0.0705882, 0.729412, 1, 1)
@@ -51,18 +47,14 @@ fov = 42.6
 
 [node name="Planet3" parent="Planets" instance=ExtResource("1_pb5o4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17448, 107.237, 0)
-lock_rotation = true
 max_contacts_reported = 10
-contact_monitor = true
 initial_velocity = Vector3(76.475, 0, 0)
 planet_radius = 8.0
 color = Color(0.72549, 0, 0, 1)
 
 [node name="Planet4" parent="Planets" instance=ExtResource("1_pb5o4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19717, -181.612, 0)
-lock_rotation = true
 max_contacts_reported = 10
-contact_monitor = true
 initial_velocity = Vector3(-100.025, 0, 0)
 planet_radius = 15.0
 color = Color(0.72549, 0, 0, 1)

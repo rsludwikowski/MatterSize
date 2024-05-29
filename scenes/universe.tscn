@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxenq08svwqd1"]
+
+[ext_resource type="Script" path="res://scripts/universe.gd" id="1_0yfca"]
+[ext_resource type="PackedScene" uid="uid://capjyo1b1avt8" path="res://scenes/S_Planet.tscn" id="2_d8x5x"]
+
+[node name="Universe" type="Node3D"]
+script = ExtResource("1_0yfca")
+
+[node name="SPlanet1" parent="." instance=ExtResource("2_d8x5x")]
+mass = 1e+08
+
+[node name="SPlanet2" parent="." instance=ExtResource("2_d8x5x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+mass = 0.71
+linear_velocity = Vector3(10, 0, 0)
+initialVelocity = Vector3(300, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15.63, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.475854, 0.879524, 0, -0.879524, 0.475854, 0, 15.7957, 0)

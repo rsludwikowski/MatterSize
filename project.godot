@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Planeta"
-run/main_scene="res://scenes/Space3D.tscn"
+run/main_scene="res://scenes/universe.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://res_files/icon.svg"
+
+[audio]
+
+buses/default_bus_layout="res://res_files/default_bus_layout.tres"
 
 [input]
 
