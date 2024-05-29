@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuvlxfbdb6mb7"]
+
+[ext_resource type="PackedScene" uid="uid://bjiv610u3hpy6" path="res://scenes/S_Planet.tscn" id="1_cf7fq"]
+
+[node name="Space3d" type="Node3D"]
+
+[node name="SPlanet" parent="." instance=ExtResource("1_cf7fq")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.999998, 0.00165621, 0.00107487, -0.0010706, -0.00257777, 0.999996, 0.00165898, -0.999995, -0.002576, 0, 8, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.475854, 0.879524, 0, -0.879524, 0.475854, 0, 15.7957, 0)
