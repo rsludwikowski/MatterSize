@@ -8,7 +8,8 @@
 script = ExtResource("1_rpodr")
 
 [node name="SPlanet" parent="." instance=ExtResource("1_cf7fq")]
-mass = 1e+12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.30844)
+mass = 9.58
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.999998, 0.00165621, 0.00107487, -0.0010706, -0.00257777, 0.999996, 0.00165898, -0.999995, -0.002576, -0.0138826, 15.6299, -3.73408)
@@ -18,11 +19,10 @@ current = true
 transform = Transform3D(1, 0, 0, 0, 0.475854, 0.879524, 0, -0.879524, 0.475854, 0, 15.7957, 0)
 
 [node name="SPlanet2" parent="." instance=ExtResource("1_cf7fq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24.2078)
-linear_velocity = Vector3(12.52, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 
 [node name="DebugLines" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.24602, 2.96241, 2.24841)
 script = ExtResource("3_m4cjj")
-metadata/steps = 736
-metadata/visualize = false
+metadata/steps = 8
+metadata/visualize = true

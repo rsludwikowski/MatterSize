@@ -1,8 +1,14 @@
-extends Node
+extends Node3D
 
 const G_constant = 6.67
 
 var planets = []
+
+
+
+	
+
+
 
 
 func get_all_planets(node,script_path):
@@ -43,7 +49,6 @@ func get_G():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-
 
 func _physics_process(delta):
 	for planet in planets:

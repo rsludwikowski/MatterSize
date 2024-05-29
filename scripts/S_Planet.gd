@@ -33,7 +33,7 @@ func _ready():
 	self.set_meta("initialVelocity",initialVelocity)
 	#print(self.get_meta("metadata/initialVelocity"))
 	if initialVelocity != Vector3.ZERO:
-		self.angular_velocity = initialVelocity
+		self.linear_velocity = initialVelocity
 	pass
 
 #
