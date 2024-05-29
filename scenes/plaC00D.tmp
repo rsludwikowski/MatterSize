@@ -27,10 +27,10 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.686192, 0.516483), 0.0, 0.0, 0
 point_count = 3
 
 [node name="Planet" type="RigidBody3D" groups=["Planets"]]
-lock_rotation = true
-max_contacts_reported = 25
-contact_monitor = true
 script = ExtResource("1_ysgxj")
+initial_velocity = null
+planet_radius = null
+color = null
 
 [node name="Area3D" type="Area3D" parent="."]
 gravity_space_override = 1

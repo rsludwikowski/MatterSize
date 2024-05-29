@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://bf675du8if2kv"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qj0ms"]
+radius = 20.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdvtj"]
+albedo_color = Color(1, 0.556863, 0, 1)
+emission_enabled = true
+emission = Color(0.909804, 0.333333, 0.00392157, 1)
+emission_energy_multiplier = 0.83
+
+[sub_resource type="SphereMesh" id="SphereMesh_ts2c6"]
+material = SubResource("StandardMaterial3D_pdvtj")
+radius = 20.0
+height = 40.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l35dr"]
+radius = 200.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6rydh"]
+transparency = 1
+albedo_color = Color(0.745098, 0.584314, 0.439216, 0.337255)
+
+[sub_resource type="SphereMesh" id="SphereMesh_2tatl"]
+material = SubResource("StandardMaterial3D_6rydh")
+radius = 200.0
+height = 400.0
+
+[node name="Sun" type="StaticBody3D" groups=["Planet"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qj0ms")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ts2c6")
+
+[node name="Area3D" type="Area3D" parent="."]
+gravity_space_override = 1
+gravity_point = true
+gravity_point_unit_distance = 9.799
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+gravity = 32.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_l35dr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("SphereMesh_2tatl")

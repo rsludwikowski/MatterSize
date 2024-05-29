@@ -27,9 +27,6 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.686192, 0.516483), 0.0, 0.0, 0
 point_count = 3
 
 [node name="Planet" type="RigidBody3D" groups=["Planets"]]
-lock_rotation = true
-max_contacts_reported = 25
-contact_monitor = true
 script = ExtResource("1_ysgxj")
 
 [node name="Area3D" type="Area3D" parent="."]
@@ -48,19 +45,18 @@ shape = SubResource("SphereShape3D_6rk0y")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_w683j")
 
-[node name="Explosion" type="CPUParticles3D" parent="."]
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
 emitting = false
 amount = 60
 lifetime = 2.03
 one_shot = true
 explosiveness = 1.0
-randomness = 0.5
 mesh = SubResource("SphereMesh_hro5y")
 direction = Vector3(0, 0, 0)
-spread = 180.0
+spread = 80.0
 gravity = Vector3(0, 0, 0)
+initial_velocity_min = 3.0
 initial_velocity_max = 20.0
-linear_accel_max = 32.55
 scale_amount_min = 2.0
 scale_amount_max = 6.0
 scale_amount_curve = SubResource("Curve_00h45")
