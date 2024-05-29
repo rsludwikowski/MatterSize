@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjiv610u3hpy6"]
+
+[ext_resource type="Script" path="res://scripts/S_Planet.gd" id="1_rx8s5"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ev1c0"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_17rd3"]
+
+[node name="SPlanet" type="RigidBody3D"]
+gravity_scale = 0.0
+script = ExtResource("1_rx8s5")
+metadata/initialVelocity = Vector3(0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ev1c0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_17rd3")
