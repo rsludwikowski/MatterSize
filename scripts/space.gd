@@ -1,8 +1,11 @@
 extends Node3D
-# Called when the node enters the scene tree for the first time.
+
+var planets
+
 func _ready():
-	pass
+	planets = get_tree().get_nodes_in_group("Planets")
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+	

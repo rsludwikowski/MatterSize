@@ -17,7 +17,7 @@ lightmap_size_hint = Vector2i(17, 9)
 material = SubResource("StandardMaterial3D_mrotc")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0o5iw"]
-albedo_color = Color(0.33118, 0.0405798, 2.05759e-06, 1)
+albedo_color = Color(1, 0.816816, 0.77567, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_hro5y"]
 material = SubResource("StandardMaterial3D_0o5iw")
@@ -27,26 +27,27 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.686192, 0.516483), 0.0, 0.0, 0
 point_count = 3
 
 [node name="Planet" type="RigidBody3D" groups=["Planets"]]
-gravity_scale = 0.0
 lock_rotation = true
 max_contacts_reported = 25
 contact_monitor = true
 script = ExtResource("1_ysgxj")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="HillArea" type="Area3D" parent="."]
 gravity_space_override = 1
 gravity_point = true
 gravity_point_center = Vector3(0, 0, 0)
 gravity_direction = Vector3(0, 0, 0)
 gravity = 32.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="HillAreaShape" type="CollisionShape3D" parent="HillArea"]
 shape = SubResource("SphereShape3D_2o1ej")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="HillAreaSurface" type="MeshInstance3D" parent="HillArea"]
+
+[node name="PlanetShape" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_6rk0y")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="PlanetSurface" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_w683j")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
@@ -69,5 +70,5 @@ scale_amount_curve = SubResource("Curve_00h45")
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]
-[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
-[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
+[connection signal="area_entered" from="HillArea" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="HillArea" to="." method="_on_area_3d_area_exited"]

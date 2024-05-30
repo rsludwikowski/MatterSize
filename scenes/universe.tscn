@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxenq08svwqd1"]
+[gd_scene load_steps=4 format=3 uid="uid://b4cv3bticiion"]
 
 [ext_resource type="Script" path="res://scripts/universe.gd" id="1_0yfca"]
 [ext_resource type="PackedScene" uid="uid://capjyo1b1avt8" path="res://scenes/S_Planet.tscn" id="2_d8x5x"]
@@ -20,7 +20,7 @@ initialVelocity = Vector3(300, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0927429, 0, 8.5123)
 mass = 0.91
 initial_velocity = Vector3(-16.745, 0, -0.395)
-planet_radius = 0.3
+planet_radius = 4.0
 color = Color(0.929412, 0.313726, 0, 1)
 
 [node name="Camera3D" type="Camera3D" parent="."]

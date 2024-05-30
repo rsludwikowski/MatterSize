@@ -1,19 +1,27 @@
+@tool
 extends RigidBody3D
 
 @export var initial_velocity: Vector3
-@export var planet_radius: float = 1.0
+@export var planet_radius: float
 @export var color: Color
+
+@onready var hill_area: Area3D = $HillArea
+@onready var hill_area_shape: CollisionShape3D = $HillArea/HillAreaShape
+@onready var hill_area_surface: MeshInstance3D = $HillArea/HillAreaSurface
+
+@onready var planet_surface: MeshInstance3D = $PlanetSurface
+@onready var planet_shape: CollisionShape3D = $PlanetShape
 
 var current_velocity: Vector3
 
 var direction: Vector3
 const RADIUS_SCALE = 1.0
-const GRAVITATIONAL_CONSTANT = 6.67430e-11
+const GRAVITATIONAL_CONSTANT = 6.67430
 
 var overlapping_areas = []
 
 func _ready():
-	var hill_area = create_hill_area(pow(planet_radius,2) / sqrt(planet_radius))
+	update_hill_area_radius(pow(planet_radius,2) / sqrt(planet_radius))
 	hill_area.connect("area_entered", Callable(self, "_on_area_entered"))
 	hill_area.connect("area_exited", Callable(self, "_on_area_exited"))
 
@@ -36,67 +44,48 @@ func _integrate_forces(state):
 	update_position(state.step)
 
 func set_planet_radius(r):
-	planet_radius = r
-	var coll_shape = $CollisionShape3D
-	var mesh_instance = $MeshInstance3D
-
 	var sphere_mesh = SphereMesh.new()
 	sphere_mesh.radius = r
 	sphere_mesh.height = 2 * r
 
-	mesh_instance.mesh = sphere_mesh
-
 	var sphere_shape = SphereShape3D.new()
 	sphere_shape.radius = r
-	coll_shape.shape = sphere_shape
+	
+	planet_surface.mesh = sphere_mesh
+	planet_shape.shape = sphere_shape
 
-func get_planet_radius():
-	var shape = $CollisionShape3D.shape
-	if shape is SphereShape3D:
-		return shape.radius
-	else:
-		print("Error in get_planet_radius: Collision shape is not a SphereShape3D")
-		return -1
 
-func get_planet_hill_radius():
-	var shape = $Area3D/CollisionShape3D.shape
-	if shape is SphereShape3D:
-		return shape.radius
-	else:
-		print("Error in get_planet_hill_radius: Collision shape is not a SphereShape3D")
-		return -1
-
-func create_hill_area(radius):
-	var hill_area = Area3D.new()
-	hill_area.name = "HillArea"
-	add_child(hill_area)
-
-	var hill_collision_shape = CollisionShape3D.new()
-	hill_area.add_child(hill_collision_shape)
+func update_hill_area_radius(radius):
 
 	var sphere_shape = SphereShape3D.new()
 	sphere_shape.radius = radius
-	hill_collision_shape.shape = sphere_shape
-
-	var hill_mesh_instance = MeshInstance3D.new()
-	hill_mesh_instance.name = "HillMeshInstance"
-	hill_area.add_child(hill_mesh_instance)
 
 	var hill_sphere_mesh = SphereMesh.new()
 	hill_sphere_mesh.radius = radius
 	hill_sphere_mesh.height = 2 * radius
-	hill_mesh_instance.mesh = hill_sphere_mesh
 
 	var hill_material = StandardMaterial3D.new()
 	hill_material.albedo_color = Color(1.0, 0.0, 0.0, 0.5) 
 	hill_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	hill_mesh_instance.material_override = hill_material
-
-	hill_area.gravity = 0
-	hill_area.gravity_point = true
 	
-	return hill_area
+	hill_area_shape.shape = sphere_shape
+	hill_area_surface.mesh = hill_sphere_mesh
+	hill_area_surface.material_override = hill_material
 
+	hill_area.gravity = 5
+	hill_area.gravity_point = true
+
+func update_radius(radius):
+	# Aktualizacja CollisionShape3D
+	if planet_shape.shape is SphereShape3D:
+		planet_shape.shape.radius = radius
+
+		# Aktualizacja MeshInstance3D
+		if planet_surface.mesh is SphereMesh:
+			var sphere_mesh = planet_surface.mesh
+			sphere_mesh.radius = radius
+			planet_surface.mesh = sphere_mesh
+			
 func update_velocity(planets, delta):
 	for planet in planets:
 		if planet != self:
@@ -108,6 +97,7 @@ func update_velocity(planets, delta):
 			var force = direction.normalized() * force_magnitude
 			var acceleration = force / mass
 			current_velocity += acceleration * delta
+
 	
 	for area in overlapping_areas:
 		if area is Area3D and area.gravity != 0:
@@ -123,7 +113,7 @@ func UpdateVelocity(delta_T):
 		#if planet != self:
 		var sqrDst = (planet.global_position - self.global_position).length_squared()
 		var forceDir = (planet.global_position - self.global_position).normalized()
-		var force = forceDir * $"..".G_CONSTANT
+		var force = forceDir * GRAVITATIONAL_CONSTANT
 		var acceleration = force / self.mass
 		self.linear_velocity += acceleration * delta_T
 			#print(self.linear_velocity)
@@ -132,12 +122,11 @@ func UpdatePosition(delta_T):
 	self.position += self.linear_velocity * delta_T
 
 func create_material(color):
-	var mesh_instance = $MeshInstance3D
 	var material = StandardMaterial3D.new()
 	material.albedo_color = color
 	material.metallic = 0.1
 	material.roughness = 0.8
-	mesh_instance.material_override = material
+	planet_surface.material_override = material
 
 func explosion_on_collision(body):
 	if body is RigidBody3D:
