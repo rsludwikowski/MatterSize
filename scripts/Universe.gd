@@ -4,7 +4,7 @@ const G_constant = 6.67
 
 var planets = []
 
-
+var dbLineNode
 
 	
 
@@ -37,10 +37,16 @@ func find_node_with_script(node, script_path):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var DBLines_path = "res://scripts/DebugLines.gd"
+	
+	dbLineNode = find_node_with_script(get_tree().root,DBLines_path)
+	
+	
+	
 	var target_script_path = "res://scripts/S_Planet.gd"
 	#var target_node = find_node_with_script(get_tree().root, target_script_path)
 	planets = get_all_planets(get_tree().root,target_script_path)
-	print(planets)
+	#print(planets)
 	 # Replace with function body.
 
 func get_G():
@@ -50,9 +56,14 @@ func get_G():
 func _process(delta):
 	pass
 
+
+
+
 func _physics_process(delta):
 	for planet in planets:
 		planet.UpdateVelocity(delta)
+	
+	
 	
 	for planet in planets:
 		planet.UpdatePosition(delta)

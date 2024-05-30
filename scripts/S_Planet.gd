@@ -9,7 +9,7 @@ var move_force = 10.0
 var direction = Vector3.ZERO
 var new_transform = self.global_transform
 var initialVelocity = Vector3.ZERO
-
+var velocity: Vector3
 
 
 func UpdateVelocity(delta_T):
@@ -19,21 +19,24 @@ func UpdateVelocity(delta_T):
 		var forceDir = (planet.global_position - self.global_position).normalized()
 		var force = forceDir * Universe.G_constant
 		var acceleration = force / self.mass
-		self.linear_velocity += acceleration * delta_T
+		velocity += acceleration * delta_T
 		#print(self.linear_velocity)
 		
 		
 
 func UpdatePosition(delta_T):
-	self.position += self.linear_velocity * delta_T
+	move_and_collide(velocity*delta_T)
+	#self.position += velocity * delta_T
 
+
+func getVelMeta():
+	var vel:Vector3 = get_meta("initialVelocity")
+	return vel
 
 func _ready():
 	# Inicjalizacja skryptu
-	self.set_meta("initialVelocity",initialVelocity)
-	#print(self.get_meta("metadata/initialVelocity"))
-	if initialVelocity != Vector3.ZERO:
-		self.linear_velocity = initialVelocity
+	velocity = self.linear_velocity
+	self.linear_velocity = Vector3.ZERO
 	pass
 
 #

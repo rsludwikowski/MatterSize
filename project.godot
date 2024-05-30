@@ -14,3 +14,7 @@ config/name="Planeta"
 run/main_scene="res://scenes/Space3D.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[physics]
+
+3d/default_gravity_vector=Vector3(0, 0, 0)

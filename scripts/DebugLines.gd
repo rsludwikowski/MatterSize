@@ -1,22 +1,22 @@
 @tool
 extends Node3D
 
-var fixed_deltaT = 0.016667
+var fixed_deltaT = 0.01666666666667
 
 var Universe = load("res://scripts/Universe.gd")
 var target_script_path = "res://scripts/S_Planet.gd"
 
 var steps = 10
 var visualize
-
+var gameStarted:bool = true
 
 
 
 
 class Planet:
 	var mass : float
-	var Vels : PackedVector3Array
-	var Pos  : PackedVector3Array
+	var Vels : Array 
+	var Pos  : Array
 	
 	func _init(curr_mass,curr_vel,curr_Pos):
 		mass = curr_mass
@@ -29,12 +29,21 @@ class Planet:
 
 
 
+	
 
 	#var target_node = find_node_with_script(get_tree().root, target_script_path)
 
 
 func _process(delta: float) -> void:
 	
+	if(Engine.is_editor_hint()):
+		print("editor")
+		gameStarted = false
+	else:
+		gameStarted = true
+		print("game")
+	
+	print(gameStarted)
 	visualize = self.get_meta("visualize")
 	
 	if visualize:
@@ -62,10 +71,31 @@ func _process(delta: float) -> void:
 	
 
 
-func rewrite_array(planets_t:Array,planets:Array):
+
+
+
+#func _notification(what):
+	#if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		#gameStarted = false
+	
+
+func rewrite_array(planets_t,planets:Array):
+	print(planets_t)
 	for p in planets_t:
 		
-		planets.append(Planet.new(p.mass,p.linear_velocity,p.global_position))
+		
+		var planet_vel :Vector3
+		
+		planet_vel = p.linear_velocity
+		if gameStarted:
+			planet_vel = p.velocity
+		
+		print("planet VEls: " ,planet_vel, "\t",gameStarted)
+		planets.append(Planet.new(p.mass,planet_vel,p.global_position))
+		
+	for pl in planets:
+		pl.Print()
+	
 		
 
 
@@ -96,7 +126,7 @@ func find_node_with_script(node, script_path):
 	return null
 
 func UpdatePosition_Lines(curr_planet,delta_T,i):
-	curr_planet.Pos.append(curr_planet.Pos[i] + curr_planet.Vels[i]*delta_T) 
+	curr_planet.Pos.append(curr_planet.Pos[i] + curr_planet.Vels[i+1]*delta_T) 
 
 
 func UpdateVelocity_Lines(curr_planet,planets,delta_T,i):
