@@ -27,6 +27,7 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.686192, 0.516483), 0.0, 0.0, 0
 point_count = 3
 
 [node name="Planet" type="RigidBody3D" groups=["Planets"]]
+gravity_scale = 0.0
 lock_rotation = true
 max_contacts_reported = 25
 contact_monitor = true
@@ -51,7 +52,7 @@ mesh = SubResource("SphereMesh_w683j")
 [node name="Explosion" type="CPUParticles3D" parent="."]
 emitting = false
 amount = 60
-lifetime = 2.03
+lifetime = 0.29
 one_shot = true
 explosiveness = 1.0
 randomness = 0.5

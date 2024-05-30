@@ -20,9 +20,9 @@ func _ready():
 	set_planet_radius(planet_radius)
 	create_material(color)
 
-	var planet_mass = ($Area3D.gravity * planet_radius * planet_radius) / GRAVITATIONAL_CONSTANT
-	mass = planet_mass
-	print(planet_mass)
+	#var planet_mass = ($Area3D.gravity * planet_radius * planet_radius) / GRAVITATIONAL_CONSTANT
+	#mass = planet_mass
+	#print(planet_mass)
 
 	current_velocity = initial_velocity
 
@@ -116,6 +116,20 @@ func update_velocity(planets, delta):
 
 func update_position(delta):
 	self.global_transform.origin += current_velocity * delta
+	
+func UpdateVelocity(delta_T):
+	var planets = get_tree().get_nodes_in_group("Planets")
+	for planet in planets:
+		#if planet != self:
+		var sqrDst = (planet.global_position - self.global_position).length_squared()
+		var forceDir = (planet.global_position - self.global_position).normalized()
+		var force = forceDir * $"..".G_CONSTANT
+		var acceleration = force / self.mass
+		self.linear_velocity += acceleration * delta_T
+			#print(self.linear_velocity)
+
+func UpdatePosition(delta_T):
+	self.position += self.linear_velocity * delta_T
 
 func create_material(color):
 	var mesh_instance = $MeshInstance3D
@@ -149,35 +163,35 @@ func _on_body_entered(body):
 	#print("Body ", body.name, " is colliding")
 	print("BOOM!")
 	explosion_on_collision(body)
-	if body is RigidBody3D:
-		# Obliczenie nowych prędkości po zderzeniu
-		var m1 = mass
-		var m2 = body.mass
-		var v1_initial = current_velocity
-		var v2_initial = body.linear_velocity
-
-		# Wektor normalny zderzenia
-		var collision_normal = (body.global_transform.origin - global_transform.origin).normalized()
-
-		# Składowe prędkości wzdłuż normalnej zderzenia
-		var v1_normal = collision_normal.dot(v1_initial)
-		var v2_normal = collision_normal.dot(v2_initial)
-
-		# Składowe prędkości po zderzeniu
-		var v1_normal_after = ((m1 - m2) * v1_normal + 2 * m2 * v2_normal) / (m1 + m2)
-		var v2_normal_after = ((m2 - m1) * v2_normal + 2 * m1 * v1_normal) / (m1 + m2)
-
-		# Nowe prędkości wzdłuż normalnej zderzenia
-		var v1_final = v1_initial + collision_normal * (v1_normal_after - v1_normal)
-		var v2_final = v2_initial + collision_normal * (v2_normal_after - v2_normal)
-
-		# Aktualizacja prędkości planet
-		current_velocity = v1_final
-		linear_velocity = v1_final
-		body.linear_velocity = v2_final
-	else:
-		current_velocity = Vector3(0,0,0)
-		initial_velocity = Vector3(0,0,0)
+	#if body is RigidBody3D:
+		## Obliczenie nowych prędkości po zderzeniu
+		#var m1 = mass
+		#var m2 = body.mass
+		#var v1_initial = current_velocity
+		#var v2_initial = body.linear_velocity
+#
+		## Wektor normalny zderzenia
+		#var collision_normal = (body.global_transform.origin - global_transform.origin).normalized()
+#
+		## Składowe prędkości wzdłuż normalnej zderzenia
+		#var v1_normal = collision_normal.dot(v1_initial)
+		#var v2_normal = collision_normal.dot(v2_initial)
+#
+		## Składowe prędkości po zderzeniu
+		#var v1_normal_after = ((m1 - m2) * v1_normal + 2 * m2 * v2_normal) / (m1 + m2)
+		#var v2_normal_after = ((m2 - m1) * v2_normal + 2 * m1 * v1_normal) / (m1 + m2)
+#
+		## Nowe prędkości wzdłuż normalnej zderzenia
+		#var v1_final = v1_initial + collision_normal * (v1_normal_after - v1_normal)
+		#var v2_final = v2_initial + collision_normal * (v2_normal_after - v2_normal)
+#
+		## Aktualizacja prędkości planet
+		#current_velocity = v1_final
+		#linear_velocity = v1_final
+		#body.linear_velocity = v2_final
+	#else:
+		#current_velocity = Vector3(0,0,0)
+		#initial_velocity = Vector3(0,0,0)
 
 func _on_body_exited(body):
 	pass#print("Body ", body.name, " is exiting")
