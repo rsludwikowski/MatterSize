@@ -3,13 +3,13 @@ extends Node3D
 
 var fixed_deltaT = 0.01666666666667
 
-var Universe = load("res://scripts/universe.gd")
+var universe = load("res://scripts/universe.gd")
 var target_script_path = "res://scripts/s_planet.gd"
 
 var steps = 10
 var visualize
 var gameStarted:bool = true
-
+@onready var global_planets = get_tree().get_nodes_in_group("Planets")
 
 
 
@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 	
 	if visualize:
 		var planets: Array = []
-		var planets_t = get_all_planets(get_tree().root,target_script_path)
+		var planets_t = global_planets
 		
 		rewrite_array(planets_t,planets)
 		#for pl in planets:
@@ -93,8 +93,8 @@ func rewrite_array(planets_t,planets:Array):
 		print("planet VEls: " ,planet_vel, "\t",gameStarted)
 		planets.append(Planet.new(p.mass,planet_vel,p.global_position))
 		
-	for pl in planets:
-		pl.Print()
+	#for pl in planets:
+		#pl.Print()
 	
 		
 
@@ -135,7 +135,7 @@ func CalculateAcceleration(point:Vector3,ignoreBody,planets,i):
 		if body != ignoreBody:
 			var sqrDst = (body.Pos[i] - point).length_squared()
 			var forceDir = (body.Pos[i] - point).normalized()
-			var force = forceDir * Universe.G_constant
+			var force = forceDir * universe.G_CONSTANT
 			acceleration += force*body.mass/sqrDst
 	return acceleration
 
@@ -145,7 +145,7 @@ func UpdateVelocity_Lines(curr_planet,planets,delta_T,i):
 		if planet != curr_planet:
 			var sqrDst = (planet.Pos[i] - curr_planet.Pos[i]).length_squared()
 			var forceDir = (planet.Pos[i] - curr_planet.Pos[i]).normalized()
-			var force = forceDir * Universe.G_constant
+			var force = forceDir * universe.G_CONSTANT
 			var acceleration = force / curr_planet.mass
 			curr_planet.Vels.append(curr_planet.Vels[i] + acceleration * delta_T)
 			#print(self.linear_velocity)

@@ -1,30 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4cv3bticiion"]
+[gd_scene load_steps=5 format=3 uid="uid://b4cv3bticiion"]
 
 [ext_resource type="Script" path="res://scripts/universe.gd" id="1_0yfca"]
 [ext_resource type="PackedScene" uid="uid://chlidsef3m21r" path="res://scenes/S_Planet.tscn" id="2_d8x5x"]
+[ext_resource type="Script" path="res://scripts/DebugLines.gd" id="2_uflvv"]
 [ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="3_x1axv"]
 
 [node name="Universe" type="Node3D"]
 script = ExtResource("1_0yfca")
 
+[node name="DebugLines" type="Node3D" parent="."]
+script = ExtResource("2_uflvv")
+metadata/visualize = true
+metadata/steps = 447
+
 [node name="SPlanet1" parent="." instance=ExtResource("2_d8x5x")]
-mass = 200.0
+mass = 1000.0
+
+[node name="Camera3D" type="Camera3D" parent="SPlanet1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15.63, 0)
 
 [node name="SPlanet2" parent="." instance=ExtResource("2_d8x5x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.30615)
-mass = 0.71
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.12976, 0, -10.6823)
+mass = 5.5
 linear_velocity = Vector3(10, 0, 0)
 initialVelocity = Vector3(300, 0, 0)
 
 [node name="Planet" parent="." instance=ExtResource("3_x1axv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0927429, 0, 13.8484)
-mass = 0.91
-initial_velocity = Vector3(-16.745, 0, -0.395)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.286, 0, 7.59182)
+mass = 12.17
 planet_radius = 4.0
 color = Color(0.929412, 0.313726, 0, 1)
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15.63, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.475854, 0.879524, 0, -0.879524, 0.475854, 0, 15.7957, 0)

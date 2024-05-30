@@ -16,7 +16,7 @@ var current_velocity: Vector3
 
 var direction: Vector3
 const RADIUS_SCALE = 1.0
-const GRAVITATIONAL_CONSTANT = 6.67430
+var universe = load("res://scripts/universe.gd")
 
 var overlapping_areas = []
 var velocity: Vector3
@@ -94,7 +94,7 @@ func update_velocity(planets, delta):
 			var distance = direction.length()
 			if distance == 0:
 				continue
-			var force_magnitude = (GRAVITATIONAL_CONSTANT * mass * planet.mass) / (distance * distance)
+			var force_magnitude = (universe.G_CONSTANT * mass * planet.mass) / (distance * distance)
 			var force = direction.normalized() * force_magnitude
 			var acceleration = force / mass
 			current_velocity += acceleration * delta
@@ -114,7 +114,7 @@ func UpdateVelocity(delta_T:float):
 		if planet != self:
 			var sqrDst = (planet.global_position - self.global_position).length_squared()
 			var forceDir = (planet.global_position - self.global_position).normalized()
-			var force = forceDir * GRAVITATIONAL_CONSTANT
+			var force = forceDir * universe.G_CONSTANT
 			var acceleration = force / self.mass
 			velocity += acceleration * delta_T
 
