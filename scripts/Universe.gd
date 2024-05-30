@@ -36,6 +36,6 @@ func CalculateAcceleration(point:Vector3,ignoreBody):
 		if body != ignoreBody:
 			var sqrDst = (body.global_position - point).length_squared()
 			var forceDir = (body.global_position - point).normalized()
-			var force = forceDir * G_constant
+			var force = forceDir * G_CONSTANT
 			acceleration += force*body.mass/sqrDst
 	return acceleration

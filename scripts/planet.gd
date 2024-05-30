@@ -19,6 +19,7 @@ const RADIUS_SCALE = 1.0
 const GRAVITATIONAL_CONSTANT = 6.67430
 
 var overlapping_areas = []
+var velocity: Vector3
 
 func _ready():
 	update_hill_area_radius(pow(planet_radius,2) / sqrt(planet_radius))
@@ -107,19 +108,22 @@ func update_velocity(planets, delta):
 func update_position(delta):
 	self.global_transform.origin += current_velocity * delta
 	
-func UpdateVelocity(delta_T):
+func UpdateVelocity(delta_T:float):
 	var planets = get_tree().get_nodes_in_group("Planets")
 	for planet in planets:
-		#if planet != self:
-		var sqrDst = (planet.global_position - self.global_position).length_squared()
-		var forceDir = (planet.global_position - self.global_position).normalized()
-		var force = forceDir * GRAVITATIONAL_CONSTANT
-		var acceleration = force / self.mass
-		self.linear_velocity += acceleration * delta_T
-			#print(self.linear_velocity)
+		if planet != self:
+			var sqrDst = (planet.global_position - self.global_position).length_squared()
+			var forceDir = (planet.global_position - self.global_position).normalized()
+			var force = forceDir * GRAVITATIONAL_CONSTANT
+			var acceleration = force / self.mass
+			velocity += acceleration * delta_T
+
+func UpdateVelocity_2(acceleration:Vector3, time_step:float):
+	velocity+= acceleration*time_step
+	print(velocity)
 
 func UpdatePosition(delta_T):
-	self.position += self.linear_velocity * delta_T
+	move_and_collide(velocity*delta_T)
 
 func create_material(color):
 	var material = StandardMaterial3D.new()
@@ -147,7 +151,7 @@ func explosion_on_collision(body):
 	$Explosion.scale_amount_min = sqrt(planet_radius)
 	$Explosion.scale_amount_max = planet_radius/3
 	$Explosion.emitting = true
-	
+
 func _on_body_entered(body):
 	#print("Body ", body.name, " is colliding")
 	print("BOOM!")

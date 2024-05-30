@@ -12,7 +12,7 @@
 script = ExtResource("1_rpodr")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.999998, 0.00165622, 0.00107487, -0.0010706, -0.00257777, 0.999996, 0.00165898, -0.999995, -0.00257599, -0.0138826, 60.1352, -3.73408)
+transform = Transform3D(0.999998, 0.00165622, 0.00107487, -0.0010706, -0.00257777, 0.999996, 0.00165898, -0.999995, -0.00257599, -0.0138826, 534.135, -3.73408)
 current = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -25,7 +25,7 @@ metadata/steps = 5316
 metadata/visualize = true
 
 [node name="Sun" type="RigidBody3D" parent="."]
-mass = 9.22337e+18
+mass = 270.78
 script = ExtResource("3_ppx84")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Sun"]
@@ -38,7 +38,7 @@ shape = SubResource("SphereShape3D_o3nya")
 
 [node name="Earth" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0552731, 0, 386.943)
-mass = 1000.0
+mass = 38.16
 linear_velocity = Vector3(154.73, 0, 0)
 script = ExtResource("3_ppx84")
 

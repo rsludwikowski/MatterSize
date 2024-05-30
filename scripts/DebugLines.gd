@@ -3,8 +3,8 @@ extends Node3D
 
 var fixed_deltaT = 0.01666666666667
 
-var Universe = load("res://scripts/Universe.gd")
-var target_script_path = "res://scripts/S_Planet.gd"
+var Universe = load("res://scripts/universe.gd")
+var target_script_path = "res://scripts/s_planet.gd"
 
 var steps = 10
 var visualize

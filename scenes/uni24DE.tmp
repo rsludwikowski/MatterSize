@@ -8,16 +8,16 @@
 script = ExtResource("1_0yfca")
 
 [node name="SPlanet1" parent="." instance=ExtResource("2_d8x5x")]
-mass = 200.0
+mass = 1e+08
 
 [node name="SPlanet2" parent="." instance=ExtResource("2_d8x5x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.30615)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 mass = 0.71
 linear_velocity = Vector3(10, 0, 0)
 initialVelocity = Vector3(300, 0, 0)
 
 [node name="Planet" parent="." instance=ExtResource("3_x1axv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0927429, 0, 13.8484)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0927429, 0, 8.5123)
 mass = 0.91
 initial_velocity = Vector3(-16.745, 0, -0.395)
 planet_radius = 4.0

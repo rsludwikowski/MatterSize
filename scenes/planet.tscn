@@ -1,20 +1,29 @@
-[gd_scene load_steps=9 format=3 uid="uid://bswoaf0h0e7fw"]
+[gd_scene load_steps=11 format=3 uid="uid://bswoaf0h0e7fw"]
 
 [ext_resource type="Script" path="res://scripts/planet.gd" id="1_ysgxj"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_2o1ej"]
-radius = 2.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_siau7"]
+radius = nan
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_6rk0y"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8l0oq"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mrotc"]
-emission_enabled = true
-emission = Color(0.800029, 0.692334, 0.509742, 1)
-emission_energy_multiplier = 0.52
+[sub_resource type="SphereMesh" id="SphereMesh_2aehb"]
+radius = nan
+height = nan
 
-[sub_resource type="SphereMesh" id="SphereMesh_w683j"]
-lightmap_size_hint = Vector2i(17, 9)
-material = SubResource("StandardMaterial3D_mrotc")
+[sub_resource type="SphereShape3D" id="SphereShape3D_vw5rc"]
+radius = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5gdrr"]
+albedo_color = Color(0, 0, 0, 1)
+metallic = 0.1
+roughness = 0.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_xe2rh"]
+radius = 0.0
+height = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0o5iw"]
 albedo_color = Color(1, 0.816816, 0.77567, 1)
@@ -37,18 +46,21 @@ gravity_space_override = 1
 gravity_point = true
 gravity_point_center = Vector3(0, 0, 0)
 gravity_direction = Vector3(0, 0, 0)
-gravity = 32.0
+gravity = 5.0
 
 [node name="HillAreaShape" type="CollisionShape3D" parent="HillArea"]
-shape = SubResource("SphereShape3D_2o1ej")
+shape = SubResource("SphereShape3D_siau7")
 
 [node name="HillAreaSurface" type="MeshInstance3D" parent="HillArea"]
+material_override = SubResource("StandardMaterial3D_8l0oq")
+mesh = SubResource("SphereMesh_2aehb")
 
 [node name="PlanetShape" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_6rk0y")
+shape = SubResource("SphereShape3D_vw5rc")
 
 [node name="PlanetSurface" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_w683j")
+material_override = SubResource("StandardMaterial3D_5gdrr")
+mesh = SubResource("SphereMesh_xe2rh")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 emitting = false

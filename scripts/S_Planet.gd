@@ -9,7 +9,6 @@ var universe = load("res://scripts/universe.gd")
 @export var initialVelocity = Vector3.ZERO
 var direction = Vector3.ZERO
 var new_transform = self.global_transform
-var initialVelocity = Vector3.ZERO
 var velocity: Vector3
 
 func planetInfo():
@@ -31,24 +30,18 @@ func UpdateVelocity(delta_T:float):
 func UpdateVelocity_2(acceleration:Vector3, time_step:float):
 	velocity+= acceleration*time_step
 	print(velocity)
-	pass
 
 func UpdatePosition(delta_T):
 	move_and_collide(velocity*delta_T)
-	#self.position += velocity * delta_T
-
 
 func getVelMeta():
 	var vel:Vector3 = get_meta("initialVelocity")
 	return vel
 
-
-
 func _ready():
 	# Inicjalizacja skryptu
 	velocity = self.linear_velocity
 	self.linear_velocity = Vector3.ZERO
-	pass
 
 func get_all_rb3d(node):
 	var objects = []
