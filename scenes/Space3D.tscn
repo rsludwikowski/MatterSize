@@ -1,14 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://coaik0mexcwsc"]
+[gd_scene load_steps=6 format=3 uid="uid://coaik0mexcwsc"]
 
-[ext_resource type="PackedScene" uid="uid://chlidsef3m21r" path="res://scenes/S_Planet.tscn" id="1_cf7fq"]
 [ext_resource type="Script" path="res://scripts/Universe.gd" id="1_rpodr"]
-[ext_resource type="Script" path="res://scripts/DebugLines.gd" id="3_m4cjj"]
+[ext_resource type="Script" path="res://scripts/S_Planet.gd" id="3_ppx84"]
+[ext_resource type="Script" path="res://scripts/DebugLines.gd" id="3_qdr0r"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_bbv3u"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_o3nya"]
 
 [node name="Space3d" type="Node3D"]
 script = ExtResource("1_rpodr")
-
-[node name="SPlanet" parent="." instance=ExtResource("1_cf7fq")]
-mass = 9.22337e+18
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.999998, 0.00165622, 0.00107487, -0.0010706, -0.00257777, 0.999996, 0.00165898, -0.999995, -0.00257599, -0.0138826, 60.1352, -3.73408)
@@ -17,17 +18,49 @@ current = true
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.475854, 0.879524, 0, -0.879524, 0.475854, 0, 15.7957, 0)
 
-[node name="SPlanet2" parent="." instance=ExtResource("1_cf7fq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.48084)
-linear_velocity = Vector3(0.71, 0, 0)
-
 [node name="DebugLines" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.24602, 2.96241, 2.24841)
-script = ExtResource("3_m4cjj")
-metadata/steps = 4001
+script = ExtResource("3_qdr0r")
+metadata/steps = 5316
 metadata/visualize = true
 
-[node name="SPlanet3" parent="." instance=ExtResource("1_cf7fq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.584)
-mass = 3.91
-linear_velocity = Vector3(0.485, 0, 0)
+[node name="Sun" type="RigidBody3D" parent="."]
+mass = 9.22337e+18
+script = ExtResource("3_ppx84")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sun"]
+transform = Transform3D(19.465, 0, 0, 0, 19.465, 0, 0, 0, 19.465, 0, 0, 0)
+mesh = SubResource("SphereMesh_bbv3u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sun"]
+transform = Transform3D(19.465, 0, 0, 0, 19.465, 0, 0, 0, 19.465, 0, 0, 0)
+shape = SubResource("SphereShape3D_o3nya")
+
+[node name="Earth" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0552731, 0, 386.943)
+mass = 1000.0
+linear_velocity = Vector3(154.73, 0, 0)
+script = ExtResource("3_ppx84")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Earth"]
+transform = Transform3D(5.205, 0, 0, 0, 5.205, 0, 0, 0, 5.205, 0, 0, 0)
+mesh = SubResource("SphereMesh_bbv3u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Earth"]
+transform = Transform3D(5.205, 0, 0, 0, 5.205, 0, 0, 0, 5.205, 0, 0, 0)
+shape = SubResource("SphereShape3D_o3nya")
+
+[node name="Earth2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.110546, 0, 395.805)
+mass = 1000.0
+linear_velocity = Vector3(154.73, 0, 0)
+script = ExtResource("3_ppx84")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Earth2"]
+transform = Transform3D(1.15, 0, 0, 0, 1.15, 0, 0, 0, 1.15, 0.219429, 0.215385, -0.07724)
+mesh = SubResource("SphereMesh_bbv3u")
+skeleton = NodePath("../../Earth2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Earth2"]
+transform = Transform3D(1.15, 0, 0, 0, 1.15, 0, 0, 0, 1.15, 0.219429, 0.215385, -0.07724)
+shape = SubResource("SphereShape3D_o3nya")

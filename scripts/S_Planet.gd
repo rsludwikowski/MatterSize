@@ -11,8 +11,11 @@ var new_transform = self.global_transform
 var initialVelocity = Vector3.ZERO
 var velocity: Vector3
 
+func planetInfo():
+	print("Vel: ",velocity,"\tPos: ",self.position,"\tMass: ",self.mass)
 
-func UpdateVelocity(delta_T):
+
+func UpdateVelocity(delta_T:float):
 	var otherPlanets = get_all_rb3d(get_tree().root)
 	for planet in otherPlanets:
 		var sqrDst = (planet.global_position - self.global_position).length_squared()
@@ -23,6 +26,11 @@ func UpdateVelocity(delta_T):
 		#print(self.linear_velocity)
 		
 		
+		
+func UpdateVelocity_2(acceleration:Vector3, time_step:float):
+	velocity+= acceleration*time_step
+	print(velocity)
+	pass
 
 func UpdatePosition(delta_T):
 	move_and_collide(velocity*delta_T)
@@ -33,76 +41,13 @@ func getVelMeta():
 	var vel:Vector3 = get_meta("initialVelocity")
 	return vel
 
+
+
 func _ready():
 	# Inicjalizacja skryptu
 	velocity = self.linear_velocity
 	self.linear_velocity = Vector3.ZERO
 	pass
-
-#
-#func _physics_process(delta):
-	#
-	##direction = Vector3.ZERO
-	##
-	##
-	##if Input.is_action_pressed("ui_right"):
-		##direction.x += 1
-	##if Input.is_action_pressed("ui_left"):
-		##direction.x -= 1
-	##if Input.is_action_pressed("ui_down"):
-		##direction.z += 1
-	##if Input.is_action_pressed("ui_up"):
-		##direction.z -= 1
-	##
-	###if direction != Vector3.ZERO:
-		###var new_transform = self.global_transform
-		###new_transform.origin += direction*delta
-		###self.global_transform = new_transform
-	####move_rigidbody_to(new_transform)
-	##move_and_collide(direction*delta)
-	#
-	#UpdateVelocity(get_all_rb3d(get_tree().root),delta)
-	#UpdatePosition(delta)
-#
-	#
-	#
-	#
-	##
-##func integrate_forces(state):
-	##direction = Vector3.ZERO
-	##
-	##if Input.is_action_just_pressed("ui_select"):
-		##print("SPacja kliknięta")
-		##print(get_all_rb3d(get_tree().root))
-	##
-	##
-	##if Input.is_action_pressed("ui_right"):
-		##direction.x += 1
-	##if Input.is_action_pressed("ui_left"):
-		##direction.x -= 1
-	##if Input.is_action_pressed("ui_down"):
-		##direction.z += 1
-	##if Input.is_action_pressed("ui_up"):
-		##direction.z -= 1
-##
-##
-##
-	##var new_transform = self.global_transform
-	##new_transform.origin += direction
-	##self.global_transform = new_transform
-	### Normalizowanie kierunku, aby ruch nie był szybszy po przekątnej
-	##if direction.length() > 0:
-		##direction = direction.normalized() * move_force
-##
-	### Dodanie siły do obiektu
-	####apply_central_force(direction)
-##
-	### Ograniczenie prędkości obiektu
-	##if linear_velocity.length() > speed:
-		##linear_velocity = linear_velocity.normalized() * speed
-#
-
-
 
 func get_all_rb3d(node):
 	var objects = []

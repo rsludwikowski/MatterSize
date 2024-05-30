@@ -1,6 +1,6 @@
 extends Node3D
 
-const G_constant = 6.67
+const G_constant = 0.000000000000667
 
 var planets = []
 
@@ -46,7 +46,9 @@ func _ready():
 	var target_script_path = "res://scripts/S_Planet.gd"
 	#var target_node = find_node_with_script(get_tree().root, target_script_path)
 	planets = get_all_planets(get_tree().root,target_script_path)
-	#print(planets)
+	print(planets)
+	for pl in planets:
+		pl.planetInfo()
 	 # Replace with function body.
 
 func get_G():
@@ -61,10 +63,24 @@ func _process(delta):
 
 func _physics_process(delta):
 	for planet in planets:
-		planet.UpdateVelocity(delta)
+		var acceleration = CalculateAcceleration(planet.global_position,planet)
+		planet.UpdateVelocity_2(acceleration,delta)
+		#planet.UpdateVelocity(delta)
 	
 	
 	
 	for planet in planets:
 		planet.UpdatePosition(delta)
 	
+
+
+
+func CalculateAcceleration(point:Vector3,ignoreBody):
+	var acceleration = Vector3.ZERO
+	for body in planets:
+		if body != ignoreBody:
+			var sqrDst = (body.global_position - point).length_squared()
+			var forceDir = (body.global_position - point).normalized()
+			var force = forceDir * G_constant
+			acceleration += force*body.mass/sqrDst
+	return acceleration
