@@ -1,4 +1,4 @@
-extends Node
+extends Node3D
 
 const G_CONSTANT = 6.67
 
@@ -18,8 +18,24 @@ func _process(delta):
 
 func _physics_process(delta):
 	for planet in planets:
-		planet.UpdateVelocity(delta)
+		var acceleration = CalculateAcceleration(planet.global_position,planet)
+		planet.UpdateVelocity_2(acceleration,delta)
+		#planet.UpdateVelocity(delta)
+	
+	
 	
 	for planet in planets:
 		planet.UpdatePosition(delta)
 	
+
+
+
+func CalculateAcceleration(point:Vector3,ignoreBody):
+	var acceleration = Vector3.ZERO
+	for body in planets:
+		if body != ignoreBody:
+			var sqrDst = (body.global_position - point).length_squared()
+			var forceDir = (body.global_position - point).normalized()
+			var force = forceDir * G_constant
+			acceleration += force*body.mass/sqrDst
+	return acceleration

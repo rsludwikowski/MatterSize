@@ -129,8 +129,18 @@ func UpdatePosition_Lines(curr_planet,delta_T,i):
 	curr_planet.Pos.append(curr_planet.Pos[i] + curr_planet.Vels[i+1]*delta_T) 
 
 
+func CalculateAcceleration(point:Vector3,ignoreBody,planets,i):
+	var acceleration = Vector3.ZERO
+	for body in planets:
+		if body != ignoreBody:
+			var sqrDst = (body.Pos[i] - point).length_squared()
+			var forceDir = (body.Pos[i] - point).normalized()
+			var force = forceDir * Universe.G_constant
+			acceleration += force*body.mass/sqrDst
+	return acceleration
+
+
 func UpdateVelocity_Lines(curr_planet,planets,delta_T,i):
-	
 	for planet in planets:
 		if planet != curr_planet:
 			var sqrDst = (planet.Pos[i] - curr_planet.Pos[i]).length_squared()
@@ -147,7 +157,8 @@ func DrawOrbits(planets:Array):
 	for i in steps:
 		#main loop of drawing orbits
 		for planet in planets:
-			UpdateVelocity_Lines(planet,planets,fixed_deltaT,i)
+			var acceleration = CalculateAcceleration(planet.Pos[i],planet,planets,i)
+			planet.Vels.append(planet.Vels[i] + acceleration*fixed_deltaT)
 		
 		for planet in planets:
 			UpdatePosition_Lines(planet,fixed_deltaT,i)

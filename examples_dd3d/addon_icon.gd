@@ -9,3 +9,4 @@ func _process(delta: float) -> void:
 	DebugDraw3D.draw_sphere_xf($sphere.global_transform, Color.RED)
 	DebugDraw3D.draw_cylinder($cylinder.global_transform, Color.BLUE)
 	DebugDraw3D.draw_line_hit_offset($"line/1".global_transform.origin, $"line/2".global_transform.origin, true, 0.3, 0.1)
+	DebugDraw3D.draw_line(Vector3(0,0,0),Vector3(5,5,1),Color(1,1,0))

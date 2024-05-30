@@ -31,7 +31,7 @@ transform = Transform3D(0.155034, 0.231693, -0.112783, -0.160003, 0.264761, -0.0
 [node name="line" type="Node3D" parent="."]
 
 [node name="1" type="Node3D" parent="line"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568458, -0.615948, 0.653444)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.676657, 0.0537331, -1.12556)
 
 [node name="2" type="Node3D" parent="line"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0051975, 0.373791, 0.0974927)
