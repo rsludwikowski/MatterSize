@@ -4,7 +4,6 @@ extends RigidBody3D
 @export var initial_velocity: Vector3 = Vector3(0,0,0)
 @export var planet_radius: float = 3.0
 var old_planet_radius = planet_radius
-#@export var color: Color = Color(1.0, 1.0, 1.0, 1.0) 
 @export  var gravity_strength: float = 9.8
 @export var planet_material: Material
 @export var planet_hill_material: Material
@@ -147,7 +146,7 @@ func update_planet_material():
 		material = planet_material
 	else:
 		material = Material.new()
-	#material.albedo_color = color
+	#material.albedo_color = Color.random
 	material.metallic = 0.1
 	material.roughness = 0.8
 	planet_surface.material_override = material

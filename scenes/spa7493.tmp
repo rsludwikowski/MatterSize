@@ -7,7 +7,6 @@
 
 [sub_resource type="Environment" id="Environment_1tnpd"]
 background_mode = 1
-background_color = Color(0.180005, 0.180005, 0.180005, 1)
 background_energy_multiplier = 1.78
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_scecj"]
@@ -36,11 +35,16 @@ script = ExtResource("2_xiyqc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
 light_energy = 9.059
 
+[node name="camera_space" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6956, 14.395, 138.801)
+current = true
+fov = 48.9
+
 [node name="Player" parent="." instance=ExtResource("3_taom1")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 21.8684, 34.9304, 0)
 linear_velocity = Vector3(0, -3.405, 0)
-move_speed = 60.0
-jump_initial_impulse = 10
+move_speed = 30.0
+jump_initial_impulse = 5
 rotation_speed = 1.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -55,14 +59,9 @@ mass = 42.98
 lock_rotation = false
 freeze = true
 max_contacts_reported = 10
-planet_radius = 12.795
+planet_radius = 7.98
 gravity_strength = 11.19
 planet_material = SubResource("StandardMaterial3D_piuna")
-
-[node name="camera_space" type="Camera3D" parent="Planets/Planet3"]
-transform = Transform3D(1, -1.74846e-07, -7.64274e-15, 0, -4.37114e-08, 1, -1.74846e-07, -1, -4.37114e-08, -2.29613, 32.7537, -0.278454)
-current = true
-fov = 48.9
 
 [node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.1311, 1.51178, 0)

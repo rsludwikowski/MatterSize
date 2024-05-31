@@ -30,11 +30,6 @@ func _integrate_forces(state: PhysicsDirectBodyState3D):
 			apply_central_impulse(-local_gravity * jump_initial_impulse)
 		elif is_on_floor(state):
 			apply_movement(state)
-	# Debugging: Check if the character is moving
-	if state.linear_velocity.length() > 0:
-		print("Character is moving. Velocity: ", state.linear_velocity)
-	else:
-		print("Character is not moving.")
 
 
 
@@ -43,14 +38,20 @@ func get_model_oriented_input() -> Vector3:
 		Input.get_action_strength("move_left")
 		- Input.get_action_strength("move_right")
 	)
-	var input_forward := Input.get_action_strength("move_forward")
-	var raw_input = Vector2(input_left_right, input_forward)
+	var input_forward_backward := (
+		Input.get_action_strength("move_backward")
+		- Input.get_action_strength("move_forward")
+	)
+	#var input_forward = Input.get_action_strength("move_forward")
+	var raw_input = Vector2(input_left_right, input_forward_backward)
+	print("raw_input: ", raw_input)
 	var input: Vector3 = Vector3.ZERO
 	
-	input.x = raw_input.x * sqrt(1.0 - raw_input.y * raw_input.y / 2.0)
-	input.z = raw_input.y * sqrt(1.0 - raw_input.x * raw_input.x / 2.0)
+	input.x = raw_input.x #* sqrt(1.0 - raw_input.y * raw_input.y / 2.0)
+	input.z = raw_input.y #* sqrt(1.0 - raw_input.x * raw_input.x / 2.0)
 	
 	input = transform.basis * input
+	print("Input direction: ", input)
 	return input
 
 func orient_character_to_direction(direction: Vector3, delta: float) -> void:
