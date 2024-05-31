@@ -50,6 +50,9 @@ func get_model_oriented_input() -> Vector3:
 	input.x = raw_input.x #* sqrt(1.0 - raw_input.y * raw_input.y / 2.0)
 	input.z = raw_input.y #* sqrt(1.0 - raw_input.x * raw_input.x / 2.0)
 	
+	if raw_input.length() > 1.0:
+		input = input.normalized()
+		
 	input = transform.basis * input
 	print("Input direction: ", input)
 	return input
