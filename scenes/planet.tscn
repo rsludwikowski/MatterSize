@@ -1,29 +1,97 @@
-[gd_scene load_steps=11 format=3 uid="uid://bswoaf0h0e7fw"]
+[gd_scene load_steps=13 format=3 uid="uid://bswoaf0h0e7fw"]
 
 [ext_resource type="Script" path="res://scripts/planet.gd" id="1_ysgxj"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_siau7"]
-radius = nan
+[sub_resource type="GDScript" id="GDScript_rv655"]
+script/source = "extends Area3D
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8l0oq"]
+@export var gravity_strength: float = 9.8
+
+@onready var planet = get_parent()
+
+func _ready():
+	connect(\"area_entered\", Callable(self, \"_on_area_entered\"))
+	connect(\"area_exited\", Callable(self, \"_on_area_exited\"))
+
+func _on_body_entered(body):
+	if body is RigidBody3D and body.is_in_group(\"Planets\"):
+		print(\"BOOM!\")
+		planet.explosion_on_collision(body)
+		#if body is RigidBody3D:
+		## Obliczenie nowych prędkości po zderzeniu
+		#var m1 = mass
+		#var m2 = body.mass
+		#var v1_initial = current_velocity
+		#var v2_initial = body.linear_velocity
+#
+		## Wektor normalny zderzenia
+		#var collision_normal = (body.global_transform.origin - global_transform.origin).normalized()
+#
+		## Składowe prędkości wzdłuż normalnej zderzenia
+		#var v1_normal = collision_normal.dot(v1_initial)
+		#var v2_normal = collision_normal.dot(v2_initial)
+#
+		## Składowe prędkości po zderzeniu
+		#var v1_normal_after = ((m1 - m2) * v1_normal + 2 * m2 * v2_normal) / (m1 + m2)
+		#var v2_normal_after = ((m2 - m1) * v2_normal + 2 * m1 * v1_normal) / (m1 + m2)
+#
+		## Nowe prędkości wzdłuż normalnej zderzenia
+		#var v1_final = v1_initial + collision_normal * (v1_normal_after - v1_normal)
+		#var v2_final = v2_initial + collision_normal * (v2_normal_after - v2_normal)
+#
+		## Aktualizacja prędkości planet
+		#current_velocity = v1_final
+		#linear_velocity = v1_final
+		#body.linear_velocity = v2_final
+	#else:
+		#current_velocity = Vector3(0,0,0)
+		#initial_velocity = Vector3(0,0,0)
+	else:
+		body.set(\"in_hill_area\", true)
+		body.set(\"hill_area\", self)
+
+func _on_body_exited(body):
+	if body is RigidBody3D:
+		body.set(\"in_hill_area\", false)
+		body.set(\"hill_area\", null)
+
+
+func get_planet_gravity_direction() -> Vector3:
+	var planet_position = planet.global_transform.origin
+	return (planet_position - global_transform.origin).normalized()
+
+func calculate_gravity_force() -> Vector3:
+	var gravity_direction = get_planet_gravity_direction()
+	return gravity_direction * gravity_strength
+
+func calculate_gravity_force_at_position(position: Vector3) -> Vector3:
+	var planet_position = planet.global_transform.origin
+	var gravity_direction = (planet_position - position).normalized()
+	return gravity_direction * gravity_strength
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1pfuj"]
+radius = 7.79092
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ad12g"]
 transparency = 1
 albedo_color = Color(1, 0, 0, 0.5)
 
-[sub_resource type="SphereMesh" id="SphereMesh_2aehb"]
-radius = nan
-height = nan
+[sub_resource type="SphereMesh" id="SphereMesh_cb45b"]
+radius = 7.79092
+height = 15.5818
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_vw5rc"]
-radius = 0.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_da768"]
+radius = 3.93
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5gdrr"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ko522"]
 albedo_color = Color(0, 0, 0, 1)
 metallic = 0.1
 roughness = 0.8
 
-[sub_resource type="SphereMesh" id="SphereMesh_xe2rh"]
-radius = 0.0
-height = 0.0
+[sub_resource type="SphereMesh" id="SphereMesh_sapmp"]
+radius = 3.93
+height = 7.86
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0o5iw"]
 albedo_color = Color(1, 0.816816, 0.77567, 1)
@@ -35,32 +103,63 @@ material = SubResource("StandardMaterial3D_0o5iw")
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.686192, 0.516483), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.409789, 0.0, 0, 0]
 point_count = 3
 
+[sub_resource type="GDScript" id="GDScript_5b2fv"]
+script/source = "extends CPUParticles3D
+
+@onready var planet = get_parent()
+
+func explosion_on_collision(body):
+	if body is RigidBody3D:
+		#var direction = (body.global_transform.origin - global_transform.origin).normalized()
+		var relative_velocity = (planet.current_velocity - body.linear_velocity).length()
+
+		# Ustawienie minimalnej i maksymalnej prędkości początkowej cząsteczek
+		initial_velocity_min = planet.current_velocity.length() + relative_velocity / 2
+		initial_velocity_max = relative_velocity / 2
+		# Ustawienie kierunku emisji cząsteczek
+		self.direction = direction
+	else:
+		var relative_velocity = planet.current_velocity.length()
+		initial_velocity_min = planet.current_velocity.length() + relative_velocity / 2
+		initial_velocity_max = relative_velocity / 2
+	# Rozpoczęcie emisji cząsteczek
+	
+	scale_amount_min = sqrt(planet.planet_radius)
+	scale_amount_max = planet.planet_radius/3
+	emitting = true
+"
+
 [node name="Planet" type="RigidBody3D" groups=["Planets"]]
 lock_rotation = true
 max_contacts_reported = 25
 contact_monitor = true
 script = ExtResource("1_ysgxj")
+planet_radius = 3.93
+color = Color(0, 0, 0, 1)
+gravity_strength = 1.825
 
 [node name="HillArea" type="Area3D" parent="."]
 gravity_space_override = 1
 gravity_point = true
+gravity_point_unit_distance = 3.52
 gravity_point_center = Vector3(0, 0, 0)
 gravity_direction = Vector3(0, 0, 0)
-gravity = 5.0
+gravity = 1.825
+script = SubResource("GDScript_rv655")
 
 [node name="HillAreaShape" type="CollisionShape3D" parent="HillArea"]
-shape = SubResource("SphereShape3D_siau7")
+shape = SubResource("SphereShape3D_1pfuj")
 
 [node name="HillAreaSurface" type="MeshInstance3D" parent="HillArea"]
-material_override = SubResource("StandardMaterial3D_8l0oq")
-mesh = SubResource("SphereMesh_2aehb")
+material_override = SubResource("StandardMaterial3D_ad12g")
+mesh = SubResource("SphereMesh_cb45b")
 
 [node name="PlanetShape" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_vw5rc")
+shape = SubResource("SphereShape3D_da768")
 
 [node name="PlanetSurface" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_5gdrr")
-mesh = SubResource("SphereMesh_xe2rh")
+material_override = SubResource("StandardMaterial3D_ko522")
+mesh = SubResource("SphereMesh_sapmp")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 emitting = false
@@ -78,9 +177,12 @@ linear_accel_max = 32.55
 scale_amount_min = 2.0
 scale_amount_max = 6.0
 scale_amount_curve = SubResource("Curve_00h45")
+script = SubResource("GDScript_5b2fv")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="area_entered" from="HillArea" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="HillArea" to="." method="_on_area_3d_area_exited"]
+[connection signal="body_entered" from="HillArea" to="." method="_on_hill_area_body_entered"]
+[connection signal="body_exited" from="HillArea" to="." method="_on_hill_area_body_exited"]

@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://6a6ph8vs7fjf"]
+[gd_scene load_steps=7 format=3 uid="uid://6a6ph8vs7fjf"]
 
 [ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="1_pb5o4"]
 [ext_resource type="Script" path="res://scripts/space.gd" id="1_vm23c"]
+[ext_resource type="PackedScene" uid="uid://duosirkttbn2l" path="res://scenes/player.tscn" id="2_qymr1"]
+[ext_resource type="Script" path="res://scenes/camera_switch.gd" id="4_cvf7x"]
 
 [sub_resource type="Environment" id="Environment_1tnpd"]
 background_mode = 1
@@ -13,12 +15,19 @@ background_energy_multiplier = 1.78
 [node name="Space" type="Node3D"]
 script = ExtResource("1_vm23c")
 
+[node name="Player" parent="." instance=ExtResource("2_qymr1")]
+transform = Transform3D(0.972796, -0.0690948, -0.221121, -0.0673761, -0.99761, 0.0153149, -0.221651, 0, -0.975126, -2.22831, -77.2912, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1tnpd")
+camera_attributes = SubResource("CameraAttributesPractical_scecj")
+
 [node name="Sun" parent="." instance=ExtResource("1_pb5o4")]
 mass = 10000.0
 planet_radius = 30.0
 color = Color(0.964706, 0.309804, 0, 1)
 
-[node name="Camera3D" type="Camera3D" parent="Sun"]
+[node name="camera_space" type="Camera3D" parent="Sun"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 216.572)
 current = true
 fov = 48.9
@@ -26,10 +35,6 @@ fov = 48.9
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Sun"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
 light_energy = 9.059
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_1tnpd")
-camera_attributes = SubResource("CameraAttributesPractical_scecj")
 
 [node name="Planets" type="Node3D" parent="."]
 
@@ -49,7 +54,7 @@ initial_velocity = Vector3(0, 26.085, 0)
 planet_radius = 3.0
 color = Color(0.0705882, 0.729412, 1, 1)
 
-[node name="Camera3D2" type="Camera3D" parent="Planets/Planet2"]
+[node name="camera_planet" type="Camera3D" parent="Planets/Planet2"]
 transform = Transform3D(0.701084, 1.88045e-07, -0.713079, -0.552306, 0.63253, -0.543014, 0.451044, 0.774536, 0.443456, -0.631958, -0.0139904, 47.2)
 fov = 42.6
 
@@ -68,3 +73,6 @@ max_contacts_reported = 10
 initial_velocity = Vector3(-23.93, 0, 0)
 planet_radius = 15.0
 color = Color(0.415686, 0.87451, 0, 1)
+
+[node name="camera_switch" type="Node3D" parent="."]
+script = ExtResource("4_cvf7x")

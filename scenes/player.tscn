@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://duosirkttbn2l"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_qshg3"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0ux1c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwig4"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2f7eh"]
+material = SubResource("StandardMaterial3D_bwig4")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mqhdb"]
+radius = 0.206
+height = 0.717
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_o80q4"]
+radius = 0.165
+height = 0.646
+
+[node name="Player" type="RigidBody3D" groups=["Player"]]
+collision_priority = 3.0
+mass = 6.03
+script = ExtResource("1_qshg3")
+
+[node name="camera_character" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.957052, 0.289917, 0, -0.289917, 0.957052, 0, 3.28985, 3.34543)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_0ux1c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_2f7eh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 0)
+mesh = SubResource("CapsuleMesh_mqhdb")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0, 0)
+mesh = SubResource("CapsuleMesh_mqhdb")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.559699, -0.361369)
+mesh = SubResource("CapsuleMesh_o80q4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
