@@ -1,6 +1,18 @@
-[gd_scene load_steps=13 format=3 uid="uid://bswoaf0h0e7fw"]
+[gd_scene load_steps=14 format=3 uid="uid://bswoaf0h0e7fw"]
 
 [ext_resource type="Script" path="res://scripts/planet.gd" id="1_ysgxj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_63687"]
+friction = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0gu3o"]
+albedo_color = Color(0.913725, 0.87451, 0, 1)
+metallic = 0.1
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fajcp"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 0.5)
 
 [sub_resource type="GDScript" id="GDScript_rv655"]
 script/source = "extends Area3D
@@ -59,28 +71,19 @@ func _on_body_exited(body):
 		body.hill_area = null
 "
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_e045l"]
-radius = 8.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_va2m4"]
+radius = 1.64764
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01irw"]
-transparency = 1
-albedo_color = Color(1, 0, 0, 0.5)
+[sub_resource type="SphereMesh" id="SphereMesh_bq66e"]
+radius = 1.64764
+height = 3.29527
 
-[sub_resource type="SphereMesh" id="SphereMesh_44c8w"]
-radius = 8.0
-height = 16.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_tbyft"]
+radius = 1.395
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_r83na"]
-radius = 4.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_my11n"]
-albedo_color = Color(0, 0, 0, 1)
-metallic = 0.1
-roughness = 0.8
-
-[sub_resource type="SphereMesh" id="SphereMesh_xg8dm"]
-radius = 4.0
-height = 8.0
+[sub_resource type="SphereMesh" id="SphereMesh_fdvrj"]
+radius = 1.395
+height = 2.79
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0o5iw"]
 albedo_color = Color(1, 0.816816, 0.77567, 1)
@@ -116,13 +119,15 @@ func explosion_on_collision(body,global_contact_position):
 "
 
 [node name="Planet" type="RigidBody3D" groups=["Planets"]]
+physics_material_override = SubResource("PhysicsMaterial_63687")
 lock_rotation = true
 max_contacts_reported = 5
 contact_monitor = true
 script = ExtResource("1_ysgxj")
-planet_radius = 4.0
-color = Color(0, 0, 0, 1)
+planet_radius = 1.395
 gravity_strength = 5.0
+planet_material = SubResource("StandardMaterial3D_0gu3o")
+planet_hill_material = SubResource("StandardMaterial3D_fajcp")
 
 [node name="HillArea" type="Area3D" parent="."]
 gravity_space_override = 3
@@ -133,18 +138,18 @@ gravity = 5.0
 script = SubResource("GDScript_rv655")
 
 [node name="HillAreaShape" type="CollisionShape3D" parent="HillArea"]
-shape = SubResource("SphereShape3D_e045l")
+shape = SubResource("SphereShape3D_va2m4")
 
 [node name="HillAreaSurface" type="MeshInstance3D" parent="HillArea"]
-material_override = SubResource("StandardMaterial3D_01irw")
-mesh = SubResource("SphereMesh_44c8w")
+material_override = SubResource("StandardMaterial3D_fajcp")
+mesh = SubResource("SphereMesh_bq66e")
 
 [node name="PlanetShape" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_r83na")
+shape = SubResource("SphereShape3D_tbyft")
 
 [node name="PlanetSurface" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_my11n")
-mesh = SubResource("SphereMesh_xg8dm")
+material_override = SubResource("StandardMaterial3D_0gu3o")
+mesh = SubResource("SphereMesh_fdvrj")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 emitting = false

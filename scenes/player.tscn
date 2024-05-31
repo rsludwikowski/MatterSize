@@ -1,6 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://duosirkttbn2l"]
+[gd_scene load_steps=8 format=3 uid="uid://duosirkttbn2l"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_qshg3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_e5l82"]
+friction = 0.1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0ux1c"]
 
@@ -19,12 +22,12 @@ radius = 0.165
 height = 0.646
 
 [node name="Player" type="RigidBody3D" groups=["Player"]]
-disable_mode = 1
 collision_priority = 3.0
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 mass = 6.03
+physics_material_override = SubResource("PhysicsMaterial_e5l82")
 max_contacts_reported = 10
 contact_monitor = true
 script = ExtResource("1_qshg3")

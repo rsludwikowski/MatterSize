@@ -3,9 +3,11 @@ extends RigidBody3D
 
 @export var initial_velocity: Vector3 = Vector3(0,0,0)
 @export var planet_radius: float = 3.0
-@export var color: Color = Color(1.0, 1.0, 1.0, 1.0) 
+var old_planet_radius = planet_radius
+#@export var color: Color = Color(1.0, 1.0, 1.0, 1.0) 
 @export  var gravity_strength: float = 9.8
-
+@export var planet_material: Material
+@export var planet_hill_material: Material
 @onready var hill_area: Area3D = $HillArea
 @onready var hill_area_shape: CollisionShape3D = $HillArea/HillAreaShape
 @onready var hill_area_surface: MeshInstance3D = $HillArea/HillAreaSurface
@@ -24,9 +26,11 @@ var particle_emitter: Node = null
 var overlapping_areas = []
 
 func _ready():
-	set_planet_radius(planet_radius)
-	update_planet_material(color)
 	
+	update_planet_material()
+	update_hill_area_material()
+	
+	set_planet_radius(planet_radius)
 	update_hill_area_radius(pow(planet_radius,2) / sqrt(planet_radius))
 	particle_emitter = get_node("Explosion")
 	#hill_area.connect("area_entered", Callable(self, "_on_area_entered"))
@@ -40,9 +44,14 @@ func _ready():
 
 func _process(_delta):
 	if Engine.is_editor_hint():
-		set_planet_radius(planet_radius)
-		update_planet_material(color)
-		update_hill_area_radius(pow(planet_radius,2) / sqrt(planet_radius))
+		update_planet_material()
+		update_hill_area_material()
+		if planet_radius != old_planet_radius:
+			set_planet_radius(planet_radius)
+			update_hill_area_radius(pow(planet_radius,2) / sqrt(planet_radius))
+			
+		old_planet_radius = planet_radius
+		
 
 func _integrate_forces(state):
 	var colliding_bodies = get_colliding_bodies()
@@ -76,14 +85,9 @@ func update_hill_area_radius(radius):
 	var hill_sphere_mesh = SphereMesh.new()
 	hill_sphere_mesh.radius = radius
 	hill_sphere_mesh.height = 2 * radius
-
-	var hill_material = StandardMaterial3D.new()
-	hill_material.albedo_color = Color(1.0, 0.0, 0.0, 0.5) 
-	hill_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	
 	hill_area_shape.shape = sphere_shape
 	hill_area_surface.mesh = hill_sphere_mesh
-	hill_area_surface.material_override = hill_material
 	hill_area.gravity = gravity_strength
 
 
@@ -137,12 +141,27 @@ func UpdateVelocity_2(acceleration:Vector3, time_step:float):
 func UpdatePosition(delta_T):
 	move_and_collide(current_velocity*delta_T)
 
-func update_planet_material(color):
-	var material = StandardMaterial3D.new()
-	material.albedo_color = color
+func update_planet_material():
+	var material: Material
+	if planet_material:
+		material = planet_material
+	else:
+		material = Material.new()
+	#material.albedo_color = color
 	material.metallic = 0.1
 	material.roughness = 0.8
 	planet_surface.material_override = material
+
+func update_hill_area_material():
+	var hill_material: Material
+	if planet_hill_material:
+		hill_material = planet_hill_material
+	else:
+		hill_material = Material.new()
+
+	hill_material.albedo_color = Color(0.0, 0.0, 0.0, 0.5) 
+	hill_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	hill_area_surface.material_override = hill_material
 
 func get_gravity_direction(position) -> Vector3:
 	var planet_position = global_transform.origin

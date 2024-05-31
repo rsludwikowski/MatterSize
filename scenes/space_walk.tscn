@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://boo21jkowihng"]
+[gd_scene load_steps=10 format=3 uid="uid://boo21jkowihng"]
 
 [ext_resource type="Script" path="res://scenes/space_walk.gd" id="1_wb8cd"]
 [ext_resource type="Script" path="res://scenes/camera_switch.gd" id="2_xiyqc"]
@@ -10,6 +10,18 @@ background_mode = 1
 background_energy_multiplier = 1.78
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_scecj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_piuna"]
+albedo_color = Color(0.443137, 1, 0, 1)
+metallic = 0.1
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iky0p"]
+albedo_color = Color(1, 0.419608, 0, 1)
+metallic = 0.1
+roughness = 0.8
+normal_scale = 4.76
+rim_enabled = true
 
 [sub_resource type="LabelSettings" id="LabelSettings_5eqfc"]
 
@@ -31,7 +43,7 @@ fov = 48.9
 [node name="Player" parent="." instance=ExtResource("3_taom1")]
 transform = Transform3D(-0.975093, -0.00823797, 0.221643, -0.00803314, 0.999966, 0.00182597, -0.221651, 0, -0.975126, 21.8684, 34.9304, 0)
 linear_velocity = Vector3(0, -3.405, 0)
-move_speed = 1.115
+move_speed = 30.0
 jump_initial_impulse = 5
 rotation_speed = 1.0
 
@@ -44,11 +56,12 @@ camera_attributes = SubResource("CameraAttributesPractical_scecj")
 [node name="Planet3" parent="Planets" instance=ExtResource("4_kxp37")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.9917, 10.9234, 0)
 mass = 42.98
+lock_rotation = false
 freeze = true
 max_contacts_reported = 10
 planet_radius = 7.98
-color = Color(0.894118, 0.137255, 0.85098, 1)
 gravity_strength = 11.19
+planet_material = SubResource("StandardMaterial3D_piuna")
 
 [node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.1311, 1.51178, 0)
@@ -56,8 +69,8 @@ mass = 276.53
 freeze = true
 max_contacts_reported = 10
 planet_radius = 14.805
-color = Color(1, 0.419608, 0, 1)
 gravity_strength = 10.345
+planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = -1
