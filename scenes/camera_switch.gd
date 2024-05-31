@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var camera_scene = $"../Planets/Planet3/camera_space"
+@onready var camera_scene = $"../camera_space"
 @onready var camera_character = $"../Player".get_node("camera_character")
 
 func _ready():
