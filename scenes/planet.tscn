@@ -15,8 +15,7 @@ func _ready():
 
 func _on_body_entered(body):
 	if body is RigidBody3D and body.is_in_group(\"Planets\"):
-		print(\"BOOM!\")
-		planet.explosion_on_collision(body)
+		pass
 		#if body is RigidBody3D:
 		## Obliczenie nowych prędkości po zderzeniu
 		#var m1 = mass
@@ -46,52 +45,42 @@ func _on_body_entered(body):
 	#else:
 		#current_velocity = Vector3(0,0,0)
 		#initial_velocity = Vector3(0,0,0)
-	else:
-		body.set(\"in_hill_area\", true)
-		body.set(\"hill_area\", self)
+	elif body is RigidBody3D and body.is_in_group(\"Player\"):
+		print(\"Player in area.\")
+		body.planet = self
+		body.in_hill_area = true
+		body.hill_area = self
 
 func _on_body_exited(body):
-	if body is RigidBody3D:
-		body.set(\"in_hill_area\", false)
-		body.set(\"hill_area\", null)
-
-
-func get_planet_gravity_direction() -> Vector3:
-	var planet_position = planet.global_transform.origin
-	return (planet_position - global_transform.origin).normalized()
-
-func calculate_gravity_force() -> Vector3:
-	var gravity_direction = get_planet_gravity_direction()
-	return gravity_direction * gravity_strength
-
-func calculate_gravity_force_at_position(position: Vector3) -> Vector3:
-	var planet_position = planet.global_transform.origin
-	var gravity_direction = (planet_position - position).normalized()
-	return gravity_direction * gravity_strength
+	if body is RigidBody3D and body.is_in_group(\"Player\"):
+		print(\"Player out of area.\")
+		body.planet = null
+		body.in_hill_area = false
+		body.hill_area = null
 "
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_1pfuj"]
-radius = 7.79092
+[sub_resource type="SphereShape3D" id="SphereShape3D_5cw2d"]
+radius = 8.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ad12g"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uyug8"]
 transparency = 1
 albedo_color = Color(1, 0, 0, 0.5)
 
-[sub_resource type="SphereMesh" id="SphereMesh_cb45b"]
-radius = 7.79092
-height = 15.5818
+[sub_resource type="SphereMesh" id="SphereMesh_vgnn2"]
+radius = 8.0
+height = 16.0
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_da768"]
-radius = 3.93
+[sub_resource type="SphereShape3D" id="SphereShape3D_r16df"]
+radius = 4.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ko522"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ryqo"]
 albedo_color = Color(0, 0, 0, 1)
 metallic = 0.1
 roughness = 0.8
 
-[sub_resource type="SphereMesh" id="SphereMesh_sapmp"]
-radius = 3.93
-height = 7.86
+[sub_resource type="SphereMesh" id="SphereMesh_o52g1"]
+radius = 4.0
+height = 8.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0o5iw"]
 albedo_color = Color(1, 0.816816, 0.77567, 1)
@@ -108,63 +97,59 @@ script/source = "extends CPUParticles3D
 
 @onready var planet = get_parent()
 
-func explosion_on_collision(body):
+func explosion_on_collision(body,global_contact_position):
 	if body is RigidBody3D:
-		#var direction = (body.global_transform.origin - global_transform.origin).normalized()
-		var relative_velocity = (planet.current_velocity - body.linear_velocity).length()
+		var direction = (body.global_transform.origin - global_contact_position).normalized()
+		var relative_velocity = (planet.global_transform.origin - body.global_transform.origin).length()
 
 		# Ustawienie minimalnej i maksymalnej prędkości początkowej cząsteczek
-		initial_velocity_min = planet.current_velocity.length() + relative_velocity / 2
-		initial_velocity_max = relative_velocity / 2
+		self.initial_velocity_min = relative_velocity / 2
+		self.initial_velocity_max = relative_velocity
 		# Ustawienie kierunku emisji cząsteczek
 		self.direction = direction
-	else:
-		var relative_velocity = planet.current_velocity.length()
-		initial_velocity_min = planet.current_velocity.length() + relative_velocity / 2
-		initial_velocity_max = relative_velocity / 2
-	# Rozpoczęcie emisji cząsteczek
-	
-	scale_amount_min = sqrt(planet.planet_radius)
-	scale_amount_max = planet.planet_radius/3
-	emitting = true
+
+		self.scale_amount_min = sqrt(planet.scale.x)
+		self.scale_amount_max = planet.scale.x / 3
+		#self.global_transform.origin = global_contact_position  # Ustawienie pozycji emitera na punkt kolizji
+		self.emitting = true
+		#restart()
 "
 
 [node name="Planet" type="RigidBody3D" groups=["Planets"]]
 lock_rotation = true
-max_contacts_reported = 25
+max_contacts_reported = 5
 contact_monitor = true
 script = ExtResource("1_ysgxj")
-planet_radius = 3.93
+planet_radius = 4.0
 color = Color(0, 0, 0, 1)
-gravity_strength = 1.825
+gravity_strength = 5.0
 
 [node name="HillArea" type="Area3D" parent="."]
-gravity_space_override = 1
+gravity_space_override = 3
 gravity_point = true
-gravity_point_unit_distance = 3.52
 gravity_point_center = Vector3(0, 0, 0)
 gravity_direction = Vector3(0, 0, 0)
-gravity = 1.825
+gravity = 5.0
 script = SubResource("GDScript_rv655")
 
 [node name="HillAreaShape" type="CollisionShape3D" parent="HillArea"]
-shape = SubResource("SphereShape3D_1pfuj")
+shape = SubResource("SphereShape3D_5cw2d")
 
 [node name="HillAreaSurface" type="MeshInstance3D" parent="HillArea"]
-material_override = SubResource("StandardMaterial3D_ad12g")
-mesh = SubResource("SphereMesh_cb45b")
+material_override = SubResource("StandardMaterial3D_uyug8")
+mesh = SubResource("SphereMesh_vgnn2")
 
 [node name="PlanetShape" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_da768")
+shape = SubResource("SphereShape3D_r16df")
 
 [node name="PlanetSurface" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_ko522")
-mesh = SubResource("SphereMesh_sapmp")
+material_override = SubResource("StandardMaterial3D_2ryqo")
+mesh = SubResource("SphereMesh_o52g1")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 emitting = false
 amount = 60
-lifetime = 0.29
+lifetime = 1.71
 one_shot = true
 explosiveness = 1.0
 randomness = 0.5
@@ -184,5 +169,5 @@ script = SubResource("GDScript_5b2fv")
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="area_entered" from="HillArea" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="HillArea" to="." method="_on_area_3d_area_exited"]
-[connection signal="body_entered" from="HillArea" to="." method="_on_hill_area_body_entered"]
-[connection signal="body_exited" from="HillArea" to="." method="_on_hill_area_body_exited"]
+[connection signal="body_entered" from="HillArea" to="HillArea" method="_on_body_entered"]
+[connection signal="body_exited" from="HillArea" to="HillArea" method="_on_body_exited"]

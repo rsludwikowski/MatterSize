@@ -19,8 +19,14 @@ radius = 0.165
 height = 0.646
 
 [node name="Player" type="RigidBody3D" groups=["Player"]]
+disable_mode = 1
 collision_priority = 3.0
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
 mass = 6.03
+max_contacts_reported = 10
+contact_monitor = true
 script = ExtResource("1_qshg3")
 
 [node name="camera_character" type="Camera3D" parent="."]

@@ -20,6 +20,7 @@ const RADIUS_SCALE = 1.0
 var universe = load("res://scripts/universe.gd")
 var space = load("res://scripts/space.gd")
 
+var particle_emitter: Node = null
 var overlapping_areas = []
 
 func _ready():
@@ -27,8 +28,9 @@ func _ready():
 	update_planet_material(color)
 	
 	update_hill_area_radius(pow(planet_radius,2) / sqrt(planet_radius))
-	hill_area.connect("area_entered", Callable(self, "_on_area_entered"))
-	hill_area.connect("area_exited", Callable(self, "_on_area_exited"))
+	particle_emitter = get_node("Explosion")
+	#hill_area.connect("area_entered", Callable(self, "_on_area_entered"))
+	#hill_area.connect("area_exited", Callable(self, "_on_area_exited"))
 
 	#var planet_mass = ($Area3D.gravity * planet_radius * planet_radius) / GRAVITATIONAL_CONSTANT
 	#mass = planet_mass
@@ -43,8 +45,16 @@ func _process(_delta):
 		update_hill_area_radius(pow(planet_radius,2) / sqrt(planet_radius))
 
 func _integrate_forces(state):
-	UpdateVelocity(state.step)
-	UpdatePosition(state.step)
+	var colliding_bodies = get_colliding_bodies()
+	for body in colliding_bodies:
+		if body is RigidBody3D:
+			print("BOOM!")
+			var contact_position = state.get_contact_local_position(0)  # Use the first contact point
+			var global_contact_position = state.transform.origin + contact_position
+			print("Local position: ", contact_position, " Global position: ", global_contact_position)
+			particle_emitter.call("explosion_on_collision", body, global_contact_position)
+	update_velocity(state.step)
+	update_position(state.step)
 
 func set_planet_radius(r):
 	var sphere_mesh = SphereMesh.new()
@@ -88,7 +98,8 @@ func update_radius(radius):
 			sphere_mesh.radius = radius
 			planet_surface.mesh = sphere_mesh
 			
-func update_velocity(planets, delta):
+func update_velocity(delta):
+	var planets = get_tree().get_nodes_in_group("Planets")
 	for planet in planets:
 		if planet != self:
 			direction = planet.global_transform.origin - self.global_transform.origin
@@ -137,14 +148,3 @@ func get_gravity_direction(position) -> Vector3:
 	var planet_position = global_transform.origin
 	return (planet_position - position).normalized()
 	
-
-func _on_hill_area_body_entered(body):
-	if body.is_in_group("Player"):
-		print("Player in area.")
-		body.planet = self
-
-
-func _on_hill_area_body_exited(body):
-	if body.is_in_group("Player"):
-		print("Player out of area.")
-		body.planet = null

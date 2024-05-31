@@ -1,38 +1,71 @@
 extends RigidBody3D
 
 @export var move_speed: float = 5.0
+@export var jump_initial_impulse = 5.0
+@export var rotation_speed = 8.0
+
 var planet: RigidBody3D = null
 var in_hill_area: bool = false
 var hill_area: Area3D = null
-var gravity_force
-var global_direction
-
-var velocity: Vector3 = Vector3.ZERO
+var move_direction = Vector3.ZERO
+var local_gravity = Vector3.ZERO
+var last_strong_direction = Vector3.FORWARD
 
 func _ready():
 	pass
 
 func _integrate_forces(state: PhysicsDirectBodyState3D):
-	var input_dir: Vector3 = Vector3.ZERO
-
-	if Input.is_action_pressed("move_forward"):
-		input_dir.z -= 1
-	if Input.is_action_pressed("move_backward"):
-		input_dir.z += 1
-	if Input.is_action_pressed("move_left"):
-		input_dir.x -= 1
-	if Input.is_action_pressed("move_right"):
-		input_dir.x += 1
-
-	input_dir = input_dir.normalized()
-
 	if in_hill_area and hill_area != null:
-		gravity_force = hill_area.calculate_gravity_force_at_position(global_transform.origin)
-		apply_central_force(gravity_force)
+		
+		local_gravity = state.total_gravity.normalized()
+		
+		move_direction = get_model_oriented_input()
+		if move_direction.length() > 0.2:
+			last_strong_direction = move_direction.normalized()
+		
+		orient_character_to_direction(last_strong_direction,state.step)
+		
+		if is_jumping(state):
+			apply_central_impulse(-local_gravity * jump_initial_impulse)
+		if is_on_floor(state):
+			add_constant_force(move_direction * move_speed)
+			
 
-	global_direction = (global_transform.basis * input_dir).normalized()
-	velocity = global_direction * move_speed
-	state.linear_velocity = velocity
+
+
+func get_model_oriented_input() -> Vector3:
+	var input_left_right := (
+		Input.get_action_strength("move_left")
+		- Input.get_action_strength("move_right")
+	)
+	var input_forward := Input.get_action_strength("move_forward")
+	var raw_input = Vector2(input_left_right,input_forward)
+	var input: Vector3 = Vector3.ZERO
 	
-func set_planet(planet):
-	self.planet = planet
+	input.x = raw_input.x * sqrt(1.0 - raw_input.y * raw_input.y / 2.0)
+	input.z = raw_input.y * sqrt(1.0 - raw_input.x * raw_input.x / 2.0)
+	
+	input = transform.basis * input
+	return input
+
+func orient_character_to_direction(direction: Vector3, delta: float) -> void:
+	var left_axis = -local_gravity.cross(direction)
+	var rotation_basis = Basis(left_axis,-local_gravity,direction).orthonormalized()
+	var current_rotation = transform.basis.get_rotation_quaternion()
+	var target_rotation = rotation_basis.get_rotation_quaternion()
+	var new_rotation = current_rotation.slerp(target_rotation, delta * rotation_speed)
+	transform.basis = Basis(new_rotation)
+	
+	
+func is_jumping(state: PhysicsDirectBodyState3D):
+	return Input.is_action_just_pressed("jump") and is_on_floor(state)
+
+func is_on_floor(state: PhysicsDirectBodyState3D):
+	for i in range(state.get_contact_count()):
+		var contact_normal = state.get_contact_local_normal(i)
+		if contact_normal.dot(-local_gravity) > 0.5:
+			return true
+	return false
+
+func is_falling(state: PhysicsDirectBodyState3D):
+	return not is_on_floor(state) and state.linear_velocity.dot(local_gravity) > 0
