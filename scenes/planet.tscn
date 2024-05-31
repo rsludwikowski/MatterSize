@@ -59,26 +59,26 @@ func _on_body_exited(body):
 		body.hill_area = null
 "
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_5cw2d"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_e045l"]
 radius = 8.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uyug8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01irw"]
 transparency = 1
 albedo_color = Color(1, 0, 0, 0.5)
 
-[sub_resource type="SphereMesh" id="SphereMesh_vgnn2"]
+[sub_resource type="SphereMesh" id="SphereMesh_44c8w"]
 radius = 8.0
 height = 16.0
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_r16df"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_r83na"]
 radius = 4.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ryqo"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_my11n"]
 albedo_color = Color(0, 0, 0, 1)
 metallic = 0.1
 roughness = 0.8
 
-[sub_resource type="SphereMesh" id="SphereMesh_o52g1"]
+[sub_resource type="SphereMesh" id="SphereMesh_xg8dm"]
 radius = 4.0
 height = 8.0
 
@@ -133,18 +133,18 @@ gravity = 5.0
 script = SubResource("GDScript_rv655")
 
 [node name="HillAreaShape" type="CollisionShape3D" parent="HillArea"]
-shape = SubResource("SphereShape3D_5cw2d")
+shape = SubResource("SphereShape3D_e045l")
 
 [node name="HillAreaSurface" type="MeshInstance3D" parent="HillArea"]
-material_override = SubResource("StandardMaterial3D_uyug8")
-mesh = SubResource("SphereMesh_vgnn2")
+material_override = SubResource("StandardMaterial3D_01irw")
+mesh = SubResource("SphereMesh_44c8w")
 
 [node name="PlanetShape" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_r16df")
+shape = SubResource("SphereShape3D_r83na")
 
 [node name="PlanetSurface" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_2ryqo")
-mesh = SubResource("SphereMesh_o52g1")
+material_override = SubResource("StandardMaterial3D_my11n")
+mesh = SubResource("SphereMesh_xg8dm")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 emitting = false

@@ -1,7 +1,7 @@
 extends RigidBody3D
 
 @export var move_speed: float = 5.0
-@export var jump_initial_impulse = 5.0
+@export var jump_initial_impulse = 40
 @export var rotation_speed = 8.0
 
 var planet: RigidBody3D = null
@@ -17,18 +17,18 @@ func _ready():
 func _integrate_forces(state: PhysicsDirectBodyState3D):
 	if in_hill_area and hill_area != null:
 		
-		local_gravity = state.total_gravity.normalized()
-		
+		local_gravity = (hill_area.global_transform.origin - global_transform.origin).normalized() * hill_area.gravity_strength
+		state.apply_central_force(local_gravity)
 		move_direction = get_model_oriented_input()
 		if move_direction.length() > 0.2:
 			last_strong_direction = move_direction.normalized()
-		
+		print(last_strong_direction)
 		orient_character_to_direction(last_strong_direction,state.step)
 		
 		if is_jumping(state):
 			apply_central_impulse(-local_gravity * jump_initial_impulse)
 		if is_on_floor(state):
-			add_constant_force(move_direction * move_speed)
+			state.apply_central_force(move_direction * move_speed)
 			
 
 
@@ -39,7 +39,7 @@ func get_model_oriented_input() -> Vector3:
 		- Input.get_action_strength("move_right")
 	)
 	var input_forward := Input.get_action_strength("move_forward")
-	var raw_input = Vector2(input_left_right,input_forward)
+	var raw_input = Vector2(input_left_right, input_forward)
 	var input: Vector3 = Vector3.ZERO
 	
 	input.x = raw_input.x * sqrt(1.0 - raw_input.y * raw_input.y / 2.0)
