@@ -8,7 +8,7 @@ extends RigidBody3D
 var planet: RigidBody3D = null
 var in_hill_area: bool = false
 var hill_area: Area3D = null
-
+var on_floor = false
 var move_direction
 var input_dir = Vector3.ZERO
 var local_gravity = Vector3.ZERO
@@ -18,35 +18,36 @@ func _ready():
 	pass
 
 func _integrate_forces(state: PhysicsDirectBodyState3D):
+	pass
 	
-	
-	if in_hill_area and hill_area != null:
-		planet = hill_area.get_parent()
-		#print(planet)
-		#apply_gravity(state)
-		
-		
-		
-		local_gravity = (hill_area.global_transform.origin - global_transform.origin).normalized() * hill_area.gravity_strength
-		state.apply_central_force(local_gravity * mass)
-		
-		
-		
-		
-		
-		
-		
-		#move_direction = get_input_direction()
-		#if abs(move_direction) > 0.1:
-			#last_strong_direction += move_direction * move_speed * state.step
+	#if in_hill_area and hill_area != null:
+		#planet = hill_area.get_parent()
+		##print(planet)
+		##apply_gravity(state)
 		#
-		#orient_character_to_direction(last_strong_direction,state.step)
 		#
-		##move_character(state)
-		#if is_jumping(state):
-			#apply_central_impulse(-local_gravity * jump_initial_impulse)
-		#elif is_on_floor(state):
-			#apply_movement(state)
+		#
+		#local_gravity = (hill_area.global_transform.origin - global_transform.origin).normalized() * hill_area.gravity_strength
+		#state.apply_central_force(local_gravity * mass)
+		#
+		#
+		#
+		#
+		#
+		#
+		#
+		##move_direction = get_input_direction()
+		##if abs(move_direction) > 0.1:
+			##last_strong_direction += move_direction * move_speed * state.step
+		##
+		##orient_character_to_direction(last_strong_direction,state.step)
+		##
+		###move_character(state)
+		#jump()
+		##if is_jumping(state):
+			##apply_central_impulse(-local_gravity * jump_initial_impulse)
+		##elif is_on_floor(state):
+			##apply_movement(state)
 
 
 func _process(delta):
@@ -55,8 +56,16 @@ func _process(delta):
 		
 
 func _physics_process(delta):
+	print(on_floor)
+	if in_hill_area and hill_area != null:
+		planet = hill_area.get_parent()
+		jump()
+		
+		
+		local_gravity = (hill_area.global_transform.origin - global_transform.origin).normalized() * hill_area.gravity_strength
+		apply_central_force(local_gravity * mass)
 	var rotate_toward_v:Vector3
-	self.rotate_z((-local_gravity.normalized()).signed_angle_to(self.basis.y.normalized(),Vector3(0,0,-1)))
+	self.rotate_z( delta * 100 * (-local_gravity.normalized()).signed_angle_to(self.basis.y.normalized(),Vector3(0,0,-1)))
 	
 	#print((-local_gravity.normalized()).signed_angle_to(self.basis.y.normalized(),Vector3(0,0,-1)))
 	#self.rotate(self.global_transform.basis.y,self.global_transform.basis.y.angle_to(-local_gravity.normalized())) 
@@ -83,7 +92,7 @@ func _physics_process(delta):
 		#print(planet_p)
 		relative_vel = self.linear_velocity
 		relative_vel = self.linear_velocity - planet.getVelocity()
-		print(relative_vel.length())
+		#print(relative_vel.length())
 	
 		
 	if relative_vel.length() < max_speed:
@@ -144,6 +153,15 @@ func orient_character_to_direction(angle: float, delta: float) -> void:
 func is_jumping(state: PhysicsDirectBodyState3D):
 	return Input.is_action_just_pressed("jump") and is_on_floor(state)
 
+func jump():
+	if Input.is_action_pressed("jump"):
+		var floor_area: CollisionShape3D = $Area3D/CollisionShape3D
+		var relative_position = self.global_position - planet.global_position
+		if relative_position.length() - planet.planet_radius < floor_area.shape.radius:
+			if on_floor:
+				on_floor = false
+				apply_central_impulse(-local_gravity * jump_initial_impulse)
+			
 func is_on_floor(state: PhysicsDirectBodyState3D):
 	for i in range(state.get_contact_count()):
 		var contact_normal = state.get_contact_local_normal(i)
@@ -165,6 +183,6 @@ func apply_movement(state: PhysicsDirectBodyState3D):
 
 	state.apply_central_force(movement_direction * mass)
 
-func apply_damping(state: PhysicsDirectBodyState3D):
-	# Tłumienie prędkości liniowej przy kontakcie z planetą
-	state.linear_velocity *= damping_factor
+
+func _on_area_3d_body_entered(body):
+	on_floor = true

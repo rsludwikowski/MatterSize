@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://duosirkttbn2l"]
+[gd_scene load_steps=9 format=3 uid="uid://duosirkttbn2l"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_qshg3"]
 
@@ -20,6 +20,8 @@ height = 0.717
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_o80q4"]
 radius = 0.165
 height = 0.646
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_o0co1"]
 
 [node name="Player" type="RigidBody3D" groups=["Player"]]
 axis_lock_angular_x = true
@@ -57,5 +59,12 @@ mesh = SubResource("CapsuleMesh_mqhdb")
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.559699, -0.361369)
 mesh = SubResource("CapsuleMesh_o80q4")
 
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.129498, 0)
+shape = SubResource("SphereShape3D_o0co1")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
