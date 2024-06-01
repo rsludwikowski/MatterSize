@@ -9,10 +9,10 @@ var planet: RigidBody3D = null
 var in_hill_area: bool = false
 var hill_area: Area3D = null
 
-var move_direction = 0
+var move_direction
 var input_dir = Vector3.ZERO
 var local_gravity = Vector3.ZERO
-var last_strong_direction = 0
+var last_strong_direction = 0.0
 
 func _ready():
 	pass
@@ -155,9 +155,16 @@ func is_falling(state: PhysicsDirectBodyState3D):
 	return not is_on_floor(state) and state.linear_velocity.dot(local_gravity) > 0
 
 func apply_movement(state: PhysicsDirectBodyState3D):
-	if abs(move_direction) > 0.1:
-		var tangent_force = Vector3(-sin(last_strong_direction), cos(last_strong_direction), 0) * move_speed
-		state.apply_central_force(tangent_force)
-		print("Applying tangential force: ", tangent_force)
-	else:
-		print("No movement input detected")
+	var direction_to_planet_center = (planet.global_transform.origin - global_transform.origin).normalized()
+	var up_direction = -direction_to_planet_center
+
+	var right_direction = up_direction.cross(Vector3.FORWARD).normalized()
+	var forward_direction = right_direction.cross(up_direction).normalized()
+
+	var movement_direction = right_direction * last_strong_direction * move_speed * state.step
+
+	state.apply_central_force(movement_direction * mass)
+
+func apply_damping(state: PhysicsDirectBodyState3D):
+	# Tłumienie prędkości liniowej przy kontakcie z planetą
+	state.linear_velocity *= damping_factor
