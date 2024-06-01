@@ -32,7 +32,7 @@ contact_monitor = true
 script = ExtResource("1_qshg3")
 
 [node name="camera_character" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.957052, 0.289917, 0, -0.289917, 0.957052, 0, 3.28985, 3.34543)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

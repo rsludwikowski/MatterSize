@@ -29,6 +29,11 @@ rim_enabled = true
 [node name="SpaceWalk" type="Node3D"]
 script = ExtResource("1_wb8cd")
 
+[node name="camera_space" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+current = true
+fov = 48.9
+
 [node name="camera_switch" type="Node3D" parent="."]
 script = ExtResource("2_xiyqc")
 
@@ -37,12 +42,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
 light_energy = 9.059
 
 [node name="Player" parent="." instance=ExtResource("3_taom1")]
-transform = Transform3D(-0.17923, 0.0626973, -0.981807, 0.0117553, 0.998032, 0.0615874, 0.983737, -0.000503123, -0.179614, 55.6714, 26.8414, 0)
-mass = 1.76
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 35.268, 4.355, 0)
 linear_velocity = Vector3(0, -3.405, 0)
-move_speed = 22.645
+move_speed = 60.0
 jump_initial_impulse = 25
-rotation_speed = 10.0
+rotation_speed = 1.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1tnpd")
@@ -56,16 +60,9 @@ mass = 42.98
 lock_rotation = false
 freeze = true
 max_contacts_reported = 10
-planet_radius = 8.48
+planet_radius = 12.795
 gravity_strength = 11.19
 planet_material = SubResource("StandardMaterial3D_piuna")
-
-[node name="camera_space" type="Camera3D" parent="Planets/Planet3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.503, 7.902, 100)
-projection = 1
-current = true
-fov = 48.9
-size = 41.776
 
 [node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.906, 1.512, 0)
@@ -78,33 +75,24 @@ planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = -1
-anchor_right = 1.001
-anchor_bottom = 1.0
-offset_left = 748.0
-offset_top = 526.0
-offset_right = -0.1521
-offset_bottom = -11.0
+anchor_left = 0.845
+anchor_top = 0.812
+anchor_right = 1.0
+anchor_bottom = 0.921
+offset_left = 0.559937
+offset_top = -0.176025
+offset_right = 1.0
+offset_bottom = 1.19196
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="Label1" type="Label" parent="Panel"]
+[node name="Label" type="Label" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 6.0
-offset_right = -10.0
-offset_bottom = -43.0
-label_settings = SubResource("LabelSettings_5eqfc")
-
-[node name="Label2" type="Label" parent="Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 9.0
-offset_top = 43.0
-offset_right = -11.0
-offset_bottom = -6.0
+anchor_right = 0.963
+anchor_bottom = 0.366
+offset_left = 7.0
+offset_top = 3.0
+offset_right = -3.48601
+offset_bottom = 0.013998
 label_settings = SubResource("LabelSettings_5eqfc")
