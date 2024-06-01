@@ -8,10 +8,10 @@ var planet: RigidBody3D = null
 var in_hill_area: bool = false
 var hill_area: Area3D = null
 
-var move_direction = 0
+var move_direction
 var input_dir = Vector3.ZERO
 var local_gravity = Vector3.ZERO
-var last_strong_direction = 0
+var last_strong_direction = 0.0
 
 func _ready():
 	pass
@@ -19,7 +19,6 @@ func _ready():
 func _integrate_forces(state: PhysicsDirectBodyState3D):
 	if in_hill_area and hill_area != null:
 		planet = hill_area.get_parent()
-		#apply_gravity(state)
 		local_gravity = (hill_area.global_transform.origin - global_transform.origin).normalized() * hill_area.gravity_strength
 		state.apply_central_force(local_gravity * mass)
 		
@@ -29,7 +28,6 @@ func _integrate_forces(state: PhysicsDirectBodyState3D):
 		
 		orient_character_to_direction(last_strong_direction,state.step)
 		
-		#move_character(state)
 		if is_jumping(state):
 			apply_central_impulse(-local_gravity * jump_initial_impulse)
 		elif is_on_floor(state):
@@ -37,10 +35,15 @@ func _integrate_forces(state: PhysicsDirectBodyState3D):
 
 
 
-func get_input_direction() -> float:
-	var input_left = Input.get_action_strength("move_left")
-	var input_right = Input.get_action_strength("move_right")
-	return input_right - input_left
+func get_input_direction():
+	var input_direction = 0.0
+
+	if Input.is_action_pressed("move_left"):
+		input_direction += 1
+	if Input.is_action_pressed("move_right"):
+		input_direction -= 1
+
+	return input_direction * rotation_speed
 
 func orient_character_to_direction(angle: float, delta: float) -> void:
 	var direction_to_planet_center = (planet.global_transform.origin - global_transform.origin).normalized()
@@ -79,9 +82,12 @@ func is_falling(state: PhysicsDirectBodyState3D):
 	return not is_on_floor(state) and state.linear_velocity.dot(local_gravity) > 0
 
 func apply_movement(state: PhysicsDirectBodyState3D):
-	if abs(move_direction) > 0.1:
-		var tangent_force = Vector3(-sin(last_strong_direction), cos(last_strong_direction), 0) * move_speed
-		state.apply_central_force(tangent_force)
-		print("Applying tangential force: ", tangent_force)
-	else:
-		print("No movement input detected")
+	var direction_to_planet_center = (planet.global_transform.origin - global_transform.origin).normalized()
+	var up_direction = -direction_to_planet_center
+
+	var right_direction = up_direction.cross(Vector3.FORWARD).normalized()
+	var forward_direction = right_direction.cross(up_direction).normalized()
+
+	var movement_direction = right_direction * last_strong_direction * move_speed * state.step
+
+	state.apply_central_force(movement_direction * mass)

@@ -39,10 +39,10 @@ light_energy = 9.059
 [node name="Player" parent="." instance=ExtResource("3_taom1")]
 transform = Transform3D(-0.17923, 0.0626973, -0.981807, 0.0117553, 0.998032, 0.0615874, 0.983737, -0.000503123, -0.179614, 55.6714, 26.8414, 0)
 mass = 1.76
-linear_velocity = Vector3(0, -3.405, 0)
-move_speed = 22.645
-jump_initial_impulse = 25
-rotation_speed = 10.0
+linear_velocity = Vector3(0, -10.3, 0)
+move_speed = 23.87
+jump_initial_impulse = -35
+rotation_speed = 1.88
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1tnpd")
