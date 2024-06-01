@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cidrxvqi1u73o"]
+[gd_scene load_steps=10 format=3 uid="uid://boo21jkowihng"]
 
 [ext_resource type="Script" path="res://scenes/space_walk.gd" id="1_wb8cd"]
 [ext_resource type="Script" path="res://scenes/camera_switch.gd" id="2_xiyqc"]

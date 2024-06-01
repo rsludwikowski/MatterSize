@@ -21,6 +21,7 @@ script/source = "extends Area3D
 @onready var planet = get_parent()
 
 func _ready():
+	self.gravity = gravity_strength
 	connect(\"area_entered\", Callable(self, \"_on_area_entered\"))
 	connect(\"area_exited\", Callable(self, \"_on_area_exited\"))
 
@@ -70,17 +71,17 @@ func _on_body_exited(body):
 		body.hill_area = null
 "
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_1y4bc"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_n3xpd"]
 radius = 1.64764
 
-[sub_resource type="SphereMesh" id="SphereMesh_hrvcc"]
+[sub_resource type="SphereMesh" id="SphereMesh_3k67x"]
 radius = 1.64764
 height = 3.29527
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_o4015"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_htqxp"]
 radius = 1.395
 
-[sub_resource type="SphereMesh" id="SphereMesh_tnohw"]
+[sub_resource type="SphereMesh" id="SphereMesh_k2yif"]
 radius = 1.395
 height = 2.79
 
@@ -137,18 +138,18 @@ gravity = 5.0
 script = SubResource("GDScript_rv655")
 
 [node name="HillAreaShape" type="CollisionShape3D" parent="HillArea"]
-shape = SubResource("SphereShape3D_1y4bc")
+shape = SubResource("SphereShape3D_n3xpd")
 
 [node name="HillAreaSurface" type="MeshInstance3D" parent="HillArea"]
 material_override = SubResource("StandardMaterial3D_fajcp")
-mesh = SubResource("SphereMesh_hrvcc")
+mesh = SubResource("SphereMesh_3k67x")
 
 [node name="PlanetShape" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_o4015")
+shape = SubResource("SphereShape3D_htqxp")
 
 [node name="PlanetSurface" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_0gu3o")
-mesh = SubResource("SphereMesh_tnohw")
+mesh = SubResource("SphereMesh_k2yif")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 emitting = false
