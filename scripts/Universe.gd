@@ -1,6 +1,6 @@
 extends Node3D
 
-const G_constant = 0.000000000000667
+const G_constant = 6.67
 
 var planets = []
 
