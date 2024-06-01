@@ -40,7 +40,7 @@ light_energy = 9.059
 transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 62.5009, 14.8929, 0)
 mass = 1.76
 linear_velocity = Vector3(0, -3.405, 0)
-move_speed = 1.0
+move_speed = 22.645
 jump_initial_impulse = 25
 rotation_speed = 10.0
 

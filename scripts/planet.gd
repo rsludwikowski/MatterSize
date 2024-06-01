@@ -41,6 +41,9 @@ func _ready():
 
 	current_velocity = initial_velocity
 
+func getVelocity():
+	return current_velocity
+
 func _process(_delta):
 	if Engine.is_editor_hint():
 		update_planet_material()
