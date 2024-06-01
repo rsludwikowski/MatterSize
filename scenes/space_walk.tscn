@@ -37,7 +37,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
 light_energy = 9.059
 
 [node name="Player" parent="." instance=ExtResource("3_taom1")]
-transform = Transform3D(-0.17923, 0.0626973, -0.981807, 0.0117553, 0.998032, 0.0615874, 0.983737, -0.000503123, -0.179614, 55.6714, 26.8414, 0)
+transform = Transform3D(-0.999062, 0.0091558, 0.0423214, 0.0117553, 0.998032, 0.0615874, -0.0416746, 0.0620272, -0.997204, 55.6714, 26.8414, 0)
 mass = 1.76
 linear_velocity = Vector3(0, -10.3, 0)
 move_speed = 23.87

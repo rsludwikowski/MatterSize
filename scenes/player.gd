@@ -3,6 +3,7 @@ extends RigidBody3D
 @export var move_speed: float = 5.0
 @export var jump_initial_impulse = 40
 @export var rotation_speed = 8.0
+@export var damping_factor: float = 4 # Współczynnik tłumienia
 
 var planet: RigidBody3D = null
 var in_hill_area: bool = false
@@ -32,6 +33,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D):
 			apply_central_impulse(-local_gravity * jump_initial_impulse)
 		elif is_on_floor(state):
 			apply_movement(state)
+			apply_damping(state)
 
 
 
@@ -91,3 +93,7 @@ func apply_movement(state: PhysicsDirectBodyState3D):
 	var movement_direction = right_direction * last_strong_direction * move_speed * state.step
 
 	state.apply_central_force(movement_direction * mass)
+
+func apply_damping(state: PhysicsDirectBodyState3D):
+	# Tłumienie prędkości liniowej przy kontakcie z planetą
+	state.linear_velocity *= damping_factor
