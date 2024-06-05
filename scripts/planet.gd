@@ -5,8 +5,8 @@ class_name Planet
 
 @export var initial_velocity: Vector3 = Vector3(0,0,0)
 @export var planet_radius: float = 3.0
-
-@export  var gravity_strength: float = 9.8
+@export var hill_area_radius: float = 6.0
+#@export  var gravity_strength: float = 9.8
 @export var planet_material: Material
 @export var planet_hill_material: Material
 @onready var hill_area: Area3D = $HillArea
@@ -17,6 +17,7 @@ class_name Planet
 @onready var planet_shape: CollisionShape3D = $PlanetShape
 
 var old_planet_radius: float = planet_radius
+var old_hill_area_radius: float = hill_area_radius
 var current_velocity: Vector3
 
 var direction: Vector3
@@ -33,7 +34,7 @@ func _ready():
 	update_hill_area_material()
 	
 	set_planet_radius(planet_radius)
-	update_hill_area_radius(pow(planet_radius,2) / sqrt(planet_radius))
+	update_hill_area_radius(hill_area_radius)
 	particle_emitter = get_node("Explosion")
 	current_velocity = initial_velocity
 
@@ -41,23 +42,24 @@ func _process(_delta):
 	if Engine.is_editor_hint():
 		update_planet_material()
 		update_hill_area_material()
-		if planet_radius != old_planet_radius:
+		if planet_radius != old_planet_radius or hill_area_radius != old_hill_area_radius:
 			set_planet_radius(planet_radius)
-			update_hill_area_radius(pow(planet_radius,2) / sqrt(planet_radius))
+			update_hill_area_radius(hill_area_radius)
 			old_planet_radius = planet_radius
+			old_hill_area_radius = hill_area_radius
 		
 
 func _integrate_forces(state):
 	var colliding_bodies = get_colliding_bodies()
 	for body in colliding_bodies:
 		if body is RigidBody3D:
-			print("BOOM!")
+			#print("BOOM!")
 			var contact_position = state.get_contact_local_position(0)  # Use the first contact point
 			var global_contact_position = state.transform.origin + contact_position
-			print("Local position: ", contact_position, " Global position: ", global_contact_position)
+			#print("Local position: ", contact_position, " Global position: ", global_contact_position)
 			particle_emitter.call("explosion_on_collision", body, global_contact_position)
-	update_velocity(state.step)
-	update_position(state.step)
+	#update_velocity(state.step)
+	#update_position(state.step)
 
 func set_planet_radius(r: float) -> void:
 	var sphere_mesh = SphereMesh.new()
@@ -82,7 +84,7 @@ func update_hill_area_radius(radius) -> void:
 	
 	hill_area_shape.shape = sphere_shape
 	hill_area_surface.mesh = hill_sphere_mesh
-	hill_area.gravity = gravity_strength
+	hill_area.gravity = $HillArea.gravity_strength
 
 
 func update_radius(radius) -> void:

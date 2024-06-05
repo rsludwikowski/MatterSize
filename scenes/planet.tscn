@@ -18,16 +18,17 @@ script/source = "extends Area3D
 
 @export var gravity_strength: float = 9.8
 
-@onready var planet = get_parent()
+@onready var planet: Planet = get_parent()
 
 func _ready():
 	self.gravity = gravity_strength
+	self.gravity_point_unit_distance = planet.planet_radius
 	connect(\"area_entered\", Callable(self, \"_on_area_entered\"))
 	connect(\"area_exited\", Callable(self, \"_on_area_exited\"))
 
 func _on_body_entered(body):
 	if body is RigidBody3D and body.is_in_group(\"Planets\"):
-		pass
+		print(\"GRAF GRAF\")
 		#if body is RigidBody3D:
 		## Obliczenie nowych prędkości po zderzeniu
 		#var m1 = mass
@@ -60,15 +61,17 @@ func _on_body_entered(body):
 	elif body is RigidBody3D and body.is_in_group(\"Player\"):
 		print(\"Player in area.\")
 		body.planet = self
-		body.in_hill_area = true
 		body.hill_area = self
-
+		body.in_hill_area = true
+	elif body.is_in_group(\"Player\") and body.in_hill_area == true:
+		print(\"UPss\")
 func _on_body_exited(body):
 	if body is RigidBody3D and body.is_in_group(\"Player\"):
 		print(\"Player out of area.\")
+		body.hill_area = null
 		body.planet = null
 		body.in_hill_area = false
-		body.hill_area = null
+		
 "
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ciulb"]
@@ -125,7 +128,7 @@ max_contacts_reported = 5
 contact_monitor = true
 script = ExtResource("1_ysgxj")
 planet_radius = 1.395
-gravity_strength = 5.0
+hill_area_radius = null
 planet_material = SubResource("StandardMaterial3D_0gu3o")
 planet_hill_material = SubResource("StandardMaterial3D_fajcp")
 
