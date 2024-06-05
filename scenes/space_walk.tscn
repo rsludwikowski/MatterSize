@@ -58,22 +58,20 @@ camera_attributes = SubResource("CameraAttributesPractical_scecj")
 [node name="Planets" type="Node3D" parent="."]
 
 [node name="Planet3" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.432, 1.563, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.4926, 1.563, 0)
 mass = 42.98
 lock_rotation = false
-freeze = true
 max_contacts_reported = 10
-planet_radius = 8.48
+planet_radius = 15.635
 gravity_strength = 11.19
 planet_material = SubResource("StandardMaterial3D_piuna")
 
 [node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.466, 1.402, 0)
 mass = 222.75
-freeze = true
 max_contacts_reported = 10
-planet_radius = 14.805
-gravity_strength = 50.0
+planet_radius = 16.2
+gravity_strength = 37.75
 planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Panel" type="Panel" parent="."]

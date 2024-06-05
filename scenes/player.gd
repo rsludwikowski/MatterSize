@@ -51,7 +51,7 @@ func _physics_process(delta):
 		
 		var planet_p = get_node_and_resource(planet.get_path())
 		relative_vel = self.linear_velocity
-		relative_vel = self.linear_velocity - planet.getVelocity()
+		relative_vel = self.linear_velocity - planet.current_velocity
 	
 		
 		if relative_vel.length() < max_speed:

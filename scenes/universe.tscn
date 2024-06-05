@@ -29,7 +29,6 @@ initialVelocity = Vector3(300, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.286, 0, 7.59182)
 mass = 12.17
 planet_radius = 4.0
-color = Color(0.929412, 0.313726, 0, 1)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.475854, 0.879524, 0, -0.879524, 0.475854, 0, 15.7957, 0)
