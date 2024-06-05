@@ -6,7 +6,7 @@ class_name Planet
 @export var initial_velocity: Vector3 = Vector3(0,0,0)
 @export var planet_radius: float = 3.0
 @export var hill_area_radius: float = 6.0
-#@export  var gravity_strength: float = 9.8
+@export var gravity_strength: float = 9.8
 @export var planet_material: Material
 @export var planet_hill_material: Material
 @onready var hill_area: Area3D = $HillArea
@@ -84,7 +84,7 @@ func update_hill_area_radius(radius) -> void:
 	
 	hill_area_shape.shape = sphere_shape
 	hill_area_surface.mesh = hill_sphere_mesh
-	hill_area.gravity = $HillArea.gravity_strength
+	hill_area.gravity = self.gravity_strength
 
 
 func update_radius(radius) -> void:

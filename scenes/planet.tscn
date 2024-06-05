@@ -16,12 +16,10 @@ albedo_color = Color(0, 0, 0, 0.5)
 [sub_resource type="GDScript" id="GDScript_rv655"]
 script/source = "extends Area3D
 
-@export var gravity_strength: float = 9.8
-
 @onready var planet: Planet = get_parent()
 
 func _ready():
-	self.gravity = gravity_strength
+	self.gravity = planet.gravity_strength
 	self.gravity_point_unit_distance = planet.planet_radius
 	connect(\"area_entered\", Callable(self, \"_on_area_entered\"))
 	connect(\"area_exited\", Callable(self, \"_on_area_exited\"))
@@ -63,15 +61,13 @@ func _on_body_entered(body):
 		body.planet = self
 		body.hill_area = self
 		body.in_hill_area = true
-	elif body.is_in_group(\"Player\") and body.in_hill_area == true:
-		print(\"UPss\")
+
 func _on_body_exited(body):
 	if body is RigidBody3D and body.is_in_group(\"Player\"):
 		print(\"Player out of area.\")
 		body.hill_area = null
 		body.planet = null
 		body.in_hill_area = false
-		
 "
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ciulb"]
@@ -129,6 +125,7 @@ contact_monitor = true
 script = ExtResource("1_ysgxj")
 planet_radius = 1.395
 hill_area_radius = null
+gravity_strength = null
 planet_material = SubResource("StandardMaterial3D_0gu3o")
 planet_hill_material = SubResource("StandardMaterial3D_fajcp")
 
