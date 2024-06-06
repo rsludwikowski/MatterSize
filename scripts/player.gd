@@ -7,7 +7,7 @@ extends RigidBody3D
 
 
 
-var cursor 
+var cursor
 var planet: Planet = null
 var in_hill_area: bool = false
 var hill_area: Area3D = null
@@ -18,7 +18,7 @@ var local_gravity = Vector3.ZERO
 var last_strong_direction = 0.0
 
 func _ready():
-	cursor = self.get_node("../Cursor")
+	cursor = $"../../Cursor"
 	pass
 
 func _process(delta):

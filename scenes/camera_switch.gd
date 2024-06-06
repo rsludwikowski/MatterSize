@@ -1,25 +1,20 @@
-extends Node3D
+extends Node
 
-@onready var camera_scene = $"../camera_space"
-@onready var camera_character = $"../Player".get_node("camera_character")
+@export var camera_frame: PhantomCamera3D
+@export var camera_group: PhantomCamera3D
 
 func _ready():
-	# Upewnij się, że tylko jedna kamera jest aktywna na początku
-	camera_scene.current = true
-	camera_character.current = false
+	pass
 
-func _input(event):
-	if Input.is_action_just_pressed("camera_scene"):
-		set_current_camera(camera_scene)
-		print("camera_scene")
-	elif Input.is_action_just_pressed("camera_player"):
-		set_current_camera(camera_character)
-		print("camera_player")
+func _process(delta):
+	toggle_camera()
 
-func set_current_camera(camera):
-	# Ustaw wszystkie kamery na nieaktywne
-	camera_scene.current = false
-	camera_character.current = false
-
-	# Ustaw wybraną kamerę na aktywną
-	camera.current = true
+func toggle_camera():
+	if Input.is_action_pressed("camera_frame"):
+		camera_frame.priority = 0
+		camera_group.priority = 20
+	elif Input.is_action_pressed("camera_group"):
+		camera_frame.priority = 20
+		camera_group.priority = 0
+	else:
+		pass

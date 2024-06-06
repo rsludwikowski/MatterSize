@@ -1,17 +1,57 @@
-[gd_scene load_steps=11 format=3 uid="uid://boo21jkowihng"]
+[gd_scene load_steps=19 format=3 uid="uid://boo21jkowihng"]
 
 [ext_resource type="Script" path="res://scenes/space_walk.gd" id="1_wb8cd"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_5xchs"]
 [ext_resource type="Script" path="res://scenes/camera_switch.gd" id="2_xiyqc"]
 [ext_resource type="PackedScene" uid="uid://duosirkttbn2l" path="res://scenes/player.tscn" id="3_taom1"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4_5bllr"]
 [ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="4_kxp37"]
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="4_loyi5"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="5_scqkl"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="6_0i2wt"]
 
 [sub_resource type="Environment" id="Environment_1tnpd"]
 background_mode = 1
-background_color = Color(0.180005, 0.180005, 0.180005, 1)
-background_energy_multiplier = 1.78
+background_color = Color(0.0475577, 0.0475577, 0.0475576, 1)
+background_energy_multiplier = 1.16
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_scecj"]
+
+[sub_resource type="Resource" id="Resource_7qnno"]
+script = ExtResource("5_scqkl")
+duration = 0.605
+transition = 3
+ease = 2
+
+[sub_resource type="Resource" id="Resource_6utqf"]
+script = ExtResource("6_0i2wt")
+cull_mask = 1048575
+h_offset = 0.0
+v_offset = 0.0
+projection = 0
+fov = 75.0
+size = 1.0
+frustum_offset = Vector2(0, 0)
+near = 0.05
+far = 4000.0
+
+[sub_resource type="Resource" id="Resource_bsw5e"]
+script = ExtResource("5_scqkl")
+duration = 1.0
+transition = 3
+ease = 2
+
+[sub_resource type="Resource" id="Resource_8vedi"]
+script = ExtResource("6_0i2wt")
+cull_mask = 1048575
+h_offset = 0.0
+v_offset = 0.0
+projection = 0
+fov = 75.0
+size = 1.0
+frustum_offset = Vector2(0, 0)
+near = 0.05
+far = 4000.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_piuna"]
 albedo_color = Color(0.443137, 1, 0, 1)
@@ -30,57 +70,81 @@ rim_enabled = true
 [node name="SpaceWalk" type="Node3D"]
 script = ExtResource("1_wb8cd")
 
-[node name="camera_space" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.155, 2.6, 100)
-h_offset = 6.98
-v_offset = 10.81
-projection = 1
-current = true
-fov = 48.9
-size = 100.0
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1tnpd")
+camera_attributes = SubResource("CameraAttributesPractical_scecj")
 
-[node name="camera_switch" type="Node3D" parent="."]
+[node name="Cameras" type="Node" parent="."]
+
+[node name="camera_switch" type="Node" parent="Cameras" node_paths=PackedStringArray("camera_frame", "camera_group")]
 script = ExtResource("2_xiyqc")
+camera_frame = NodePath("../camera_1_frame")
+camera_group = NodePath("../camera_2_group")
+
+[node name="camera_1_frame" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_target")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.0923, 10.0101, 31)
+script = ExtResource("4_5bllr")
+priority = 1
+follow_mode = 5
+follow_target = NodePath("../../PlayerNode/Player")
+tween_resource = SubResource("Resource_7qnno")
+camera_3d_resource = SubResource("Resource_6utqf")
+follow_offset = Vector3(0, 0, 30)
+follow_damping = true
+dead_zone_width = 0.384
+dead_zone_height = 0.669
+
+[node name="camera_2_group" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_targets")]
+unique_name_in_owner = true
+transform = Transform3D(0.999906, 1.71758e-10, -2.12787e-05, 0, 0.999968, 8.07155e-06, 2.12774e-05, -8.07155e-06, 0.999968, 13.8249, 18.6804, 102.317)
+script = ExtResource("4_5bllr")
+follow_mode = 3
+follow_targets = [NodePath("../../PlayerNode/Player"), NodePath("../../Planets/Planet3"), NodePath("../../Planets/Planet4"), NodePath("../../Planets/Planet")]
+tween_resource = SubResource("Resource_bsw5e")
+camera_3d_resource = SubResource("Resource_8vedi")
+follow_offset = Vector3(0, 0, 2.32)
+follow_damping = true
+auto_follow_distance = true
+auto_follow_distance_min = 10.0
+auto_follow_distance_max = 100.0
+
+[node name="camera_space" type="Camera3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.0923, 10.0101, 31)
+
+[node name="PhantomCameraHost" type="Node" parent="Cameras/camera_space"]
+script = ExtResource("2_5xchs")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
 light_energy = 9.059
 
-[node name="Player" parent="." instance=ExtResource("3_taom1")]
-transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 46.2744, -15.9586, 0)
+[node name="PlayerNode" type="Node" parent="."]
+
+[node name="Player" parent="PlayerNode" instance=ExtResource("3_taom1")]
+transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 48.0923, 10.0101, 0)
 mass = 1.94
 linear_velocity = Vector3(0, -20.16, 0)
-move_speed = 1.0
-jump_initial_impulse = 108
+move_speed = 8.0
+jump_initial_impulse = 3
 rotation_speed = 10.0
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-editor_description = ""
-environment = SubResource("Environment_1tnpd")
-camera_attributes = SubResource("CameraAttributesPractical_scecj")
-script = null
 
 [node name="Planets" type="Node3D" parent="."]
 
 [node name="Planet3" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.0098, 1.563, 0)
-mass = 42.98
-lock_rotation = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.1201, 1.563, 0)
+mass = 443.71
+freeze = true
 max_contacts_reported = 10
-planet_radius = 7.67
-hill_area_radius = 48.615
-gravity_strength = 24.405
+planet_radius = 10.62
+hill_area_radius = 41.98
+gravity_strength = 61.61
 planet_material = SubResource("StandardMaterial3D_piuna")
 
 [node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.466, 1.402, 0)
 mass = 222.75
+freeze = true
 max_contacts_reported = 10
 planet_radius = 16.2
 hill_area_radius = 36.305
@@ -88,10 +152,11 @@ gravity_strength = 28.225
 planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Planet" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.318, 52.313, 0)
-planet_radius = 3.06
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3212, 35.9571, 0)
+freeze = true
+planet_radius = 6.405
 hill_area_radius = 11.31
-gravity_strength = 47.05
+gravity_strength = 68.905
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = -1
