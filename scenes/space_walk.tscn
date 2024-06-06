@@ -55,8 +55,16 @@ jump_initial_impulse = 108
 rotation_speed = 10.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+editor_description = ""
 environment = SubResource("Environment_1tnpd")
 camera_attributes = SubResource("CameraAttributesPractical_scecj")
+script = null
 
 [node name="Planets" type="Node3D" parent="."]
 
