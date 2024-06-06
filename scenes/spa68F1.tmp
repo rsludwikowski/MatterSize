@@ -31,9 +31,7 @@ rim_enabled = true
 script = ExtResource("1_wb8cd")
 
 [node name="camera_space" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.155, 2.6, 100)
-h_offset = 6.98
-v_offset = 10.81
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 84.8049)
 projection = 1
 current = true
 fov = 48.9
@@ -47,11 +45,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
 light_energy = 9.059
 
 [node name="Player" parent="." instance=ExtResource("3_taom1")]
-transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 46.2744, -15.9586, 0)
+transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 68.6651, 14.8929, 0)
 mass = 1.94
-linear_velocity = Vector3(0, -20.16, 0)
+linear_velocity = Vector3(0, -3.405, 0)
 move_speed = 1.0
-jump_initial_impulse = 108
+jump_initial_impulse = 8
 rotation_speed = 10.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -61,29 +59,23 @@ camera_attributes = SubResource("CameraAttributesPractical_scecj")
 [node name="Planets" type="Node3D" parent="."]
 
 [node name="Planet3" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.0098, 1.563, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.432, 1.563, 0)
 mass = 42.98
 lock_rotation = false
+freeze = true
 max_contacts_reported = 10
-planet_radius = 7.67
-hill_area_radius = 48.615
-gravity_strength = 24.405
+planet_radius = 8.48
+gravity_strength = 11.19
 planet_material = SubResource("StandardMaterial3D_piuna")
 
 [node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.466, 1.402, 0)
 mass = 222.75
+freeze = true
 max_contacts_reported = 10
-planet_radius = 16.2
-hill_area_radius = 36.305
-gravity_strength = 28.225
+planet_radius = 14.805
+gravity_strength = 50.0
 planet_material = SubResource("StandardMaterial3D_iky0p")
-
-[node name="Planet" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.318, 52.313, 0)
-planet_radius = 3.06
-hill_area_radius = 11.31
-gravity_strength = 47.05
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = -1
