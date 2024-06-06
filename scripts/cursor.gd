@@ -6,8 +6,9 @@ extends Control
 
 var mouse_pos
 var active_camera :PhantomCamera3D
+var plane3d :Plane = Plane(Vector3(0,0,0),Vector3(1,0,0),Vector3(0,1,0))
 
-
+var collision_mask:int = 1 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -26,15 +27,22 @@ func _process(delta):
 	
 	
 	
-	mouse_pos = get_viewport().get_mouse_position()
+	var mv_pos = get_viewport().get_mouse_position()
 
-	print(mouse_pos)
-	var camera = $"../Cameras/camera_space"
+	print(mv_pos)
+	var camera:Camera3D = $"../Cameras/camera_space"
 	
-	print(camera.global_position)
+	#print(camera.global_position)
 	#ray casting positions
-	mouse_pos = camera.project_ray_origin(mouse_pos)
+	var ray_origin = camera.project_ray_origin(mv_pos)
+	var ray_dir = camera.project_ray_normal(mv_pos)
+	
+	var result = ray_origin + ray_dir * 1000
+	mouse_pos = plane3d.intersects_ray(ray_origin,result)
+	print("RESULT: ",result)
+	print(camera.name)
 	print(mouse_pos)
+	print("viewport position: ",active_camera.get_size())
 	
 	
 	

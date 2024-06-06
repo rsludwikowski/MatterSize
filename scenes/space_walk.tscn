@@ -111,6 +111,7 @@ auto_follow_distance_max = 100.0
 
 [node name="camera_space" type="Camera3D" parent="Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.0923, 10.0101, 31)
+current = true
 
 [node name="PhantomCameraHost" type="Node" parent="Cameras/camera_space"]
 script = ExtResource("2_5xchs")
