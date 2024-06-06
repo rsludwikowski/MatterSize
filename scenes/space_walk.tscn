@@ -90,7 +90,8 @@ host = NodePath("../camera_space/PhantomCameraHost")
 
 [node name="camera_1_frame" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_target")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.1444, 55.7818, 31)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 274.541, 23.3783, 31)
+visible = false
 script = ExtResource("4_5bllr")
 priority = 1
 follow_mode = 5
@@ -104,7 +105,8 @@ dead_zone_height = 0.669
 
 [node name="camera_2_group" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_targets")]
 unique_name_in_owner = true
-transform = Transform3D(0.999906, 1.71758e-10, -2.12787e-05, 0, 0.999968, 8.07155e-06, 2.12774e-05, -8.07155e-06, 0.999968, 58.1191, 1.56387, 3.34015)
+transform = Transform3D(0.999906, 1.71758e-10, -2.12787e-05, 0, 0.999968, 8.07155e-06, 2.12774e-05, -8.07155e-06, 0.999968, 199.093, 28.7054, 3.34015)
+visible = false
 script = ExtResource("4_5bllr")
 follow_mode = 3
 follow_targets = [null, null, null, null]
@@ -114,24 +116,11 @@ follow_offset = Vector3(0, 0, 2.32)
 follow_damping = true
 auto_follow_distance = true
 auto_follow_distance_min = 10.0
-auto_follow_distance_max = 150.0
-
-[node name="camera_3_frame_sun" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 301)
-script = ExtResource("4_5bllr")
-follow_mode = 5
-follow_target = NodePath("../../Planets/Sun")
-tween_resource = SubResource("Resource_7qnno")
-camera_3d_resource = SubResource("Resource_6utqf")
-follow_offset = Vector3(0, 0, 300)
-follow_damping = true
-dead_zone_width = 0.384
-dead_zone_height = 0.669
+auto_follow_distance_max = 250.0
+auto_follow_distance_divisor = 30.0
 
 [node name="camera_space" type="Camera3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.1444, 55.7818, 31)
-current = true
-size = 19.4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 274.541, 23.3783, 31)
 
 [node name="PhantomCameraHost" type="Node" parent="Cameras/camera_space"]
 script = ExtResource("2_5xchs")
@@ -139,17 +128,18 @@ script = ExtResource("2_5xchs")
 [node name="PlayerNode" type="Node" parent="."]
 
 [node name="Player" parent="PlayerNode" instance=ExtResource("3_taom1")]
-transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 66.1444, 55.7818, 0)
-mass = 0.01
-move_speed = 15.0
+transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 274.541, 23.3783, 0)
+mass = 1.94
+linear_velocity = Vector3(0, -20.16, 0)
+move_speed = 8.0
 jump_initial_impulse = 3
 rotation_speed = 10.0
 
 [node name="Planets" type="Node3D" parent="."]
 
 [node name="Planet3" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 314.025, 1.82142, -0.046875)
-mass = 50.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 275.889, 1.563, 0)
+mass = 260.0
 max_contacts_reported = 10
 initial_velocity = Vector3(0, 4.68, 0)
 planet_radius = 10.62

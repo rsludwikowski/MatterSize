@@ -38,9 +38,9 @@ func _ready():
 
 func _process(_delta):
 	if Engine.is_editor_hint():
-		update_planet_material()
-		update_hill_area_material()
 		if planet_radius != old_planet_radius or hill_area_radius != old_hill_area_radius:
+			update_planet_material()
+			update_hill_area_material()
 			set_planet_radius(planet_radius)
 			update_hill_area_radius(hill_area_radius)
 			old_planet_radius = planet_radius
@@ -56,8 +56,8 @@ func _integrate_forces(state):
 			var global_contact_position = state.transform.origin + contact_position
 			#print("Local position: ", contact_position, " Global position: ", global_contact_position)
 			particle_emitter.call("explosion_on_collision", body, global_contact_position)
-	#update_velocity(state.step)
-	#update_position(state.step)
+	UpdateVelocity(state.step)
+	UpdatePosition(state.step)
 
 func set_planet_radius(r: float) -> void:
 	var sphere_mesh = SphereMesh.new()
@@ -110,16 +110,25 @@ func update_position(delta_T) -> void:
 	
 #region Materials
 func update_planet_material() -> void:
-	var material: Material
+	var material: StandardMaterial3D
 	if planet_material:
 		material = planet_material
+		material.metallic = 0.1
+		material.roughness = 0.8
 	else:
-		material = Material.new()
-	#material.albedo_color = Color.random
-	material.metallic = 0.1
-	material.roughness = 0.8
-	planet_surface.material_override = material
+		material = StandardMaterial3D.new()
+		material.albedo_color = get_random_color()
+		material.metallic = 0.1
+		material.roughness = 0.8
 	
+	planet_surface.material_override = material
+
+func get_random_color() -> Color:
+	var r = randf()
+	var g = randf()
+	var b = randf()
+	return Color(r, g, b, 1.0)
+
 func update_hill_area_material() -> void:
 	var hill_material: Material
 	if planet_hill_material:
