@@ -31,7 +31,7 @@ rim_enabled = true
 script = ExtResource("1_wb8cd")
 
 [node name="camera_space" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 84.8049)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.155, 2.6, 100)
 projection = 1
 current = true
 fov = 48.9
@@ -45,7 +45,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
 light_energy = 9.059
 
 [node name="Player" parent="." instance=ExtResource("3_taom1")]
-transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 46.2744, -15.9586, 0)
+transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 62.5009, 14.8929, 0)
 mass = 1.94
 linear_velocity = Vector3(0, -3.405, 0)
 move_speed = 1.0

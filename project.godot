@@ -11,13 +11,18 @@ config_version=5
 [application]
 
 config/name="Planeta"
-run/main_scene="res://scenes/universe.tscn"
+run/main_scene="res://scenes/space_walk.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://res_files/icon.svg"
 
 [audio]
 
 buses/default_bus_layout="res://res_files/default_bus_layout.tres"
+
+[display]
+
+mouse_cursor/custom_image="res://sprites/1.png"
+mouse_cursor/custom_image_hotspot=Vector2(16, 16)
 
 [input]
 
