@@ -191,9 +191,11 @@ offset_right = -11.0
 offset_bottom = -6.0
 label_settings = SubResource("LabelSettings_5eqfc")
 
-[node name="Cursor" type="Control" parent="."]
+[node name="Cursor" type="Control" parent="." node_paths=PackedStringArray("camera_frame", "camera_group")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("4_loyi5")
+camera_frame = NodePath("../Cameras/camera_1_frame")
+camera_group = NodePath("../Cameras/camera_2_group")
