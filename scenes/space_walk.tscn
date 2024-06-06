@@ -1,8 +1,8 @@
 [gd_scene load_steps=19 format=3 uid="uid://boo21jkowihng"]
 
-[ext_resource type="Script" path="res://scenes/space_walk.gd" id="1_wb8cd"]
+[ext_resource type="Script" path="res://scripts/space_walk.gd" id="1_wb8cd"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_5xchs"]
-[ext_resource type="Script" path="res://scenes/camera_switch.gd" id="2_xiyqc"]
+[ext_resource type="Script" path="res://scripts/camera_switch.gd" id="2_xiyqc"]
 [ext_resource type="PackedScene" uid="uid://duosirkttbn2l" path="res://scenes/player.tscn" id="3_taom1"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4_5bllr"]
 [ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="4_kxp37"]
@@ -83,7 +83,8 @@ camera_group = NodePath("../camera_2_group")
 
 [node name="camera_1_frame" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_target")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.0923, 10.0101, 31)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 274.541, 23.3783, 31)
+visible = false
 script = ExtResource("4_5bllr")
 priority = 1
 follow_mode = 5
@@ -97,7 +98,8 @@ dead_zone_height = 0.669
 
 [node name="camera_2_group" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_targets")]
 unique_name_in_owner = true
-transform = Transform3D(0.999906, 1.71758e-10, -2.12787e-05, 0, 0.999968, 8.07155e-06, 2.12774e-05, -8.07155e-06, 0.999968, 58.1191, 1.56387, 3.34015)
+transform = Transform3D(0.999906, 1.71758e-10, -2.12787e-05, 0, 0.999968, 8.07155e-06, 2.12774e-05, -8.07155e-06, 0.999968, 199.093, 28.7054, 3.34015)
+visible = false
 script = ExtResource("4_5bllr")
 follow_mode = 3
 follow_targets = [null, null, null, null]
@@ -107,10 +109,11 @@ follow_offset = Vector3(0, 0, 2.32)
 follow_damping = true
 auto_follow_distance = true
 auto_follow_distance_min = 10.0
-auto_follow_distance_max = 100.0
+auto_follow_distance_max = 250.0
+auto_follow_distance_divisor = 30.0
 
 [node name="camera_space" type="Camera3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.0923, 10.0101, 31)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 274.541, 23.3783, 31)
 
 [node name="PhantomCameraHost" type="Node" parent="Cameras/camera_space"]
 script = ExtResource("2_5xchs")
@@ -122,7 +125,7 @@ light_energy = 9.059
 [node name="PlayerNode" type="Node" parent="."]
 
 [node name="Player" parent="PlayerNode" instance=ExtResource("3_taom1")]
-transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 48.0923, 10.0101, 0)
+transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 274.541, 23.3783, 0)
 mass = 1.94
 linear_velocity = Vector3(0, -20.16, 0)
 move_speed = 8.0
@@ -132,9 +135,8 @@ rotation_speed = 10.0
 [node name="Planets" type="Node3D" parent="."]
 
 [node name="Planet3" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.1201, 1.563, 0)
-mass = 443.71
-freeze = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 275.889, 1.563, 0)
+mass = 260.0
 max_contacts_reported = 10
 planet_radius = 10.62
 hill_area_radius = 41.98
@@ -142,21 +144,37 @@ gravity_strength = 61.61
 planet_material = SubResource("StandardMaterial3D_piuna")
 
 [node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.466, 1.402, 0)
-mass = 222.75
+mass = 1000.0
 freeze = true
 max_contacts_reported = 10
-planet_radius = 16.2
-hill_area_radius = 36.305
+planet_radius = 40.0
+hill_area_radius = 100.0
 gravity_strength = 28.225
 planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Planet" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3212, 35.9571, 0)
-freeze = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.2721, 195.016, 0)
+mass = 100.0
 planet_radius = 6.405
-hill_area_radius = 11.31
+hill_area_radius = 11.81
 gravity_strength = 68.905
+planet_material = null
+
+[node name="Planet2" parent="Planets" instance=ExtResource("4_kxp37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -308.233, 77.1388, 0)
+mass = 500.0
+planet_radius = 22.88
+hill_area_radius = 49.79
+gravity_strength = 11.66
+planet_material = null
+
+[node name="Planet5" parent="Planets" instance=ExtResource("4_kxp37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -149.274, -27.0843, 0)
+mass = 500.0
+planet_radius = 9.16
+hill_area_radius = 16.12
+gravity_strength = 18.225
+planet_material = null
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = -1

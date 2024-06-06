@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="1_pb5o4"]
 [ext_resource type="Script" path="res://scripts/space.gd" id="1_vm23c"]
 [ext_resource type="PackedScene" uid="uid://duosirkttbn2l" path="res://scenes/player.tscn" id="2_qymr1"]
-[ext_resource type="Script" path="res://scenes/camera_switch.gd" id="4_cvf7x"]
+[ext_resource type="Script" path="res://scripts/camera_switch.gd" id="4_cvf7x"]
 
 [sub_resource type="Environment" id="Environment_1tnpd"]
 background_mode = 1

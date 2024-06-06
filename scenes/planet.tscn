@@ -4,8 +4,8 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_63687"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0gu3o"]
-albedo_color = Color(0.913725, 0.87451, 0, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4siv5"]
+albedo_color = Color(0.564181, 0.292303, 0.411744, 1)
 metallic = 0.1
 roughness = 0.8
 
@@ -70,17 +70,17 @@ func _on_body_exited(body):
 		body.in_hill_area = false
 "
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_xxqw8"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_q4gq4"]
 radius = 6.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_ea5gs"]
+[sub_resource type="SphereMesh" id="SphereMesh_sxw2d"]
 radius = 6.0
 height = 12.0
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_xgvhg"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_pb16x"]
 radius = 1.395
 
-[sub_resource type="SphereMesh" id="SphereMesh_mdyqu"]
+[sub_resource type="SphereMesh" id="SphereMesh_xq325"]
 radius = 1.395
 height = 2.79
 
@@ -124,7 +124,7 @@ max_contacts_reported = 5
 contact_monitor = true
 script = ExtResource("1_ysgxj")
 planet_radius = 1.395
-planet_material = SubResource("StandardMaterial3D_0gu3o")
+planet_material = SubResource("StandardMaterial3D_4siv5")
 planet_hill_material = SubResource("StandardMaterial3D_fajcp")
 
 [node name="HillArea" type="Area3D" parent="."]
@@ -135,18 +135,18 @@ gravity_direction = Vector3(0, 0, 0)
 script = SubResource("GDScript_rv655")
 
 [node name="HillAreaShape" type="CollisionShape3D" parent="HillArea"]
-shape = SubResource("SphereShape3D_xxqw8")
+shape = SubResource("SphereShape3D_q4gq4")
 
 [node name="HillAreaSurface" type="MeshInstance3D" parent="HillArea"]
 material_override = SubResource("StandardMaterial3D_fajcp")
-mesh = SubResource("SphereMesh_ea5gs")
+mesh = SubResource("SphereMesh_sxw2d")
 
 [node name="PlanetShape" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_xgvhg")
+shape = SubResource("SphereShape3D_pb16x")
 
 [node name="PlanetSurface" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_0gu3o")
-mesh = SubResource("SphereMesh_mdyqu")
+material_override = SubResource("StandardMaterial3D_4siv5")
+mesh = SubResource("SphereMesh_xq325")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 emitting = false
