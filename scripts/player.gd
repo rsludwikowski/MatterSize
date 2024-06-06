@@ -8,7 +8,7 @@ extends RigidBody3D
 
 
 var cursor 
-var planet: RigidBody3D = null
+var planet: Planet = null
 var in_hill_area: bool = false
 var hill_area: Area3D = null
 var on_floor = false
@@ -34,7 +34,7 @@ func _physics_process(delta):
 		jump()
 		
 		
-		local_gravity = (hill_area.global_transform.origin - global_transform.origin).normalized() * hill_area.gravity_strength
+		local_gravity = (planet.global_transform.origin - global_transform.origin).normalized() * planet.gravity_strength
 		apply_central_force(local_gravity * mass)
 	var rotate_toward_v:Vector3
 	self.rotate_z( delta * rotation_speed * (-local_gravity.normalized()).signed_angle_to(self.basis.y.normalized(),Vector3(0,0,-1)))
@@ -53,7 +53,7 @@ func _physics_process(delta):
 		var planet_p = get_node_and_resource(planet.get_path())
 		#print(planet_p)
 		relative_vel = self.linear_velocity
-		relative_vel = self.linear_velocity - planet.getVelocity()
+		relative_vel = self.linear_velocity - planet.current_velocity
 		#print(relative_vel.length())
 	
 		#
@@ -144,7 +144,7 @@ func move_player(forward_vec:Vector3,delta):
 		var planet_p = get_node_and_resource(planet.get_path())
 		#print(planet_p)
 		relative_vel = self.linear_velocity
-		relative_vel = self.linear_velocity - planet.getVelocity()
+		relative_vel = self.linear_velocity - planet.current_velocity
 	
 	
 	#self.move_and_collide(move_vec*delta)
