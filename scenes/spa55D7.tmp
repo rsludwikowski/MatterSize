@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://boo21jkowihng"]
+[gd_scene load_steps=10 format=3 uid="uid://boo21jkowihng"]
 
 [ext_resource type="Script" path="res://scenes/space_walk.gd" id="1_wb8cd"]
 [ext_resource type="Script" path="res://scenes/camera_switch.gd" id="2_xiyqc"]
 [ext_resource type="PackedScene" uid="uid://duosirkttbn2l" path="res://scenes/player.tscn" id="3_taom1"]
 [ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="4_kxp37"]
-[ext_resource type="Script" path="res://scripts/cursor.gd" id="4_loyi5"]
 
 [sub_resource type="Environment" id="Environment_1tnpd"]
 background_mode = 1
@@ -32,8 +31,6 @@ script = ExtResource("1_wb8cd")
 
 [node name="camera_space" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.155, 2.6, 100)
-h_offset = 6.98
-v_offset = 10.81
 projection = 1
 current = true
 fov = 48.9
@@ -47,11 +44,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
 light_energy = 9.059
 
 [node name="Player" parent="." instance=ExtResource("3_taom1")]
-transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 44.3823, 14.8929, 0)
+transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 78.3628, 14.8929, 0)
 mass = 1.94
 linear_velocity = Vector3(0, -20.16, 0)
 move_speed = 1.0
-jump_initial_impulse = 108
+jump_initial_impulse = 8
 rotation_speed = 10.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -64,10 +61,11 @@ camera_attributes = SubResource("CameraAttributesPractical_scecj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.0098, 1.563, 0)
 mass = 42.98
 lock_rotation = false
+freeze = true
 max_contacts_reported = 10
 planet_radius = 7.67
 hill_area_radius = 48.615
-gravity_strength = 24.405
+gravity_strength = 5.125
 planet_material = SubResource("StandardMaterial3D_piuna")
 
 [node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
@@ -78,12 +76,6 @@ planet_radius = 16.2
 hill_area_radius = 36.305
 gravity_strength = 28.225
 planet_material = SubResource("StandardMaterial3D_iky0p")
-
-[node name="Planet" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.318, 52.313, 0)
-planet_radius = 3.06
-hill_area_radius = 11.31
-gravity_strength = 47.05
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = -1
@@ -118,9 +110,7 @@ offset_right = -11.0
 offset_bottom = -6.0
 label_settings = SubResource("LabelSettings_5eqfc")
 
-[node name="Cursor" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("4_loyi5")
+[node name="Planet" parent="." instance=ExtResource("4_kxp37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.31832, 52.3125, 11.0886)
+planet_radius = 3.06
+hill_area_radius = 11.31
