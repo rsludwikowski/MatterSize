@@ -97,10 +97,10 @@ dead_zone_height = 0.669
 
 [node name="camera_2_group" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_targets")]
 unique_name_in_owner = true
-transform = Transform3D(0.999906, 1.71758e-10, -2.12787e-05, 0, 0.999968, 8.07155e-06, 2.12774e-05, -8.07155e-06, 0.999968, 58.1191, 1.56387, 3.34015)
+transform = Transform3D(0.999906, 1.71758e-10, -2.12787e-05, 0, 0.999968, 8.07155e-06, 2.12774e-05, -8.07155e-06, 0.999968, 13.8249, 18.6804, 102.317)
 script = ExtResource("4_5bllr")
 follow_mode = 3
-follow_targets = [null, null, null, null]
+follow_targets = [NodePath("../../PlayerNode/Player"), NodePath("../../Planets/Planet3"), NodePath("../../Planets/Planet4"), NodePath("../../Planets/Planet")]
 tween_resource = SubResource("Resource_bsw5e")
 camera_3d_resource = SubResource("Resource_8vedi")
 follow_offset = Vector3(0, 0, 2.32)
