@@ -1,10 +1,11 @@
-
 extends Control
 
 @export var camera_frame: PhantomCamera3D
 @export var camera_group: PhantomCamera3D
 
-var mouse_pos
+var mouse_pos : Vector3
+var ray_origin
+var ray_end
 var active_camera :PhantomCamera3D
 var plane3d :Plane = Plane(Vector3(0,0,0),Vector3(1,0,0),Vector3(0,1,0))
 
@@ -16,6 +17,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	
 	
 	if(camera_frame.priority>camera_group.priority):
 		#print("CAMERA_FRAME")
@@ -34,15 +37,12 @@ func _process(delta):
 	
 	#print(camera.global_position)
 	#ray casting positions
-	var ray_origin = camera.project_ray_origin(mv_pos)
+	ray_origin = camera.project_ray_origin(mv_pos)
+	print("Ray origin: ",ray_origin)
 	var ray_dir = camera.project_ray_normal(mv_pos)
 	
-	var result = ray_origin + ray_dir * 1000
-	mouse_pos = plane3d.intersects_ray(ray_origin,result)
-	print("RESULT: ",result)
-	print(camera.name)
-	print(mouse_pos)
-	print("viewport position: ",active_camera.get_size())
+	ray_end = ray_origin + ray_dir * 100000
 	
-	
+	mouse_pos = plane3d.intersects_ray(ray_origin,ray_end)
+
 	

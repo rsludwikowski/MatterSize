@@ -108,9 +108,12 @@ func _on_area_3d_body_entered(body):
 
 
 func rotate_toward_cursor(delta) -> Vector3:
+	
 	var cursor_point = cursor.mouse_pos
+	
+
 	if(cursor_point != null):
-		cursor_point.z = self.global_position.z
+		#cursor_point.z = self.global_position.z
 		#print(cursor.intersection)
 		DebugDraw3D.draw_line(self.global_position,cursor_point)
 		var floor_plane:Plane = Plane(self.global_position, self.global_position + self.basis.z, self.global_position + self.basis.x)
