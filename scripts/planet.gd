@@ -95,60 +95,20 @@ func update_radius(radius) -> void:
 			var sphere_mesh = planet_surface.mesh
 			sphere_mesh.radius = radius
 			planet_surface.mesh = sphere_mesh
-			#
-#func update_velocity(delta) -> void:
-	#var planets = get_tree().get_nodes_in_group("Planets")
-	#
-	#for planet in planets:
-		#if planet != self:
-			#var distance_vec = planet.global_position - self.global_position
-			#var r = distance_vec.length()
-			#var forceDir = distance_vec.normalized()
-			#
-			## Calculate the gravitational force magnitude
-			#var force_mag = (G_CONSTANT * self.mass * planet.mass) / (r * r)
-			#
-			## Calculate the force vector
-			#var force = forceDir * force_mag
-			#
-			## Calculate the acceleration
-			#var acceleration = force / self.mass
-#
-			## Update the velocity
-			#current_velocity += acceleration * delta
-#
-	#
-	##for area in overlapping_areas:
-		##if area is Area3D and area.gravity != 0:
-			##var gravity_dir = (area.get_global_transform().origin - global_transform.origin).normalized()
-			##current_velocity += gravity_dir * area.gravity * delta
 
-func update_position(delta) -> void:
+func update_position_old(delta) -> void:
 	self.global_transform.origin += current_velocity * delta
-	#
-#func UpdateVelocity(delta_T:float) -> void:
-	#var planets = get_tree().get_nodes_in_group("Planets")
-	#for planet in planets:
-		#if planet != self:
-			#var sqrDst = (planet.global_position - self.global_position).length_squared()
-			#var forceDir = (planet.global_position - self.global_position).normalized()
-			#var force = forceDir * G_CONSTANT
-			#var acceleration = force / self.mass
-			#current_velocity += acceleration * delta_T
 
-func UpdateVelocity_2(acceleration:Vector3, time_step:float) -> void:
+func update_velocity(acceleration:Vector3, time_step:float) -> void:
 	current_velocity+= acceleration*time_step
 	if(self.freeze):
 		current_velocity = Vector3.ZERO
-	#print(current_velocity)
 
-func UpdatePosition(delta_T) -> void:
+func update_position(delta_T) -> void:
 	move_and_collide(current_velocity*delta_T)
 	
 	
-	
-	
-#Material
+#region Materials
 func update_planet_material() -> void:
 	var material: Material
 	if planet_material:
@@ -159,7 +119,7 @@ func update_planet_material() -> void:
 	material.metallic = 0.1
 	material.roughness = 0.8
 	planet_surface.material_override = material
-#Color
+	
 func update_hill_area_material() -> void:
 	var hill_material: Material
 	if planet_hill_material:
@@ -170,6 +130,8 @@ func update_hill_area_material() -> void:
 	hill_material.albedo_color = Color(0.0, 0.0, 0.0, 0.5) 
 	hill_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	hill_area_surface.material_override = hill_material
+#endregion
+
 
 func get_gravity_direction(position) -> Vector3:
 	var planet_position = global_transform.origin

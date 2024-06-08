@@ -20,14 +20,11 @@ func _process(_delta):
 
 func _physics_process(delta):
 	for planet in planets:
-		var acceleration = CalculateAcceleration(planet.global_position,planet)
-		planet.UpdateVelocity_2(acceleration,delta)
-		#planet.UpdateVelocity(delta)
-	
-	
+		var acceleration = calculate_acceleration(planet.global_position,planet)
+		planet.update_velocity(acceleration,delta)
 	
 	for planet in planets:
-		planet.UpdatePosition(delta)
+		planet.update_position(delta)
 	
 func get_all_planets_list() -> Array[Planet]:
 	var planets: Array[Planet] = []
@@ -42,7 +39,7 @@ func get_all_planets_list() -> Array[Planet]:
 
 
 
-func CalculateAcceleration(point:Vector3,ignoreBody):
+func calculate_acceleration(point:Vector3,ignoreBody) -> Vector3:
 	var acceleration = Vector3.ZERO
 	for body in planets:
 		if body != ignoreBody:

@@ -70,17 +70,17 @@ func _on_body_exited(body):
 		body.in_hill_area = false
 "
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_77d6v"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_s6svh"]
 radius = 6.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_tr3kf"]
+[sub_resource type="SphereMesh" id="SphereMesh_4uou1"]
 radius = 6.0
 height = 12.0
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_uog7y"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_offqj"]
 radius = 1.395
 
-[sub_resource type="SphereMesh" id="SphereMesh_0lcqh"]
+[sub_resource type="SphereMesh" id="SphereMesh_dcomq"]
 radius = 1.395
 height = 2.79
 
@@ -135,18 +135,18 @@ gravity_direction = Vector3(0, 0, 0)
 script = SubResource("GDScript_rv655")
 
 [node name="HillAreaShape" type="CollisionShape3D" parent="HillArea"]
-shape = SubResource("SphereShape3D_77d6v")
+shape = SubResource("SphereShape3D_s6svh")
 
 [node name="HillAreaSurface" type="MeshInstance3D" parent="HillArea"]
 material_override = SubResource("StandardMaterial3D_fajcp")
-mesh = SubResource("SphereMesh_tr3kf")
+mesh = SubResource("SphereMesh_4uou1")
 
 [node name="PlanetShape" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_uog7y")
+shape = SubResource("SphereShape3D_offqj")
 
 [node name="PlanetSurface" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_0gu3o")
-mesh = SubResource("SphereMesh_0lcqh")
+mesh = SubResource("SphereMesh_dcomq")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 emitting = false
