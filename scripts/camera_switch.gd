@@ -4,7 +4,7 @@ extends Node
 @export var camera_group: PhantomCamera3D
 @export var host: PhantomCameraHost
 func _ready():
-	host._follow_target_physics_based = false
+	host._follow_target_physics_based = true
 	set_group_camera_to_all_planets()
 
 func _process(delta):

@@ -29,8 +29,8 @@ func _process(delta):
 func _physics_process(delta):
 	for planet in planets:
 		var acceleration = CalculateAcceleration(planet.global_position,planet)
-		#planet.UpdateVelocity_2(acceleration,delta)
-		planet.UpdateVelocity(delta)
+		planet.UpdateVelocity_2(acceleration,delta)
+		#planet.UpdateVelocity(delta)
 	
 	
 	

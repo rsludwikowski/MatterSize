@@ -142,7 +142,11 @@ func UpdateVelocity_2(acceleration:Vector3, time_step:float) -> void:
 
 func UpdatePosition(delta_T) -> void:
 	move_and_collide(current_velocity*delta_T)
-
+	
+	
+	
+	
+#Material
 func update_planet_material() -> void:
 	var material: Material
 	if planet_material:
@@ -153,7 +157,7 @@ func update_planet_material() -> void:
 	material.metallic = 0.1
 	material.roughness = 0.8
 	planet_surface.material_override = material
-
+#Color
 func update_hill_area_material() -> void:
 	var hill_material: Material
 	if planet_hill_material:
