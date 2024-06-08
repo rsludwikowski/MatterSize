@@ -21,7 +21,7 @@ transform = Transform3D(1, 0, 0, 0, 0.475854, 0.879524, 0, -0.879524, 0.475854, 
 [node name="DebugLines" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.24602, 2.96241, 2.24841)
 script = ExtResource("3_qdr0r")
-visualize = null
+YYYH = null
 metadata/steps = 5316
 metadata/visualize = true
 

@@ -11,6 +11,7 @@ var target_script_path = "res://scripts/planet.gd"
 var gameStarted:bool = true
 @onready var global_planets: Array[Planet] = get_all_planets_list()
 
+@export var YYYH: int = 5
 
 
 class PlanetLines:
@@ -165,8 +166,8 @@ func DrawOrbits(planets:Array):
 		for i in steps:
 			if i == 0:
 				continue
-			if i%5 == 0:
-				DebugDraw3D.draw_line(planet.Pos[i-5],planet.Pos[i],Color(1,1,0))
+			if i%YYYH == 0:
+				DebugDraw3D.draw_line(planet.Pos[i-YYYH],planet.Pos[i],Color(1,1,0))
 				
 			#print(planet.Pos[i],"  ",i)
 			

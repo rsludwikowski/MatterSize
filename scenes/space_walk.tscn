@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="4_loyi5"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="5_scqkl"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="6_0i2wt"]
-[ext_resource type="Script" path="res://scripts/DebugLines.gd" id="10_b7vlp"]
+[ext_resource type="Script" path="res://scripts/DebugLines_Ref.gd" id="10_86te5"]
 
 [sub_resource type="Environment" id="Environment_1tnpd"]
 background_mode = 1
@@ -148,10 +148,10 @@ rotation_speed = 10.0
 [node name="Planets" type="Node3D" parent="."]
 
 [node name="Planet3" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.661, 1.82142, -0.046875)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 314.025, 1.82142, -0.046875)
 mass = 50.0
 max_contacts_reported = 10
-initial_velocity = Vector3(0, 8.1, 0)
+initial_velocity = Vector3(0, 4.68, 0)
 planet_radius = 10.62
 hill_area_radius = 41.98
 gravity_strength = 0.0
@@ -159,6 +159,7 @@ planet_material = SubResource("StandardMaterial3D_piuna")
 
 [node name="Sun" parent="Planets" instance=ExtResource("4_kxp37")]
 mass = 1000.0
+freeze = true
 max_contacts_reported = 10
 planet_radius = 16.2
 hill_area_radius = 36.305
@@ -166,11 +167,19 @@ gravity_strength = 0.0
 planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Planet" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 56.06, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 72.9732, 0)
 mass = 22.88
-initial_velocity = Vector3(-7.96, 8.54, 0)
+initial_velocity = Vector3(-10.455, 0, 0)
 planet_radius = 6.405
 hill_area_radius = 11.31
+gravity_strength = 0.0
+
+[node name="Planet2" parent="Planets" instance=ExtResource("4_kxp37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 359.242, 1.2765, 0)
+mass = 6.0
+initial_velocity = Vector3(-0.245, 7.66, 0)
+planet_radius = 3.0
+hill_area_radius = 5.0
 gravity_strength = 0.0
 
 [node name="Panel" type="Panel" parent="."]
@@ -215,6 +224,7 @@ script = ExtResource("4_loyi5")
 camera_frame = NodePath("../Cameras/camera_1_frame")
 camera_group = NodePath("../Cameras/camera_2_group")
 
-[node name="DebugLines" type="Node3D" parent="."]
-script = ExtResource("10_b7vlp")
-steps = 835
+[node name="DebugLines" type="Node3D" parent="." node_paths=PackedStringArray("referenceBody")]
+script = ExtResource("10_86te5")
+steps = 4925
+referenceBody = NodePath("../Planets/Planet3")
