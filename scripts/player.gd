@@ -17,7 +17,7 @@ func _ready():
 	pass
 
 func _process(delta):
-	var a = DebugDraw3D.new_scoped_config().set_thickness(0.15)
+	#var a = DebugDraw3D.new_scoped_config().set_thickness(0.15)
 	DebugDraw3D.draw_line(self.global_position,self.global_position - local_gravity.normalized()*5,Color(0,0,1))
 		
 
