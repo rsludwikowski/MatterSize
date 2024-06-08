@@ -13,7 +13,7 @@ var gameStarted:bool = true
 
 
 
-class Planet:
+class PlanetLines:
 	var mass : float
 	var Vels : Array 
 	var Pos  : Array
@@ -25,11 +25,6 @@ class Planet:
 	
 	func Print():
 		print("Mass: ",mass,"\tVel0: ",Vels[0],"\tPos0: ",Pos[0])
-
-
-
-
-	
 
 	#var target_node = find_node_with_script(get_tree().root, target_script_path)
 
@@ -91,7 +86,7 @@ func rewrite_array(planets_t,planets:Array):
 			planet_vel = p.velocity
 		
 		print("planet VEls: " ,planet_vel, "\t",gameStarted)
-		planets.append(Planet.new(p.mass,planet_vel,p.global_position))
+		planets.append(PlanetLines.new(p.mass,planet_vel,p.global_position))
 		
 	#for pl in planets:
 		#pl.Print()

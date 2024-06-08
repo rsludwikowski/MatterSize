@@ -23,10 +23,7 @@ func UpdateVelocity(delta_T:float):
 		var force = forceDir * universe.G_CONSTANT
 		var acceleration = force / self.mass
 		velocity += acceleration * delta_T
-		#print(self.linear_velocity)
-		
-		
-		
+
 func UpdateVelocity_2(acceleration:Vector3, time_step:float):
 	velocity+= acceleration*time_step
 	print(velocity)
@@ -50,6 +47,5 @@ func get_all_rb3d(node):
 		
 		if child is RigidBody3D and child != self:
 			objects.append(child)
-			#print("test2")
 		objects += get_all_rb3d(child)  # Rekurencyjne wywołanie funkcji dla dzieci
 	return objects

@@ -3,6 +3,7 @@ extends RigidBody3D
 
 class_name Planet
 
+const G_CONSTANT: float = 6.67
 @export var initial_velocity: Vector3 = Vector3(0,0,0)
 @export var planet_radius: float = 3.0
 @export var hill_area_radius: float = 6.0
@@ -21,9 +22,6 @@ var old_hill_area_radius: float = hill_area_radius
 var current_velocity: Vector3
 
 var direction: Vector3
-
-var universe = load("res://scripts/universe.gd")
-var space = load("res://scripts/space.gd")
 
 var particle_emitter: CPUParticles3D = null
 var overlapping_areas = []
@@ -100,22 +98,30 @@ func update_radius(radius) -> void:
 			
 func update_velocity(delta) -> void:
 	var planets = get_tree().get_nodes_in_group("Planets")
+	
 	for planet in planets:
 		if planet != self:
-			direction = planet.global_transform.origin - self.global_transform.origin
-			var distance = direction.length()
-			if distance == 0:
-				continue
-			var force_magnitude = (universe.G_CONSTANT * mass * planet.mass) / (distance * distance)
-			var force = direction.normalized() * force_magnitude
-			var acceleration = force / mass
+			var distance_vec = planet.global_position - self.global_position
+			var r = distance_vec.length()
+			var forceDir = distance_vec.normalized()
+			
+			# Calculate the gravitational force magnitude
+			var force_mag = (G_CONSTANT * self.mass * planet.mass) / (r * r)
+			
+			# Calculate the force vector
+			var force = forceDir * force_mag
+			
+			# Calculate the acceleration
+			var acceleration = force / self.mass
+
+			# Update the velocity
 			current_velocity += acceleration * delta
 
 	
-	for area in overlapping_areas:
-		if area is Area3D and area.gravity != 0:
-			var gravity_dir = (area.get_global_transform().origin - global_transform.origin).normalized()
-			current_velocity += gravity_dir * area.gravity * delta
+	#for area in overlapping_areas:
+		#if area is Area3D and area.gravity != 0:
+			#var gravity_dir = (area.get_global_transform().origin - global_transform.origin).normalized()
+			#current_velocity += gravity_dir * area.gravity * delta
 
 func update_position(delta) -> void:
 	self.global_transform.origin += current_velocity * delta
@@ -126,7 +132,7 @@ func UpdateVelocity(delta_T:float) -> void:
 		if planet != self:
 			var sqrDst = (planet.global_position - self.global_position).length_squared()
 			var forceDir = (planet.global_position - self.global_position).normalized()
-			var force = forceDir * universe.G_CONSTANT
+			var force = forceDir * G_CONSTANT
 			var acceleration = force / self.mass
 			current_velocity += acceleration * delta_T
 

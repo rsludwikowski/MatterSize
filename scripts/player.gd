@@ -30,7 +30,7 @@ func _physics_process(delta):
 		jump()
 		
 		local_gravity = (planet.global_transform.origin - global_transform.origin).normalized() * planet.gravity_strength
-		apply_central_force(local_gravity * self.mass)
+		apply_central_force(local_gravity * mass)
 		var rotate_toward_v:Vector3
 		self.rotate_z( delta * rotation_speed * (-local_gravity.normalized()).signed_angle_to(self.basis.y.normalized(),Vector3(0,0,-1)))
 	
