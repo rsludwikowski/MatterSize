@@ -22,7 +22,9 @@ func _process(delta):
 		
 
 func _physics_process(delta):
-
+	
+	var forward_vec:Vector3 = rotate_toward_cursor(delta)
+	
 	if in_hill_area and hill_area != null:
 		planet = hill_area.get_parent()
 		jump()
@@ -32,7 +34,6 @@ func _physics_process(delta):
 		var rotate_toward_v:Vector3
 		self.rotate_z( delta * rotation_speed * (-local_gravity.normalized()).signed_angle_to(self.basis.y.normalized(),Vector3(0,0,-1)))
 	
-		var forward_vec:Vector3 = rotate_toward_cursor(delta)
 		move_player(forward_vec,delta)
 
 	
