@@ -65,10 +65,6 @@ func _process(delta: float) -> void:
 	
 	
 
-
-
-
-
 #func _notification(what):
 	#if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		#gameStarted = false

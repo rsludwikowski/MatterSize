@@ -81,10 +81,11 @@ camera_attributes = SubResource("CameraAttributesPractical_scecj")
 
 [node name="Cameras" type="Node" parent="."]
 
-[node name="camera_switch" type="Node" parent="Cameras" node_paths=PackedStringArray("camera_frame", "camera_group", "host")]
+[node name="camera_switch" type="Node" parent="Cameras" node_paths=PackedStringArray("camera_1_frame", "camera_2_group", "camera_3_frame_sun", "host")]
 script = ExtResource("2_xiyqc")
-camera_frame = NodePath("../camera_1_frame")
-camera_group = NodePath("../camera_2_group")
+camera_1_frame = NodePath("../camera_1_frame")
+camera_2_group = NodePath("../camera_2_group")
+camera_3_frame_sun = NodePath("../camera_3_frame_sun")
 host = NodePath("../camera_space/PhantomCameraHost")
 
 [node name="camera_1_frame" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_target")]
@@ -113,7 +114,19 @@ follow_offset = Vector3(0, 0, 2.32)
 follow_damping = true
 auto_follow_distance = true
 auto_follow_distance_min = 10.0
-auto_follow_distance_max = 100.0
+auto_follow_distance_max = 150.0
+
+[node name="camera_3_frame_sun" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 301)
+script = ExtResource("4_5bllr")
+follow_mode = 5
+follow_target = NodePath("../../Planets/Sun")
+tween_resource = SubResource("Resource_7qnno")
+camera_3d_resource = SubResource("Resource_6utqf")
+follow_offset = Vector3(0, 0, 300)
+follow_damping = true
+dead_zone_width = 0.384
+dead_zone_height = 0.669
 
 [node name="camera_space" type="Camera3D" parent="Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.1444, 55.7818, 31)
@@ -144,22 +157,21 @@ hill_area_radius = 41.98
 gravity_strength = 61.61
 planet_material = SubResource("StandardMaterial3D_piuna")
 
-[node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
+[node name="Sun" parent="Planets" instance=ExtResource("4_kxp37")]
 mass = 1000.0
-freeze = true
 max_contacts_reported = 10
 planet_radius = 16.2
 hill_area_radius = 36.305
-gravity_strength = 28.225
+gravity_strength = 0.0
 planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Planet" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.4604, 56.0601, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5419, 27.6075, 0)
 mass = 22.88
-initial_velocity = Vector3(-6.945, 2.22, 0)
+initial_velocity = Vector3(-7.96, 8.54, 0)
 planet_radius = 6.405
 hill_area_radius = 11.31
-gravity_strength = 37.565
+gravity_strength = 0.0
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = -1
@@ -205,4 +217,4 @@ camera_group = NodePath("../Cameras/camera_2_group")
 
 [node name="DebugLines" type="Node3D" parent="."]
 script = ExtResource("10_b7vlp")
-steps = 1145
+steps = 835
