@@ -70,6 +70,10 @@ rim_enabled = true
 [node name="SpaceWalk" type="Node3D"]
 script = ExtResource("1_wb8cd")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
+light_energy = 5.41
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1tnpd")
 camera_attributes = SubResource("CameraAttributesPractical_scecj")
@@ -116,10 +120,6 @@ size = 19.4
 
 [node name="PhantomCameraHost" type="Node" parent="Cameras/camera_space"]
 script = ExtResource("2_5xchs")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
-light_energy = 9.059
 
 [node name="PlayerNode" type="Node" parent="."]
 
