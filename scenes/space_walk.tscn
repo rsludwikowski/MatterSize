@@ -148,13 +148,13 @@ rotation_speed = 10.0
 [node name="Planets" type="Node3D" parent="."]
 
 [node name="Planet3" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.664, 1.563, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.661, 1.82142, -0.046875)
 mass = 50.0
 max_contacts_reported = 10
 initial_velocity = Vector3(0, 8.1, 0)
 planet_radius = 10.62
 hill_area_radius = 41.98
-gravity_strength = 61.61
+gravity_strength = 0.0
 planet_material = SubResource("StandardMaterial3D_piuna")
 
 [node name="Sun" parent="Planets" instance=ExtResource("4_kxp37")]
@@ -166,7 +166,7 @@ gravity_strength = 0.0
 planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Planet" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5419, 27.6075, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 56.06, 0)
 mass = 22.88
 initial_velocity = Vector3(-7.96, 8.54, 0)
 planet_radius = 6.405

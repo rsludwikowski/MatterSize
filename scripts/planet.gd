@@ -138,6 +138,8 @@ func update_position(delta) -> void:
 
 func UpdateVelocity_2(acceleration:Vector3, time_step:float) -> void:
 	current_velocity+= acceleration*time_step
+	if(self.freeze):
+		current_velocity = Vector3.ZERO
 	#print(current_velocity)
 
 func UpdatePosition(delta_T) -> void:

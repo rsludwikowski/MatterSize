@@ -17,12 +17,14 @@ class PlanetLines:
 	var mass : float
 	var Vels : Array 
 	var Pos  : Array
+	var freeze: bool
 	
-	func _init(curr_mass,curr_vel,curr_Pos):
+	func _init(curr_mass,curr_vel,curr_Pos,b_freeze):
 		mass = curr_mass
 		Vels.append(curr_vel)
 		Pos.append(curr_Pos)
-	
+		freeze = b_freeze
+		
 	func Print():
 		print("Mass: ",mass,"\tVel0: ",Vels[0],"\tPos0: ",Pos[0])
 
@@ -82,7 +84,7 @@ func rewrite_array(planets_t,planets:Array):
 			planet_vel = p.current_velocity
 		
 		#print("planet VEls: " ,planet_vel, "\t",gameStarted)
-		planets.append(PlanetLines.new(p.mass,planet_vel,p.global_position))
+		planets.append(PlanetLines.new(p.mass,planet_vel,p.global_position,p.freeze))
 		
 	#for pl in planets:
 		#pl.Print()
@@ -149,7 +151,10 @@ func DrawOrbits(planets:Array):
 		#main loop of drawing orbits
 		for planet in planets:
 			var acceleration = CalculateAcceleration(planet.Pos[i],planet,planets,i)
-			planet.Vels.append(planet.Vels[i] + acceleration*fixed_deltaT)
+			if(planet.freeze):
+				planet.Vels.append(Vector3.ZERO)
+			else:
+				planet.Vels.append(planet.Vels[i] + acceleration*fixed_deltaT)
 		
 		for planet in planets:
 			UpdatePosition_Lines(planet,fixed_deltaT,i)
