@@ -32,13 +32,13 @@ func _process(delta):
 	
 	var mv_pos = get_viewport().get_mouse_position()
 
-	print(mv_pos)
+	#print(mv_pos)
 	var camera:Camera3D = $"../Cameras/camera_space"
 	
 	#print(camera.global_position)
 	#ray casting positions
 	ray_origin = camera.project_ray_origin(mv_pos)
-	print("Ray origin: ",ray_origin)
+	#print("Ray origin: ",ray_origin)
 	var ray_dir = camera.project_ray_normal(mv_pos)
 	
 	ray_end = ray_origin + ray_dir * 100000

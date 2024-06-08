@@ -12,7 +12,7 @@ var new_transform = self.global_transform
 var velocity: Vector3
 
 func planetInfo():
-	print("Vel: ",velocity,"\tPos: ",self.position,"\tMass: ",self.mass)
+	#print("Vel: ",velocity,"\tPos: ",self.position,"\tMass: ",self.mass)
 
 
 func UpdateVelocity(delta_T:float):
@@ -26,7 +26,7 @@ func UpdateVelocity(delta_T:float):
 
 func UpdateVelocity_2(acceleration:Vector3, time_step:float):
 	velocity+= acceleration*time_step
-	print(velocity)
+	#print(velocity)
 
 func UpdatePosition(delta_T):
 	move_and_collide(velocity*delta_T)

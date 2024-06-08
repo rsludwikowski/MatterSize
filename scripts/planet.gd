@@ -95,50 +95,50 @@ func update_radius(radius) -> void:
 			var sphere_mesh = planet_surface.mesh
 			sphere_mesh.radius = radius
 			planet_surface.mesh = sphere_mesh
-			
-func update_velocity(delta) -> void:
-	var planets = get_tree().get_nodes_in_group("Planets")
-	
-	for planet in planets:
-		if planet != self:
-			var distance_vec = planet.global_position - self.global_position
-			var r = distance_vec.length()
-			var forceDir = distance_vec.normalized()
-			
-			# Calculate the gravitational force magnitude
-			var force_mag = (G_CONSTANT * self.mass * planet.mass) / (r * r)
-			
-			# Calculate the force vector
-			var force = forceDir * force_mag
-			
-			# Calculate the acceleration
-			var acceleration = force / self.mass
-
-			# Update the velocity
-			current_velocity += acceleration * delta
-
-	
-	#for area in overlapping_areas:
-		#if area is Area3D and area.gravity != 0:
-			#var gravity_dir = (area.get_global_transform().origin - global_transform.origin).normalized()
-			#current_velocity += gravity_dir * area.gravity * delta
+			#
+#func update_velocity(delta) -> void:
+	#var planets = get_tree().get_nodes_in_group("Planets")
+	#
+	#for planet in planets:
+		#if planet != self:
+			#var distance_vec = planet.global_position - self.global_position
+			#var r = distance_vec.length()
+			#var forceDir = distance_vec.normalized()
+			#
+			## Calculate the gravitational force magnitude
+			#var force_mag = (G_CONSTANT * self.mass * planet.mass) / (r * r)
+			#
+			## Calculate the force vector
+			#var force = forceDir * force_mag
+			#
+			## Calculate the acceleration
+			#var acceleration = force / self.mass
+#
+			## Update the velocity
+			#current_velocity += acceleration * delta
+#
+	#
+	##for area in overlapping_areas:
+		##if area is Area3D and area.gravity != 0:
+			##var gravity_dir = (area.get_global_transform().origin - global_transform.origin).normalized()
+			##current_velocity += gravity_dir * area.gravity * delta
 
 func update_position(delta) -> void:
 	self.global_transform.origin += current_velocity * delta
-	
-func UpdateVelocity(delta_T:float) -> void:
-	var planets = get_tree().get_nodes_in_group("Planets")
-	for planet in planets:
-		if planet != self:
-			var sqrDst = (planet.global_position - self.global_position).length_squared()
-			var forceDir = (planet.global_position - self.global_position).normalized()
-			var force = forceDir * G_CONSTANT
-			var acceleration = force / self.mass
-			current_velocity += acceleration * delta_T
+	#
+#func UpdateVelocity(delta_T:float) -> void:
+	#var planets = get_tree().get_nodes_in_group("Planets")
+	#for planet in planets:
+		#if planet != self:
+			#var sqrDst = (planet.global_position - self.global_position).length_squared()
+			#var forceDir = (planet.global_position - self.global_position).normalized()
+			#var force = forceDir * G_CONSTANT
+			#var acceleration = force / self.mass
+			#current_velocity += acceleration * delta_T
 
 func UpdateVelocity_2(acceleration:Vector3, time_step:float) -> void:
 	current_velocity+= acceleration*time_step
-	print(current_velocity)
+	#print(current_velocity)
 
 func UpdatePosition(delta_T) -> void:
 	move_and_collide(current_velocity*delta_T)

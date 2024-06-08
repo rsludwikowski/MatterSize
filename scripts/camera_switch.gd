@@ -25,7 +25,7 @@ func set_group_camera_to_all_planets():
 	var targets_node_3d: Array[Node3D] = []
 	var targets = get_tree().get_nodes_in_group("Planets")
 	targets += get_tree().get_nodes_in_group("Player")
-	print(targets)
+	#print(targets)
 	
 	for target in targets:
 		var target_node = target as Node3D

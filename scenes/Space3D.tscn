@@ -21,12 +21,16 @@ transform = Transform3D(1, 0, 0, 0, 0.475854, 0.879524, 0, -0.879524, 0.475854, 
 [node name="DebugLines" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.24602, 2.96241, 2.24841)
 script = ExtResource("3_qdr0r")
+visualize = null
 metadata/steps = 5316
 metadata/visualize = true
 
 [node name="Sun" type="RigidBody3D" parent="."]
 mass = 270.78
 script = ExtResource("3_ppx84")
+speed = null
+move_force = null
+initialVelocity = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Sun"]
 transform = Transform3D(19.465, 0, 0, 0, 19.465, 0, 0, 0, 19.465, 0, 0, 0)
@@ -41,6 +45,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0552731, 0, 386.943)
 mass = 38.16
 linear_velocity = Vector3(154.73, 0, 0)
 script = ExtResource("3_ppx84")
+speed = null
+move_force = null
+initialVelocity = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Earth"]
 transform = Transform3D(5.205, 0, 0, 0, 5.205, 0, 0, 0, 5.205, 0, 0, 0)
@@ -55,6 +62,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.110546, 0, 395.805)
 mass = 1000.0
 linear_velocity = Vector3(154.73, 0, 0)
 script = ExtResource("3_ppx84")
+speed = null
+move_force = null
+initialVelocity = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Earth2"]
 transform = Transform3D(1.15, 0, 0, 0, 1.15, 0, 0, 0, 1.15, 0.219429, 0.215385, -0.07724)

@@ -3,13 +3,13 @@ extends Node3D
 
 var fixed_deltaT = 0.01666666666667
 
-var universe = load("res://scripts/universe.gd")
-var target_script_path = "res://scripts/s_planet.gd"
+var universe = load("res://scripts/space_walk.gd")
+var target_script_path = "res://scripts/planet.gd"
 
-var steps = 10
-var visualize
+@export var steps:int = 10
+@export var visualize: bool
 var gameStarted:bool = true
-@onready var global_planets = get_tree().get_nodes_in_group("Planets")
+@onready var global_planets: Array[Planet] = get_all_planets_list()
 
 
 
@@ -30,29 +30,29 @@ class PlanetLines:
 
 
 func _process(delta: float) -> void:
-	
+	#print("Global planets: ",global_planets)
 	if(Engine.is_editor_hint()):
-		print("editor")
+		#print("editor")
 		gameStarted = false
 	else:
 		gameStarted = true
-		print("game")
+		#print("game")
 	
-	print(gameStarted)
-	visualize = self.get_meta("visualize")
+	#print(gameStarted)
+	
 	
 	if visualize:
 		var planets: Array = []
 		var planets_t = global_planets
 		
 		rewrite_array(planets_t,planets)
-		#for pl in planets:
-			#pl.Print()
+		for pl in planets:
+			pl.Print()
 		
 		DrawOrbits(planets)
 		
 		var a = DebugDraw3D.new_scoped_config().set_thickness(0.005)
-		steps = self.get_meta("steps")
+		
 		
 		#for i in steps:
 			#DebugDraw3D.draw_line(self.global_position + Vector3(i,i,i),Vector3(5,5,1) + Vector3(i,i,i),Color(1,1,0))
@@ -75,17 +75,17 @@ func _process(delta: float) -> void:
 	
 
 func rewrite_array(planets_t,planets:Array):
-	print(planets_t)
+	#print(planets_t)
 	for p in planets_t:
 		
 		
 		var planet_vel :Vector3
 		
-		planet_vel = p.linear_velocity
+		planet_vel = p.initial_velocity
 		if gameStarted:
-			planet_vel = p.velocity
+			planet_vel = p.current_velocity
 		
-		print("planet VEls: " ,planet_vel, "\t",gameStarted)
+		#print("planet VEls: " ,planet_vel, "\t",gameStarted)
 		planets.append(PlanetLines.new(p.mass,planet_vel,p.global_position))
 		
 	#for pl in planets:
@@ -160,7 +160,7 @@ func DrawOrbits(planets:Array):
 		
 	
 	for planet in planets:
-		print(planet.Vels.size())
+		#print(planet.Vels.size())
 		for i in steps:
 			if i == 0:
 				continue
@@ -170,3 +170,16 @@ func DrawOrbits(planets:Array):
 			#print(planet.Pos[i],"  ",i)
 			
 	
+
+
+
+
+
+func get_all_planets_list() -> Array[Planet]:
+	var planets: Array[Planet] = []
+	var nodes = get_tree().get_nodes_in_group("Planets")
+	for planet_node in nodes:
+		var planet = planet_node as Planet
+		if planet:
+			planets.append(planet)
+	return planets
