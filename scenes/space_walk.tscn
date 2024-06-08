@@ -1,8 +1,8 @@
 [gd_scene load_steps=19 format=3 uid="uid://boo21jkowihng"]
 
-[ext_resource type="Script" path="res://scenes/space_walk.gd" id="1_wb8cd"]
+[ext_resource type="Script" path="res://scripts/space_walk.gd" id="1_wb8cd"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_5xchs"]
-[ext_resource type="Script" path="res://scenes/camera_switch.gd" id="2_xiyqc"]
+[ext_resource type="Script" path="res://scripts/camera_switch.gd" id="2_xiyqc"]
 [ext_resource type="PackedScene" uid="uid://duosirkttbn2l" path="res://scenes/player.tscn" id="3_taom1"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4_5bllr"]
 [ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="4_kxp37"]
