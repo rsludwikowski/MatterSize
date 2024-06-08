@@ -10,8 +10,8 @@ func _ready():
 	for planet in planets:
 		print(planets)
 
-func get_all_planets_list() -> Array[Planet]:
-	var planets = []
+func get_all_planets_list():
+	var planets: Array[Planet] = []
 	var nodes = get_tree().get_nodes_in_group("Planets")
 	for planet_node in nodes:
 		var planet = planet_node as Planet

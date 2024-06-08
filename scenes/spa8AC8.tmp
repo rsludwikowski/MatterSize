@@ -1,15 +1,14 @@
-[gd_scene load_steps=20 format=3 uid="uid://boo21jkowihng"]
+[gd_scene load_steps=19 format=3 uid="uid://boo21jkowihng"]
 
-[ext_resource type="Script" path="res://scripts/space_walk.gd" id="1_wb8cd"]
+[ext_resource type="Script" path="res://scenes/space_walk.gd" id="1_wb8cd"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_5xchs"]
-[ext_resource type="Script" path="res://scripts/camera_switch.gd" id="2_xiyqc"]
+[ext_resource type="Script" path="res://scenes/camera_switch.gd" id="2_xiyqc"]
 [ext_resource type="PackedScene" uid="uid://duosirkttbn2l" path="res://scenes/player.tscn" id="3_taom1"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4_5bllr"]
 [ext_resource type="PackedScene" uid="uid://bswoaf0h0e7fw" path="res://scenes/planet.tscn" id="4_kxp37"]
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="4_loyi5"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="5_scqkl"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="6_0i2wt"]
-[ext_resource type="Script" path="res://scripts/DebugLines.gd" id="10_b7vlp"]
 
 [sub_resource type="Environment" id="Environment_1tnpd"]
 background_mode = 1
@@ -71,26 +70,20 @@ rim_enabled = true
 [node name="SpaceWalk" type="Node3D"]
 script = ExtResource("1_wb8cd")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
-light_energy = 5.41
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1tnpd")
 camera_attributes = SubResource("CameraAttributesPractical_scecj")
 
 [node name="Cameras" type="Node" parent="."]
 
-[node name="camera_switch" type="Node" parent="Cameras" node_paths=PackedStringArray("camera_1_frame", "camera_2_group", "camera_3_frame_sun", "host")]
+[node name="camera_switch" type="Node" parent="Cameras" node_paths=PackedStringArray("camera_frame", "camera_group")]
 script = ExtResource("2_xiyqc")
-camera_1_frame = NodePath("../camera_1_frame")
-camera_2_group = NodePath("../camera_2_group")
-camera_3_frame_sun = NodePath("../camera_3_frame_sun")
-host = NodePath("../camera_space/PhantomCameraHost")
+camera_frame = NodePath("../camera_1_frame")
+camera_group = NodePath("../camera_2_group")
 
 [node name="camera_1_frame" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_target")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.1444, 55.7818, 31)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.0923, 10.0101, 31)
 script = ExtResource("4_5bllr")
 priority = 1
 follow_mode = 5
@@ -104,92 +97,68 @@ dead_zone_height = 0.669
 
 [node name="camera_2_group" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_targets")]
 unique_name_in_owner = true
-transform = Transform3D(0.999906, 1.71758e-10, -2.12787e-05, 0, 0.999968, 8.07155e-06, 2.12774e-05, -8.07155e-06, 0.999968, 199.093, 28.7054, 3.34015)
-visible = false
+transform = Transform3D(0.999906, 1.71758e-10, -2.12787e-05, 0, 0.999968, 8.07155e-06, 2.12774e-05, -8.07155e-06, 0.999968, 13.8249, 18.6804, 102.317)
 script = ExtResource("4_5bllr")
 follow_mode = 3
-follow_targets = [null, null, null, null]
+follow_targets = [NodePath("../../PlayerNode/Player"), NodePath("../../Planets/Planet3"), NodePath("../../Planets/Planet4"), NodePath("../../Planets/Planet")]
 tween_resource = SubResource("Resource_bsw5e")
 camera_3d_resource = SubResource("Resource_8vedi")
 follow_offset = Vector3(0, 0, 2.32)
 follow_damping = true
 auto_follow_distance = true
 auto_follow_distance_min = 10.0
-auto_follow_distance_max = 150.0
-
-[node name="camera_3_frame_sun" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 301)
-script = ExtResource("4_5bllr")
-follow_mode = 5
-follow_target = NodePath("../../Planets/Sun")
-tween_resource = SubResource("Resource_7qnno")
-camera_3d_resource = SubResource("Resource_6utqf")
-follow_offset = Vector3(0, 0, 300)
-follow_damping = true
-dead_zone_width = 0.384
-dead_zone_height = 0.669
+auto_follow_distance_max = 100.0
 
 [node name="camera_space" type="Camera3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.1444, 55.7818, 31)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.0923, 10.0101, 31)
 current = true
 size = 19.4
 
 [node name="PhantomCameraHost" type="Node" parent="Cameras/camera_space"]
 script = ExtResource("2_5xchs")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832832, 0, 240.042)
+light_energy = 9.059
+
 [node name="PlayerNode" type="Node" parent="."]
 
 [node name="Player" parent="PlayerNode" instance=ExtResource("3_taom1")]
-transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 66.1444, 55.7818, 0)
-mass = 0.01
-move_speed = 15.0
+transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 48.0923, 10.0101, 0)
+mass = 1.94
+linear_velocity = Vector3(0, -20.16, 0)
+move_speed = 8.0
 jump_initial_impulse = 3
 rotation_speed = 10.0
 
 [node name="Planets" type="Node3D" parent="."]
 
 [node name="Planet3" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.661, 1.82142, -0.046875)
-mass = 50.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.1201, 1.563, 0)
+mass = 443.71
+freeze = true
 max_contacts_reported = 10
-initial_velocity = Vector3(0, 8.1, 0)
 planet_radius = 10.62
 hill_area_radius = 41.98
-gravity_strength = 0.0
+gravity_strength = 61.61
 planet_material = SubResource("StandardMaterial3D_piuna")
 
-[node name="Sun" parent="Planets" instance=ExtResource("4_kxp37")]
-mass = 1000.0
+[node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.466, 1.402, 0)
+mass = 222.75
+freeze = true
 max_contacts_reported = 10
 planet_radius = 16.2
 hill_area_radius = 36.305
-gravity_strength = 0.0
+gravity_strength = 28.225
 planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Planet" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 56.06, 0)
-mass = 22.88
-initial_velocity = Vector3(-7.96, 8.54, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3212, 35.9571, 0)
+freeze = true
 planet_radius = 6.405
-hill_area_radius = 11.81
+hill_area_radius = 11.31
 gravity_strength = 68.905
-planet_material = null
-
-[node name="Planet2" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -308.233, 77.1388, 0)
-mass = 500.0
-planet_radius = 22.88
-hill_area_radius = 49.79
-gravity_strength = 11.66
-planet_material = null
-
-[node name="Planet5" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -149.274, -27.0843, 0)
-mass = 500.0
-planet_radius = 9.16
-hill_area_radius = 16.12
-gravity_strength = 18.225
-planet_material = null
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = -1
@@ -232,7 +201,3 @@ offset_bottom = 40.0
 script = ExtResource("4_loyi5")
 camera_frame = NodePath("../Cameras/camera_1_frame")
 camera_group = NodePath("../Cameras/camera_2_group")
-
-[node name="DebugLines" type="Node3D" parent="."]
-script = ExtResource("10_b7vlp")
-steps = 835

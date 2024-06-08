@@ -10,8 +10,8 @@ script = ExtResource("1_0yfca")
 
 [node name="DebugLines" type="Node3D" parent="."]
 script = ExtResource("2_uflvv")
-metadata/visualize = true
-metadata/steps = 447
+metadata/visualize = false
+metadata/steps = 222
 
 [node name="SPlanet1" parent="." instance=ExtResource("2_d8x5x")]
 mass = 1000.0
