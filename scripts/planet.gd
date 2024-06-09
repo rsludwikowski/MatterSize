@@ -51,7 +51,7 @@ func _integrate_forces(state):
 	var colliding_bodies = get_colliding_bodies()
 	for body in colliding_bodies:
 		if body is Planet:
-			print("BOOM!")
+			print(name, " collide with ", body.name)
 			var contact_position = state.get_contact_local_position(0)  # Use the first contact point
 			var global_contact_position = state.transform.origin + contact_position
 			#print("Local position: ", contact_position, " Global position: ", global_contact_position)
