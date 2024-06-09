@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bswoaf0h0e7fw"]
+[gd_scene load_steps=15 format=3 uid="uid://bswoaf0h0e7fw"]
 
 [ext_resource type="Script" path="res://scripts/planet.gd" id="1_ysgxj"]
 
@@ -78,6 +78,7 @@ radius = 6.0
 height = 12.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pb16x"]
+margin = 0.06
 radius = 1.395
 
 [sub_resource type="SphereMesh" id="SphereMesh_xq325"]
@@ -117,10 +118,36 @@ func explosion_on_collision(body,global_contact_position):
 		#restart()
 "
 
+[sub_resource type="GDScript" id="GDScript_r3et0"]
+script/source = "extends Label3D
+
+@export var base_scale = Vector3.ONE
+@export var scale_factor = 0.2
+
+var camera
+
+func _ready():
+	position.y = get_parent().hill_area_radius
+	camera = get_viewport().get_camera_3d()
+	if not camera:
+		printerr(\"No camera found in the viewport!\")
+
+func _process(delta):
+	var planet_velocity: Vector3 = get_parent().current_velocity
+	set_text(\"V: %s\" % str(planet_velocity.length()))
+	if camera:
+		# Oblicz odległość między kamerą a Label3D
+		var z_distance = abs(global_transform.origin.z - camera.global_transform.origin.z)
+
+		# Ustaw skalę w zależności od odległości
+		var new_scale = base_scale * (z_distance * scale_factor)
+		scale = new_scale
+"
+
 [node name="Planet" type="RigidBody3D" groups=["Planets"]]
 physics_material_override = SubResource("PhysicsMaterial_63687")
 lock_rotation = true
-max_contacts_reported = 5
+max_contacts_reported = 10
 contact_monitor = true
 script = ExtResource("1_ysgxj")
 planet_radius = 1.395
@@ -165,6 +192,11 @@ scale_amount_min = 2.0
 scale_amount_max = 6.0
 scale_amount_curve = SubResource("Curve_00h45")
 script = SubResource("GDScript_5b2fv")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.98064, 0)
+text = "Text"
+script = SubResource("GDScript_r3et0")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
