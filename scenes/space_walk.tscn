@@ -98,21 +98,24 @@ follow_mode = 5
 follow_target = NodePath("../../PlayerNode/Player")
 tween_resource = SubResource("Resource_7qnno")
 camera_3d_resource = SubResource("Resource_6utqf")
-follow_offset = Vector3(0, 0, 30)
+follow_offset = Vector3(0, 0, 1)
 follow_damping = true
+follow_distance = 30.0
 dead_zone_width = 0.384
 dead_zone_height = 0.669
+spring_length = 30.0
 
 [node name="camera_2_group" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_targets")]
 unique_name_in_owner = true
-transform = Transform3D(0.999906, 1.71758e-10, -2.12787e-05, 0, 0.999968, 8.07155e-06, 2.12774e-05, -8.07155e-06, 0.999968, 199.093, 28.7054, 3.34015)
+transform = Transform3D(1, 1.71763e-10, -2.12794e-05, 0, 1, 8.07181e-06, 2.12794e-05, -8.07181e-06, 1, 0, 0, 0)
 visible = false
 script = ExtResource("4_5bllr")
+priority = 1
 follow_mode = 3
 follow_targets = [null, null, null, null]
 tween_resource = SubResource("Resource_bsw5e")
 camera_3d_resource = SubResource("Resource_8vedi")
-follow_offset = Vector3(0, 0, 2.32)
+follow_offset = Vector3(0, 0, 1)
 follow_damping = true
 auto_follow_distance = true
 auto_follow_distance_min = 10.0
@@ -129,10 +132,12 @@ follow_mode = 5
 follow_target = NodePath("../../Planets/Sun")
 tween_resource = SubResource("Resource_7qnno")
 camera_3d_resource = SubResource("Resource_6utqf")
-follow_offset = Vector3(0, 0, 250)
+follow_offset = Vector3(0, 0, 1)
 follow_damping = true
+follow_distance = 250.0
 dead_zone_width = 0.384
 dead_zone_height = 0.669
+spring_length = 250.0
 
 [node name="camera_space" type="Camera3D" parent="Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 274.541, 49.0702, 31)
@@ -249,7 +254,6 @@ camera_group = NodePath("../Cameras/camera_2_group")
 [node name="DebugLines" type="Node3D" parent="." node_paths=PackedStringArray("universe", "referenceBody")]
 script = ExtResource("10_86te5")
 universe = NodePath("..")
-visualize = true
 steps = 2000
 referenceBody = NodePath("../Planets/Sun")
 YYYH = 100
