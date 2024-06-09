@@ -35,9 +35,9 @@ func toggle_camera():
 	if active_camera == "camera_2":
 		set_group_camera_to_all_planets()
 
-	# Debugging: wyświetlenie priorytetów kamer
-	for key in cameras:
-		print(key, "priority:", cameras[key].priority)
+	## Debugging: wyświetlenie priorytetów kamer
+	#for key in cameras:
+		#print(key, "priority:", cameras[key].priority)
 
 func set_group_camera_to_all_planets():
 	var targets_node_3d: Array[Node3D] = []
