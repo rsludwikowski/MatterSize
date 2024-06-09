@@ -1,5 +1,7 @@
 extends RigidBody3D
 
+class_name Player
+
 @export var move_speed: float = 5.0
 @export var jump_initial_impulse = 40
 @export var rotation_speed = 8.0
@@ -113,12 +115,12 @@ func update_velocity(acceleration:Vector3, time_step:float) -> void:
 		if(self.freeze):
 			current_velocity = Vector3.ZERO
 	else:
-		pass#current_velocity = Vector3.ZERO
+		current_velocity = Vector3.ZERO
 
 func update_position(delta_T) -> void:
 	move_and_collide(current_velocity*delta_T)
 
 func update_position_old(delta) -> void:
 	#move_player(current_velocity,delta)
-	move_and_collide(current_velocity*delta)
-	#self.global_transform.origin += current_velocity * delta
+	#move_and_collide(current_velocity*delta)
+	self.global_transform.origin += current_velocity * delta

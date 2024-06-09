@@ -90,7 +90,7 @@ host = NodePath("../camera_space/PhantomCameraHost")
 
 [node name="camera_1_player" type="Node3D" parent="Cameras" node_paths=PackedStringArray("follow_target", "follow_targets")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 279.004, 180.123, 30)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268147, 20.3064, 30)
 visible = false
 script = ExtResource("4_5bllr")
 priority = 1
@@ -143,7 +143,7 @@ dead_zone_height = 0.669
 spring_length = 250.0
 
 [node name="camera_space" type="Camera3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 279.004, 180.123, 30)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268147, 20.3064, 30)
 size = 41.83
 
 [node name="PhantomCameraHost" type="Node" parent="Cameras/camera_space"]
@@ -152,7 +152,7 @@ script = ExtResource("2_5xchs")
 [node name="PlayerNode" type="Node" parent="."]
 
 [node name="Player" parent="PlayerNode" instance=ExtResource("3_taom1")]
-transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 279.004, 180.123, 0)
+transform = Transform3D(0.953649, 0.300922, 0, -0.300922, 0.953648, 0, 0, 0, 1, 0.268147, 20.3064, 0)
 mass = 1.78
 move_speed = 2.0
 jump_initial_impulse = 2
@@ -208,7 +208,7 @@ mass = 10.04
 initial_velocity = Vector3(30.06, -0.685, 0)
 planet_radius = 3.0
 hill_area_radius = 25.405
-gravity_strength = 100.0
+gravity_strength = 51.625
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = -1

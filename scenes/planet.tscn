@@ -136,8 +136,8 @@ func _ready():
 		printerr(\"No camera found in the viewport!\")
 
 func _process(delta):
-	var planet_velocity = str(planet.current_velocity.length())
-	set_text(\"%s\\nV: %s\" % [planet.name,planet_velocity])
+	var planet_velocity = planet.current_velocity.length()
+	set_text(\"%s\\nv: %.2f\" % [planet.name,planet_velocity])
 	
 	if camera:
 		# Oblicz odległość między kamerą a Label3D

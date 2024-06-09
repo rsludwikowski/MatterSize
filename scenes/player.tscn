@@ -30,7 +30,7 @@ script/source = "extends Label3D
 @export var scale_factor = 0.2
 
 var camera
-@onready var player = get_parent()
+@onready var player: Player = get_parent()
 
 func _ready():
 	camera = get_viewport().get_camera_3d()
@@ -38,8 +38,13 @@ func _ready():
 		printerr(\"No camera found in the viewport!\")
 
 func _process(delta):
-	var player_velocity = str(player.current_velocity.length())
-	set_text(\"%s\\nV: %s\" % [player.name,player_velocity])
+	var player_velocity = player.current_velocity.length()
+	set_text(\"%s\\nv: %.2f\\nOn Floor: %s\\nLocal gravity: %s\" % [
+		player.name,
+		player_velocity,
+		player.in_hill_area,
+		player.local_gravity.length()
+		])
 	
 	if camera:
 		# Oblicz odległość między kamerą a Label3D
