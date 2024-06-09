@@ -5,15 +5,15 @@ extends RigidBody3D
 @export var rotation_speed = 8.0
 @export var max_speed: float = 10
 
-var cursor
+@onready var cursor = $"../../Cursor"
 var planet: Planet = null
 var in_hill_area: bool = false
 var hill_area: Area3D = null
 var on_floor = false
 var local_gravity = Vector3.ZERO
+var current_velocity: Vector3 = self.linear_velocity
 
 func _ready():
-	cursor = $"../../Cursor"
 	pass
 
 func _process(delta):
@@ -107,3 +107,18 @@ func move_player(forward_vec:Vector3,delta):
 	if relative_vel.length() < max_speed:
 		self.apply_central_impulse(move_vec*delta*100)
 	
+func update_velocity(acceleration:Vector3, time_step:float) -> void:
+	if not in_hill_area:
+		current_velocity+= acceleration*time_step
+		if(self.freeze):
+			current_velocity = Vector3.ZERO
+	else:
+		pass#current_velocity = Vector3.ZERO
+
+func update_position(delta_T) -> void:
+	move_and_collide(current_velocity*delta_T)
+
+func update_position_old(delta) -> void:
+	#move_player(current_velocity,delta)
+	move_and_collide(current_velocity*delta)
+	#self.global_transform.origin += current_velocity * delta

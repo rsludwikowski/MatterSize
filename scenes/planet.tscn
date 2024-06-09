@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/planet.gd" id="1_ysgxj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_63687"]
+friction = 0.9
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4siv5"]
 albedo_color = Color(0.564181, 0.292303, 0.411744, 1)
@@ -71,17 +72,17 @@ func _on_body_exited(body):
 		body.in_hill_area = false
 "
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_lda3e"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_nnq2t"]
 radius = 6.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_adphx"]
+[sub_resource type="SphereMesh" id="SphereMesh_rj2f8"]
 radius = 6.0
 height = 12.0
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_x1ajq"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_gw7lq"]
 radius = 1.395
 
-[sub_resource type="SphereMesh" id="SphereMesh_di14n"]
+[sub_resource type="SphereMesh" id="SphereMesh_8ioy1"]
 radius = 1.395
 height = 2.79
 
@@ -147,7 +148,7 @@ func _process(delta):
 		scale = new_scale
 "
 
-[node name="Planet" type="RigidBody3D" groups=["Planets"]]
+[node name="Planet" type="RigidBody3D" groups=["MassObjects", "Planets"]]
 physics_material_override = SubResource("PhysicsMaterial_63687")
 lock_rotation = true
 max_contacts_reported = 10
@@ -166,18 +167,18 @@ gravity_direction = Vector3(0, 0, 0)
 script = SubResource("GDScript_rv655")
 
 [node name="HillAreaShape" type="CollisionShape3D" parent="HillArea"]
-shape = SubResource("SphereShape3D_lda3e")
+shape = SubResource("SphereShape3D_nnq2t")
 
 [node name="HillAreaSurface" type="MeshInstance3D" parent="HillArea"]
 material_override = SubResource("StandardMaterial3D_fajcp")
-mesh = SubResource("SphereMesh_adphx")
+mesh = SubResource("SphereMesh_rj2f8")
 
 [node name="PlanetShape" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_x1ajq")
+shape = SubResource("SphereShape3D_gw7lq")
 
 [node name="PlanetSurface" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_4siv5")
-mesh = SubResource("SphereMesh_di14n")
+mesh = SubResource("SphereMesh_8ioy1")
 
 [node name="Explosion" type="CPUParticles3D" parent="."]
 emitting = false

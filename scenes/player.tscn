@@ -1,9 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://duosirkttbn2l"]
+[gd_scene load_steps=10 format=3 uid="uid://duosirkttbn2l"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_qshg3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_e5l82"]
-friction = 0.5
+friction = 0.9
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0ux1c"]
 
@@ -23,7 +23,34 @@ height = 0.646
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_o0co1"]
 
-[node name="Player" type="RigidBody3D" groups=["Player"]]
+[sub_resource type="GDScript" id="GDScript_c3xah"]
+script/source = "extends Label3D
+
+@export var base_scale = Vector3.ONE
+@export var scale_factor = 0.2
+
+var camera
+@onready var player = get_parent()
+
+func _ready():
+	camera = get_viewport().get_camera_3d()
+	if not camera:
+		printerr(\"No camera found in the viewport!\")
+
+func _process(delta):
+	var player_velocity = str(player.current_velocity.length())
+	set_text(\"%s\\nV: %s\" % [player.name,player_velocity])
+	
+	if camera:
+		# Oblicz odległość między kamerą a Label3D
+		var z_distance = abs(global_transform.origin.z - camera.global_transform.origin.z)
+
+		# Ustaw skalę w zależności od odległości
+		var new_scale = base_scale * (z_distance * scale_factor)
+		scale = new_scale
+"
+
+[node name="Player" type="RigidBody3D" groups=["MassObjects", "Player"]]
 collision_layer = 2
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -62,6 +89,12 @@ mesh = SubResource("CapsuleMesh_o80q4")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.129498, 0)
 shape = SubResource("SphereShape3D_o0co1")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-0.0110303, 0, 0.999939, 0, 1, 0, -0.999939, 0, -0.0110303, 0, 2.68088, 0)
+billboard = 1
+text = "Text"
+script = SubResource("GDScript_c3xah")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
