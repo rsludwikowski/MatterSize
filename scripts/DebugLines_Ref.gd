@@ -52,12 +52,12 @@ func _process(delta: float) -> void:
 		var planets_t = global_planets
 		
 		rewrite_array(planets_t,planets)
-		for pl in planets:
-			pl.Print()
-		
+		#for pl in planets:
+			#pl.Print()
+			
+		var a = DebugDraw3D.new_scoped_config().set_thickness(0.8)
 		DrawOrbits(planets)
 		
-		var a = DebugDraw3D.new_scoped_config().set_thickness(0.005)
 		
 		
 		#for i in steps:
