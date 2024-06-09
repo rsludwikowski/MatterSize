@@ -3,7 +3,6 @@ extends RigidBody3D
 
 class_name Planet
 
-const G_CONSTANT: float = 6.67
 @export var initial_velocity: Vector3 = Vector3(0,0,0)
 @export var planet_radius: float = 3.0
 @export var hill_area_radius: float = 6.0

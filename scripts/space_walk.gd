@@ -36,15 +36,13 @@ func get_all_planets_list() -> Array[Planet]:
 	return planets
 
 
-
-
-
 func calculate_acceleration(point:Vector3,ignoreBody) -> Vector3:
 	var acceleration = Vector3.ZERO
 	for body in planets:
 		if body != ignoreBody:
 			var sqrDst = (body.global_position - point).length_squared()
 			var forceDir = (body.global_position - point).normalized()
-			var force = forceDir * G_CONSTANT
-			acceleration += force*body.mass/sqrDst
+			var forceMagnitude = G_CONSTANT * (ignoreBody.mass * body.mass) / sqrDst
+			var force = forceDir * forceMagnitude
+			acceleration += force / ignoreBody.mass
 	return acceleration

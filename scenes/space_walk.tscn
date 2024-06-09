@@ -154,53 +154,52 @@ rotation_speed = 10.0
 [node name="Planets" type="Node3D" parent="."]
 
 [node name="Planet3" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 275.889, 1.563, 0)
-mass = 260.0
-max_contacts_reported = 10
-initial_velocity = Vector3(0, 4.68, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.161461, 44.9066, 0)
+mass = 250.0
+initial_velocity = Vector3(-21.21, 1.39, 0)
 planet_radius = 10.62
 hill_area_radius = 41.98
-gravity_strength = 5.125
+gravity_strength = 0.0
 planet_material = SubResource("StandardMaterial3D_piuna")
 
 [node name="Sun" parent="Planets" instance=ExtResource("4_kxp37")]
-mass = 2000.0
+mass = 3000.0
 freeze = true
-max_contacts_reported = 10
 planet_radius = 16.2
 hill_area_radius = 36.305
 gravity_strength = 0.0
 planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Planet" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 72.9732, 0)
-mass = 22.88
-initial_velocity = Vector3(-10.455, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -171.976, 17.5912, 0)
+mass = 3.72
+initial_velocity = Vector3(-3.795, 9.645, 0)
 planet_radius = 6.405
 hill_area_radius = 11.81
-gravity_strength = 68.905
+gravity_strength = 0.0
 planet_material = null
 
 [node name="Planet2" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -308.233, 77.1388, 0)
-mass = 500.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -222.917, 17.0959, 0)
+mass = 1000.0
+initial_velocity = Vector3(0, -9.05, 0)
 planet_radius = 22.88
 hill_area_radius = 49.79
-gravity_strength = 11.66
+gravity_strength = 0.0
 planet_material = null
 
 [node name="Planet5" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -149.274, -27.0843, 0)
-mass = 500.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.59015, -101.536, 0)
+mass = 182.21
+initial_velocity = Vector3(17.985, 0, 0)
 planet_radius = 9.16
 hill_area_radius = 16.12
-gravity_strength = 18.225
+gravity_strength = 0.0
 planet_material = null
 
 [node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 359.242, 1.2765, 0)
-mass = 6.0
-initial_velocity = Vector3(-0.245, 7.66, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.44653, -82.0606, 0)
+initial_velocity = Vector3(10.865, 0, 0)
 planet_radius = 3.0
 hill_area_radius = 5.0
 gravity_strength = 0.0
@@ -247,8 +246,9 @@ script = ExtResource("4_loyi5")
 camera_frame = NodePath("../Cameras/camera_1_frame")
 camera_group = NodePath("../Cameras/camera_2_group")
 
-[node name="DebugLines" type="Node3D" parent="." node_paths=PackedStringArray("referenceBody")]
+[node name="DebugLines" type="Node3D" parent="." node_paths=PackedStringArray("universe", "referenceBody")]
 script = ExtResource("10_86te5")
-steps = 560
-referenceBody = NodePath("../Planets/Planet3")
-YYYH = 33
+universe = NodePath("..")
+steps = 2000
+referenceBody = NodePath("../Planets/Sun")
+YYYH = 100

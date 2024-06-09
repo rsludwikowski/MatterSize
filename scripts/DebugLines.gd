@@ -29,21 +29,15 @@ class PlanetLines:
 	func Print():
 		print("Mass: ",mass,"\tVel0: ",Vels[0],"\tPos0: ",Pos[0])
 
-	#var target_node = find_node_with_script(get_tree().root, target_script_path)
 
 
 func _process(delta: float) -> void:
-	#print("Global planets: ",global_planets)
+
 	if(Engine.is_editor_hint()):
-		#print("editor")
 		gameStarted = false
 	else:
 		gameStarted = true
-		#print("game")
-	
-	#print(gameStarted)
-	
-	
+
 	if visualize:
 		var planets: Array = []
 		var planets_t = global_planets
@@ -56,27 +50,9 @@ func _process(delta: float) -> void:
 		
 		var a = DebugDraw3D.new_scoped_config().set_thickness(0.005)
 		
-		
-		#for i in steps:
-			#DebugDraw3D.draw_line(self.global_position + Vector3(i,i,i),Vector3(5,5,1) + Vector3(i,i,i),Color(1,1,0))
-			
-			
-			
-			
-		
-		
-	
-	
-
-#func _notification(what):
-	#if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		#gameStarted = false
-	
-
 func rewrite_array(planets_t,planets:Array):
-	#print(planets_t)
+
 	for p in planets_t:
-		
 		
 		var planet_vel :Vector3
 		
@@ -84,15 +60,7 @@ func rewrite_array(planets_t,planets:Array):
 		if gameStarted:
 			planet_vel = p.current_velocity
 		
-		#print("planet VEls: " ,planet_vel, "\t",gameStarted)
 		planets.append(PlanetLines.new(p.mass,planet_vel,p.global_position,p.freeze))
-		
-	#for pl in planets:
-		#pl.Print()
-	
-		
-
-
 
 
 func get_all_planets(node,script_path):
@@ -102,10 +70,8 @@ func get_all_planets(node,script_path):
 		
 		if child is RigidBody3D and child.get_script() and child.get_script().resource_path == script_path:
 			objects.append(child)
-			#print("test2")
 		objects += get_all_planets(child,script_path)  # Rekurencyjne wywołanie funkcji dla dzieci
 	return objects
-
 
 
 func find_node_with_script(node, script_path):
@@ -129,10 +95,10 @@ func CalculateAcceleration(point:Vector3,ignoreBody,planets,i):
 		if body != ignoreBody:
 			var sqrDst = (body.Pos[i] - point).length_squared()
 			var forceDir = (body.Pos[i] - point).normalized()
-			var force = forceDir * universe.G_CONSTANT
-			acceleration += force*body.mass/sqrDst
+			var forceMagnitude = universe.G_CONSTANT * (ignoreBody.mass * body.mass) / sqrDst
+			var force = forceDir * forceMagnitude
+			acceleration += force * ignoreBody.mass
 	return acceleration
-
 
 func UpdateVelocity_Lines(curr_planet,planets,delta_T,i):
 	for planet in planets:

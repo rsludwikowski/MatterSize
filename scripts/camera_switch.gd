@@ -5,7 +5,7 @@ extends Node
 @export var camera_3_frame_sun: PhantomCamera3D
 @export var host: PhantomCameraHost
 
-var active_camera = "camera_1"
+var active_camera = "camera_3"
 @onready var cameras: Dictionary = {
 	"camera_1": camera_1_frame,
 	"camera_2": camera_2_group,

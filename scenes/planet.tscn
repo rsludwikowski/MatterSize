@@ -25,8 +25,9 @@ func _ready():
 	connect(\"area_exited\", Callable(self, \"_on_area_exited\"))
 
 func _on_body_entered(body):
-	if body is RigidBody3D and body.is_in_group(\"Planets\"):
-		print(\"GRAF GRAF\")
+	if body is Planet:
+		pass
+		#print(\"GRAF GRAF\")
 		#if body is RigidBody3D:
 		## Obliczenie nowych prędkości po zderzeniu
 		#var m1 = mass
@@ -125,6 +126,7 @@ script/source = "extends Label3D
 @export var scale_factor = 0.2
 
 var camera
+@onready var planet: Planet = get_parent()
 
 func _ready():
 	position.y = get_parent().hill_area_radius
@@ -133,8 +135,9 @@ func _ready():
 		printerr(\"No camera found in the viewport!\")
 
 func _process(delta):
-	var planet_velocity: Vector3 = get_parent().current_velocity
-	set_text(\"V: %s\" % str(planet_velocity.length()))
+	var planet_velocity = str(planet.current_velocity.length())
+	set_text(\"%s\\nV: %s\" % [planet.name,planet_velocity])
+	
 	if camera:
 		# Oblicz odległość między kamerą a Label3D
 		var z_distance = abs(global_transform.origin.z - camera.global_transform.origin.z)
