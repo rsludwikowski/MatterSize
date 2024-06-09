@@ -161,8 +161,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 72.9732, 0)
 mass = 22.88
 initial_velocity = Vector3(-10.455, 0, 0)
 planet_radius = 6.405
-hill_area_radius = 11.31
-gravity_strength = 0.0
+hill_area_radius = 11.81
+gravity_strength = 68.905
+planet_material = null
+
+[node name="Planet2" parent="Planets" instance=ExtResource("4_kxp37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -308.233, 77.1388, 0)
+mass = 500.0
+planet_radius = 22.88
+hill_area_radius = 49.79
+gravity_strength = 11.66
+planet_material = null
+
+[node name="Planet5" parent="Planets" instance=ExtResource("4_kxp37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -149.274, -27.0843, 0)
+mass = 500.0
+planet_radius = 9.16
+hill_area_radius = 16.12
+gravity_strength = 18.225
+planet_material = null
 
 [node name="Planet2" parent="Planets" instance=ExtResource("4_kxp37")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 359.242, 1.2765, 0)
