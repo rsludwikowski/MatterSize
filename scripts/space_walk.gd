@@ -24,7 +24,7 @@ func _physics_process(delta):
 		planet.update_velocity(acceleration,delta)
 	
 	for planet in planets:
-		planet.update_position(delta)
+		planet.update_position_old(delta)
 	
 func get_all_planets_list() -> Array[Planet]:
 	var planets: Array[Planet] = []
