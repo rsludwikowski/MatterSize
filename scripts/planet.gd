@@ -50,14 +50,14 @@ func _process(_delta):
 func _integrate_forces(state):
 	var colliding_bodies = get_colliding_bodies()
 	for body in colliding_bodies:
-		if body is RigidBody3D:
-			#print("BOOM!")
+		if body is Planet:
+			print("BOOM!")
 			var contact_position = state.get_contact_local_position(0)  # Use the first contact point
 			var global_contact_position = state.transform.origin + contact_position
 			#print("Local position: ", contact_position, " Global position: ", global_contact_position)
 			particle_emitter.call("explosion_on_collision", body, global_contact_position)
-	UpdateVelocity(state.step)
-	UpdatePosition(state.step)
+	#update_velocity(state.step)
+	#update_position(state.step)
 
 func set_planet_radius(r: float) -> void:
 	var sphere_mesh = SphereMesh.new()
