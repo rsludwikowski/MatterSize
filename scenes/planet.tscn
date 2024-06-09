@@ -99,24 +99,25 @@ point_count = 3
 [sub_resource type="GDScript" id="GDScript_5b2fv"]
 script/source = "extends CPUParticles3D
 
-@onready var planet = get_parent()
+@onready var planet: Planet = get_parent()
 
-func explosion_on_collision(body,global_contact_position):
-	if body is RigidBody3D:
-		var direction = (body.global_transform.origin - global_contact_position).normalized()
-		var relative_velocity = (planet.global_transform.origin - body.global_transform.origin).length()
-
+func explosion_on_collision(body):
+	if body is Planet:
+		var direction = (body.global_transform.origin - planet.global_transform.origin).normalized()
+		var emiter_position = direction * planet.planet_radius
+		global_transform.origin = planet.global_transform.origin + emiter_position
+		
+		var relative_velocity = (planet.global_transform.origin - body.global_transform.origin).length()		
 		# Ustawienie minimalnej i maksymalnej prędkości początkowej cząsteczek
 		self.initial_velocity_min = relative_velocity / 2
 		self.initial_velocity_max = relative_velocity
 		# Ustawienie kierunku emisji cząsteczek
 		self.direction = direction
 
-		self.scale_amount_min = sqrt(planet.scale.x)
-		self.scale_amount_max = planet.scale.x / 3
-		#self.global_transform.origin = global_contact_position  # Ustawienie pozycji emitera na punkt kolizji
+		self.scale_amount_min = planet.planet_radius / 1.5
+		self.scale_amount_max = planet.planet_radius
+
 		self.emitting = true
-		#restart()
 "
 
 [sub_resource type="GDScript" id="GDScript_r3et0"]

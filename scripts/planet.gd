@@ -22,7 +22,7 @@ var current_velocity: Vector3
 
 var direction: Vector3
 
-var particle_emitter: CPUParticles3D = null
+@onready var particle_emitter: CPUParticles3D = $Explosion
 var overlapping_areas = []
 
 func _ready():
@@ -32,7 +32,6 @@ func _ready():
 	
 	set_planet_radius(planet_radius)
 	update_hill_area_radius(hill_area_radius)
-	particle_emitter = get_node("Explosion")
 	current_velocity = initial_velocity
 
 func _process(_delta):
@@ -50,11 +49,7 @@ func _integrate_forces(state):
 	var colliding_bodies = get_colliding_bodies()
 	for body in colliding_bodies:
 		if body is Planet:
-			print(name, " collide with ", body.name)
-			var contact_position = state.get_contact_local_position(0)  # Use the first contact point
-			var global_contact_position = state.transform.origin + contact_position
-			#print("Local position: ", contact_position, " Global position: ", global_contact_position)
-			particle_emitter.call("explosion_on_collision", body, global_contact_position)
+			particle_emitter.call("explosion_on_collision", body)
 	#update_velocity(state.step)
 	#update_position(state.step)
 
