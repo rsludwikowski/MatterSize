@@ -171,9 +171,9 @@ gravity_strength = 0.0
 planet_material = SubResource("StandardMaterial3D_iky0p")
 
 [node name="Planet" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -171.976, 17.5912, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -171.976, -60.9353, 0)
 mass = 3.72
-initial_velocity = Vector3(-3.795, 9.645, 0)
+initial_velocity = Vector3(9.385, 12.735, 0)
 planet_radius = 6.405
 hill_area_radius = 11.81
 gravity_strength = 0.0
@@ -191,14 +191,14 @@ planet_material = null
 [node name="Planet5" parent="Planets" instance=ExtResource("4_kxp37")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.59015, -101.536, 0)
 mass = 182.21
-initial_velocity = Vector3(17.985, 0, 0)
+initial_velocity = Vector3(15.6, 0, 0)
 planet_radius = 9.16
 hill_area_radius = 16.12
 gravity_strength = 0.0
 planet_material = null
 
 [node name="Planet4" parent="Planets" instance=ExtResource("4_kxp37")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.44653, -82.0606, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.6742, -82.0606, 0)
 initial_velocity = Vector3(10.865, 0, 0)
 planet_radius = 3.0
 hill_area_radius = 5.0
@@ -249,6 +249,7 @@ camera_group = NodePath("../Cameras/camera_2_group")
 [node name="DebugLines" type="Node3D" parent="." node_paths=PackedStringArray("universe", "referenceBody")]
 script = ExtResource("10_86te5")
 universe = NodePath("..")
+visualize = true
 steps = 2000
 referenceBody = NodePath("../Planets/Sun")
 YYYH = 100
